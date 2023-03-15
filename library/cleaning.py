@@ -11,23 +11,29 @@ def alpha_name(df, input_col, output_col):
     Parameters
     ----------
     df: pandas.DataFrame
-    input_col: string
-        name of column to be sorted alphabetically
-    output_col: string
-        name of column to be output
+        The dataframe to which the function is applied.
+    input_col: str
+        Name of column to be sorted alphabetically
+    output_col: str
+        Name of column to be output
       
     Returns
     -------
     pandas.DataFrame
-        a pandas dataframe with output_col appended
+        Pandas dataframe with output_col appended
     
     Example
     --------
-    >>> df['forename'].head(1)
-    'Charlie'
-    >>> df = alpha_name(df, 'forename', 'alphaname')
-    >>> df['alphaname'].head(1)
-    'ACEHILR'
+    >>> import pandas as pd
+    >>> import re
+    >>> df = pd.DataFrame({'forename': ['Charlie']})
+    >>> df['forename'].head(n=1)
+    0    Charlie
+    Name: forename, dtype: object
+    >>> df = alpha_name(df, input_col='forename', output_col='alphaname')
+    >>> df['alphaname'].head(n=1)
+    0    ACEHILR
+    Name: alphaname, dtype: object
     """
     df[input_col + '_cleaned'] = [re.sub(r'[^A-Za-z]+', '', s) for s in df[input_col]]
     df[output_col] = [''.join(sorted(x.upper())) for x in df[input_col + '_cleaned']]
@@ -37,32 +43,34 @@ def alpha_name(df, input_col, output_col):
 
 def change_types(df, input_cols, types):
     """
-   
-   Casts specific dataframe columns to a specified type.
-   The function can either take a single column or a list of columns.
-   
-   Parameters
-   ----------
-   df : pandas dataframe
-     The dataframe to which the function is applied.
-   input_cols: {list, string}
-     The subset of columns that are having their datatypes converted.
-   types: str
-     The datatype that the column values will be converted into.
-  
-   Returns
-   -------
-   pandas dataframe
-     Returns the complete dataframe with changes to the datatypes on specified
-     columns.
-  
-   Raises
-   -------
-   None at present.
+    Casts specific dataframe columns to a specified type.
+    The function can either take a single column or a list of columns.
 
-   Example
-   -------
-   """
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The dataframe to which the function is applied.
+    input_cols: str or list of str
+        The subset of columns that are having their datatypes converted.
+    types: str
+        The datatype that the column values will be converted into.
+  
+    Returns
+    -------
+    pandas.DataFrame
+        Returns the complete dataframe with changes to the datatypes on specified
+        columns.
+
+    Example
+    -------
+    >>> import pandas as pd
+    >>> df = pd.DataFrame({'number': [1]})
+    >>> df.dtypes[0]
+    dtype('int64')
+    >>> df = change_types(df, input_cols='number', types='str')
+    >>> df.dtypes[0]
+    dtype('O')
+    """
     if type(input_cols) != list:
         input_cols = [input_cols]
     for col in input_cols:
@@ -76,31 +84,37 @@ def clean_name(df, name_column, suffix=""):
     
     Parameters
     ----------
-    df : pandas dataframe
-      Input dataframe with name_column present
-    name_column : string
-      Name of column containing name as string type
+    df : pandas.DataFrame
+        Input dataframe with name_column present
+    name_column : str
+        Name of column containing name as string type
     suffix : str, default = ""
-      Optional suffix to append to name component column names
+        Optional suffix to append to name component column names
       
     Returns
     -------
-    pandas dataframe
-      clean_name returns the dataframe with a cleaned version of name_column.
-      
-    Raises
+    pandas.DataFrame
+        clean_name returns the dataframe with a cleaned version of name_column.
+
+    Example
     -------
-    None at present.
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> import re
+    >>> df = pd.DataFrame({'Name': ['Charlie!']})
+    >>> df.head(n=1)
+           Name
+    0  Charlie!
+    >>> df = clean_name(df, name_column='Name', suffix='_cen')
+    >>> df.head(n=1)
+           Name Name_clean_cen
+    0  Charlie!        CHARLIE
     """
-
     df[name_column] = df[name_column].replace(np.nan, '')
-
     df[name_column + '_clean' + suffix] = [' '.join(x.upper().split()) for x in df[name_column]]
     df[name_column + '_clean' + suffix] = [re.sub(r'[^A-Za-z ]+', '', s) for s in df[name_column + '_clean' + suffix]]
     df[name_column + '_clean' + suffix] = df[name_column + '_clean' + suffix].replace('', np.nan)
-
     df[name_column] = df[name_column].replace('', np.nan)
-
     return df
 
 
