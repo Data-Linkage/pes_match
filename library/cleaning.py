@@ -93,7 +93,7 @@ def clean_name(df, name_column, suffix=""):
       
     Returns
     -------
-    andas.DataFramep
+    pandas.DataFrame
         clean_name returns the dataframe with a cleaned version of name_column.
 
     Example
@@ -263,31 +263,37 @@ def n_gram(df, input_col, output_col, missing_value, n):
 
     Parameters
     ----------
-    df: pandas dataframe
-    input_col: string
-      name of column to apply n_gram to
-    output_col: string
-      name of column to be output
+    df: pandas.DataFrame
+        Input dataframe with input_col present
+    input_col: str
+        name of column to apply n_gram to
+    output_col: str
+        name of column to be output
     missing_value: 
-      value that is used for missingness in input_col
-      will also be used for missingness in output_col
-    n: Chosen n-gram
+        value that is used for missingness in input_col
+        will also be used for missingness in output_col
+    n: int
+        Chosen n-gram
       
     Returns
     -------
-    a pandas dataframe with output_col appended
-    
+    pandas.DataFrame
+        n_gram returns the dataframe with additional column output_col
+
     Example
     --------
-    
-    > df['forename'].head(1)
-    'Charlie'
-    > df = n_gram(df, 'forename', 'forename_2_gram', '-9', 2)
-    > df = n_gram(df, 'forename', 'forename_-2_gram', '-9', -2)
-    > df['forename_2_gram'].head(1)
-    'CH'
-    > df['forename_-2_gram'].head(1)
-    'IE'    
+    >>> import pandas as pd
+    >>> df = pd.DataFrame({'Forename': ['Jonathon', np.nan]})
+    >>> df.head(n=2)
+       Forename
+    0  Jonathon
+    1       NaN
+    >>> df = n_gram(df, input_col='Forename', output_col='First_Two', missing_value=np.nan, n=2)
+    >>> df = n_gram(df, input_col='Forename', output_col='Last_Two', missing_value=np.nan, n=-2)
+    >>> df.head(n=2)
+       Forename First_Two Last_Two
+    0  Jonathon        JO       ON
+    1       NaN       NaN      NaN
     """
     df[input_col] = df[input_col].replace(missing_value, '')
     if n < 0:
@@ -305,25 +311,35 @@ def pad_column(df, input_col, output_col, length):
 
     Parameters
     ----------
-    df: pandas dataframe
-    input_col: string
-      name of column to apply pad_column to
-    output_col: string
-      name of column to be output
-    length: Chosen length of strings in column AFTER padding with zeros
+    df: pandas.DataFrame
+        Input dataframe with input_col present
+    input_col: str
+        name of column to apply pad_column to
+    output_col: str
+        name of column to be output
+    length: int
+        Chosen length of strings in column AFTER padding with zeros
       
     Returns
     -------
-    a pandas dataframe with output_col appended
+    pandas.DataFrame
+        pad_column returns the dataframe with additional column output_col
     
     Example
     --------
-    
-    > df['HH_ID'].head(1)
-    123
-    > df = pad_column(df, 'HH_ID', 'HH_ID', 5).head(1)
-    > df['HH_ID'].head(1)
-    00123
+    >>> import pandas as pd
+    >>> df = pd.DataFrame({'Age': [2, 5, 100]})
+    >>> df.head(n=3)
+       Age
+    0    2
+    1    5
+    2  100
+    >>> df = pad_column(df, 'Age', 'Age_Padded', 3)
+    >>> df.head(n=3)
+       Age Age_Padded
+    0    2        002
+    1    5        005
+    2  100        100
     """
     df[output_col] = [x.zfill(length) for x in df[input_col].astype('str')]
     return df
@@ -335,47 +351,47 @@ def replace_vals(df, subset=None, dic=None):
     
     Parameters
     ----------
-    df : pandas dataframe
-      The dataframe to which the function is applied.
-    dic : dictionary
-      The values of the dictionary are the substrings
-      that are being replaced within the subset columns.
-      These must either be regex statements in the form of a
-      string, or numpy nan values. The key is the replacement.
-      The value is the regex to be replaced. 
+    df : pandas.DataFrame
+        The dataframe to which the function is applied.
+    dic : dict, default = None
+        The values of the dictionary are the substrings
+        that are being replaced within the subset columns.
+        These must either be regex statements in the form of a
+        string, or numpy nan values. The key is the replacement.
+        The value is the regex to be replaced.
     subset : str or list of str, default = None
-      The subset is the list of columns in the dataframe
-      on which replace_vals is performing its actions.
-      If no subset is entered the None default makes sure
-      that all columns in the dataframe are in the subset.
+        The subset is the list of columns in the dataframe
+        on which replace_vals is performing its actions.
+        If no subset is entered the None default makes sure
+        that all columns in the dataframe are in the subset.
       
     Returns
     -------
-    pandas dataframe
-      replace_vals returns the dataframe with the column values
-      changed appropriately.
+    pandas.DataFrame
+        replace_vals returns the dataframe with the column values
+        changed appropriately.
       
     Example
     --------
-    
-    > df['sex'].head(1)
-    'M'
-    > df = replace_vals(df, dic={'MALE':'M'}, subset='sex')
-    > df['sex'].head(1)
-    'MALE'
-      
-    Raises
-    -------
-    None at present.
+    >>> import pandas as pd
+    >>> df = pd.DataFrame({'Sex': ['M', 'F']})
+    >>> df.head(n=2)
+      Sex
+    0   M
+    1   F
+    >>> df = replace_vals(df, dic={'MALE':'M', 'FEMALE':'F'}, subset='Sex')
+
+    >>> df.head(n=3)
+          Sex
+    0    MALE
+    1  FEMALE
     """
     if dic is None:
         dic = {}
     if subset is None:
         subset = df.columns
-
     if type(subset) != list:
         subset = [subset]
-
     if subset is not None:
         for col in subset:
             for key, val in dic.items():
@@ -389,26 +405,33 @@ def select(df, columns):
     
     Parameters
     ----------
-    df : pandas dataframe
-      The dataframe to which the function is applied.
-    columns : string or list of strings, default = None
-      This argument can be entered as a list of column headers
-      that are the columns to be selected. If a single string
-      that is a name of a column is entered, it will select
-      only that column.
- 
-      
+    df : pandas.DataFrame
+        The dataframe to which the function is applied.
+    columns : str or list of str, default = None
+        This argument can be entered as a list of column headers
+        that are the columns to be selected. If a single string
+        that is a name of a column is entered, it will select
+        only that column.
+
     Returns
     -------
-    pandas dataframe
-      Dataframe with only selected columns included
+    pandas.DataFrame
+        Dataframe with only selected columns included
 
     Example
     --------
-      
-    Raises
-    -------
-    None at present.
+    >>> import pandas as pd
+    >>> df = pd.DataFrame({'Sex': ['M', 'F'],
+    ...                    'Age': [10, 29]})
+    >>> df.head(n=2)
+      Sex  Age
+    0   M   10
+    1   F   29
+    >>> df = select(df, columns = 'Sex')
+    >>> df.head(n=2)
+      Sex
+    0   M
+    1   F
     """
     if type(columns) != list:
         columns = [columns]
@@ -422,27 +445,37 @@ def soundex(df, input_col, output_col, missing_value):
 
     Parameters
     ----------
-    df: pandas dataframe
-    input_col: string
-      name of column to apply soundex to
-    output_col: string
-      name of column to be output
+    df: pandas.DataFrame
+        The dataframe to which the function is applied.
+    input_col: str
+        name of column to apply soundex to
+    output_col: str
+        name of column to be output
     missing_value: 
-      value that is used for missing value in input_col
-      will also be used for missing value in output_col
+        value that is used for missing value in input_col
+        will also be used for missing value in output_col
       
     Returns
     -------
-    a pandas dataframe with output_col appended
+    pandas.DataFrame
+        soundex returns the dataframe with additional column output_col
     
     Example
     --------
-    
-    > df['forename'].head(1)
-    'Charlie'
-    > df = soundex(df, 'forename', 'sdx_forename')
-    > df['sdx_forename'].head(1)
-    'C640'
+    >>> import pandas as pd
+    >>> import jellyfish
+    >>> df = pd.DataFrame({'Forename': ['Charlie', 'Rachel', '-9']})
+    >>> df.head(n=3)
+      Forename
+    0  Charlie
+    1   Rachel
+    2       -9
+    >>> df = soundex(df, input_col='Forename', output_col='sdx_Forename', missing_value='-9')
+    >>> df.head(n=3)
+      Forename sdx_Forename
+    0  Charlie         C640
+    1   Rachel         R240
+    2       -9           -9
     """
     df[output_col] = [jellyfish.soundex(x) for x in df[input_col].astype('str')]
     df[output_col] = df[output_col].replace(jellyfish.soundex(missing_value), missing_value)
