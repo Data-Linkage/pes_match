@@ -93,7 +93,7 @@ def clean_name(df, name_column, suffix=""):
       
     Returns
     -------
-    pandas.DataFrame
+    andas.DataFramep
         clean_name returns the dataframe with a cleaned version of name_column.
 
     Example
@@ -125,34 +125,44 @@ def concat(df, columns, output_col, sep=' '):
     
     Parameters
     ----------
-    df: pandas dataframe
-      Dataframe to which the function is applied.
-    output_col : string
-      The name, in string format, of the
-      output column for the new concatenated
-      strings to be stored in.
-    sep : string, default = ' '
-      This is the value used to separate the
-      strings in the different columns when
-      combining them into a single string.
-    columns : list, default = []
-      The list of columns being concatenated into
-      one string
+    df: pandas.DataFrame
+        Dataframe to which the function is applied.
+    columns : list of strings, default = []
+        The list of columns being concatenated into
+        one string
+    output_col : str
+        The name, in string format, of the
+        output column for the new concatenated
+        strings to be stored in.
+    sep : str, default = ' '
+        This is the value used to separate the
+        strings in the different columns when
+        combining them into a single string.
       
     Returns
     -------
-    pandas dataframe
-      Returns dataframe with 'output_col' column
-      containing the concatenated string.
-      
-    Raises
-    ------
-    None at present.
+    pandas.DataFrame
+        Returns dataframe with 'output_col' column
+        containing the concatenated string.
+
+    See Also
+    --------
+    replace_vals
+        Uses regular expressions to replace values within dataframe columns.
     
     Example
     -------
-    
-    
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df = pd.DataFrame({'Forename': ['John'],
+    ...                    'Surname': ['Smith']})
+    >>> df.head(n=1)
+      Forename Surname
+    0     John   Smith
+    >>> df = concat(df, columns=['Forename', 'Surname'], output_col='Fullname', sep=' ')
+    >>> df.head(n=1)
+      Forename Surname    Fullname
+    0     John   Smith  John Smith
     """
     if columns is None:
         columns = []
@@ -160,7 +170,6 @@ def concat(df, columns, output_col, sep=' '):
     df[output_col] = df[columns].agg(sep.join, axis=1)
     df[output_col] = [' '.join(x.split()) for x in df[output_col]]
     df = replace_vals(df, dic={np.NaN: ''}, subset=columns)
-
     return df
 
 
@@ -171,29 +180,42 @@ def derive_list(df, partition_var, list_var, output_col):
     
     Parameters
     ----------
-    df : pandas dataframe
-      Input dataframe with partition_var and list_var present
-    partition_var : string
-      Name of column to partition on e.g. household ID
-    list_var : string
-      Variable to collect list of values over chosen partition e.g. names
-    output_col: string
-      Name of list column to be output
+    df : pandas.DataFrame
+        Input dataframe with partition_var and list_var present
+    partition_var : str
+        Name of column to partition on e.g. household ID
+    list_var : str
+        Variable to collect list of values over chosen partition e.g. names
+    output_col: str
+        Name of list column to be output
      
     Returns
     -------
-    pandas dataframe
-      derive_list returns the dataframe with additional column output_list
+    pandas.DataFrame
+        derive_list returns the dataframe with additional column output_col
       
-    Raises
+    Example
     -------
-    None at present.
+    >>> import pandas as pd
+    >>> df = pd.DataFrame({'Forename': ['John', 'Steve', 'Charlie', 'James'],
+    ...                    'Household': [1, 1, 2, 2]})
+    >>> df.head(n=4)
+      Forename  Household
+    0     John          1
+    1    Steve          1
+    2  Charlie          2
+    3    James          2
+    >>> df = derive_list(df, partition_var='Household', list_var='Forename', output_col='Forename_List')
+    >>> df.head(n=4)
+      Forename  Household     Forename_List
+    0     John          1     [John, Steve]
+    1    Steve          1     [John, Steve]
+    2  Charlie          2  [Charlie, James]
+    3    James          2  [Charlie, James]
     """
-
     values_in_partition = df.groupby(partition_var)[list_var].agg(list).reset_index()
     values_in_partition.columns = [partition_var, output_col]
     df = df.merge(values_in_partition, on=partition_var, how='left')
-
     return df
 
 
@@ -204,28 +226,34 @@ def derive_names(df, clean_fullname_column, suffix=""):
     
     Parameters
     ----------
-    df : pandas dataframe
-      Input dataframe with clean_fullname_column present
-    clean_fullname_column : string
-      Name of column containing fullname as string type
+    df : pandas.DataFrame
+        Input dataframe with clean_fullname_column present
+    clean_fullname_column : str
+        Name of column containing fullname as string type
     suffix : str, default = ""
-      Optional suffix to append to name component column names
+        Optional suffix to append to name component column names
       
     Returns
     -------
-    pandas dataframe
-      derive_names returns the dataframe with additional columns 
-      for first, middle (second) and last names.
-      
-    Raises
-    -------
-    None at present.
-    """
+    pandas.DataFrame
+        derive_names returns the dataframe with additional columns
+        for first, middle (second) and last names.
 
+    Example
+    -------
+    >>> import pandas as pd
+    >>> df = pd.DataFrame({'Clean_Name': ['John William Smith']})
+    >>> df.head(n=1)
+               Clean_Name
+    0  John William Smith
+    >>> df = derive_names(df, clean_fullname_column='Clean_Name', suffix="")
+    >>> df.head(n=1)
+               Clean_Name forename middle_name last_name
+    0  John William Smith     John     William     Smith
+    """
     df['forename' + suffix] = df[clean_fullname_column].str.split().str.get(0)
     df['middle_name' + suffix] = df[clean_fullname_column].str.split().str.get(1)
     df['last_name' + suffix] = df[clean_fullname_column].str.split().str.get(-1)
-
     return df
 
 
@@ -262,15 +290,12 @@ def n_gram(df, input_col, output_col, missing_value, n):
     'IE'    
     """
     df[input_col] = df[input_col].replace(missing_value, '')
-
     if n < 0:
         df[output_col] = [x.upper()[n:] for x in df[input_col]]
     else:
         df[output_col] = [x.upper()[:n] for x in df[input_col]]
-
     df[input_col] = df[input_col].replace('', missing_value)
     df[output_col] = df[output_col].replace('', missing_value)
-
     return df
 
 
@@ -300,12 +325,11 @@ def pad_column(df, input_col, output_col, length):
     > df['HH_ID'].head(1)
     00123
     """
-
     df[output_col] = [x.zfill(length) for x in df[input_col].astype('str')]
     return df
 
 
-def replace_vals(df, subset=None, dic={}):
+def replace_vals(df, subset=None, dic=None):
     """
     Uses regular expressions to replace values within dataframe columns.
     
@@ -344,6 +368,8 @@ def replace_vals(df, subset=None, dic={}):
     -------
     None at present.
     """
+    if dic is None:
+        dic = {}
     if subset is None:
         subset = df.columns
 
@@ -418,8 +444,6 @@ def soundex(df, input_col, output_col, missing_value):
     > df['sdx_forename'].head(1)
     'C640'
     """
-
     df[output_col] = [jellyfish.soundex(x) for x in df[input_col].astype('str')]
     df[output_col] = df[output_col].replace(jellyfish.soundex(missing_value), missing_value)
-
     return df
