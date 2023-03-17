@@ -155,9 +155,9 @@ def crow_output_updater(output_df, id_column, source_column, df1_name, df2_name,
     1       A2       B2  Stage_1_Conflicts         1   0
     2       A2       B3  Stage_1_Conflicts         1   0
     """
-    df = output_df
 
     # Select required columns and only keep clusters containing matches
+    df = output_df
     df = df[df['Match'] != 'No match in cluster'][[id_column, source_column, 'Match']]
     df = df.rename(columns={id_column: 'Record_1', source_column: 'Source_Dataset_1'})
 
@@ -190,40 +190,64 @@ def crow_output_updater(output_df, id_column, source_column, df1_name, df2_name,
     df.drop(['Source_Dataset_1', 'Source_Dataset_2', 'Record_1', 'Record_2'], axis=1, inplace=True)
 
     # Remove dups, rename columns and save
-    df = df[['Record_1_FINAL', 'Record_2_FINAL']].drop_duplicates(['Record_1_FINAL', 'Record_2_FINAL'])
+    df = df[['Record_1_FINAL', 'Record_2_FINAL']].drop_duplicates()
     df = df.rename(columns={'Record_1_FINAL': id_column+df1_name, 'Record_2_FINAL': id_column+df2_name})
     df.reset_index(drop=True, inplace=True)
 
     # Extra Flags
-    df['Match_Type'] = match_type
-    df['CLERICAL'] = 1
-    df['MK'] = 0
+    df['Match_Type'], df['CLERICAL'], df['MK'] = [match_type, 1, 0]
     return df
 
 
-
-
-
-
-
 def combine_crow_results(stage):
+    """
+    Takes all matches made in CROW from a chosen stage and combines them into a single pandas DataFrame.
+    All matching in CROW for the chosen stage must be completed before running this function.
+
+    Parameters
+    ----------
+    stage: str
+        Chosen stage of matching e.g., 'Stage_1'. The function will look inside CLERICAL_PATH and
+        combine all clerically matched csv files that contain this string.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Pandas dataframe with all clerically matched records from a selected stage combined.
+    """
     import pandas as pd
     import glob
     import os
-
     all_files = glob.glob(os.path.join(CLERICAL_PATH, "*.csv"))
     li = []
-
     for filename in all_files:
         if stage in filename:
             df = pd.read_csv(filename, index_col=None, header=0)
             li.append(df)
-
     df = pd.concat(li, axis=0, ignore_index=True)
     return df
 
 
 def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
+    """
+    Takes candidate matches, updates their format ready for CROW and then saves them.
+    Split matches into multiple files if desired. Large clusters that are too big for CROW are removed.
+
+    Parameters
+    ----------
+    df: pandas.DataFrame
+        DataFrame containing all candidate pairs ready for CROW.
+    id_column: str
+        Name of record_id column in CROW candidates.
+    suffix_1: str
+        Suffix used for the first data source.
+    suffix_2: str
+        Suffix used for the second data source.
+    file_name: str
+        Name of file that will be saved.
+    no_of_files: str, default = 1
+        Number of csv files that the output will be split into.
+    """
     import pandas as pd
     import numpy as np
     from library.cluster import cluster_number
