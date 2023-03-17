@@ -2,9 +2,9 @@ import pandas as pd
 from library.parameters import *
 
 # File names
-matchkey_unique = 'Stage_1_Unique_Matches'
-matchkey_nonunique = 'Stage_1_Conflict_Matches'
-associative = 'Stage_1_Associative_Matches'
+matchkey_unique = 'Stage_1_Matchkey_Unique_Matches'
+matchkey_nonunique = 'Stage_1_Matchkey_Conflict_Matches'
+associative = 'Stage_1_Associative_Unique_Matches'
 
 # Read in and combine
 df1 = pd.read_csv(CHECKPOINT_PATH + matchkey_unique + '.csv', index_col=False)[OUTPUT_VARIABLES]
