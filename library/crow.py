@@ -245,7 +245,7 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
         Suffix used for the second data source.
     file_name: str
         Name of file that will be saved.
-    no_of_files: str, default = 1
+    no_of_files: int, default = 1
         Number of csv files that the output will be split into.
     """
     import pandas as pd
