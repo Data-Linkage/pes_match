@@ -1,8 +1,6 @@
-import glob
-import numpy as np
-import pandas as pd
-from library.cluster import cluster_number
 from library.parameters import *
+import pandas as pd
+import numpy as np
 
 
 def collect_uniques(df, id_1, id_2, match_type):
@@ -46,6 +44,8 @@ def collect_uniques(df, id_1, id_2, match_type):
     4   A5   B4         0  Stage_X_Matchkeys
     5   A6   B5         0  Stage_X_Matchkeys
     """
+    import numpy as np
+    import pandas as pd
     pd.options.mode.chained_assignment = None
     df['ID_count_1'] = df.groupby([id_1])[id_2].transform('count')
     df['ID_count_2'] = df.groupby([id_2])[id_1].transform('count')
@@ -92,6 +92,8 @@ def collect_conflicts(df, id_1, id_2):
     2   A3   B3         1
     3   A4   B3         1
     """
+    import numpy as np
+    import pandas as pd
     pd.options.mode.chained_assignment = None
     df['ID_count_1'] = df.groupby([id_1])[id_2].transform('count')
     df['ID_count_2'] = df.groupby([id_2])[id_1].transform('count')
@@ -213,6 +215,9 @@ def combine_crow_results(stage):
     pandas.DataFrame
         Pandas dataframe with all clerically matched records from a selected stage combined.
     """
+    import pandas as pd
+    import glob
+    import os
     all_files = glob.glob(os.path.join(CLERICAL_PATH, "*.csv"))
     li = []
     for filename in all_files:
@@ -243,6 +248,11 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
     no_of_files: int, default = 1
         Number of csv files that the output will be split into.
     """
+    import pandas as pd
+    import numpy as np
+    from library.cluster import cluster_number
+    from library.parameters import CLERICAL_VARIABLES
+
     id_1 = id_column + suffix_1
     id_2 = id_column + suffix_2
     if not ((isinstance(id_1, str)) and (isinstance(id_2, str))):
