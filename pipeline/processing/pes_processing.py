@@ -10,30 +10,31 @@ for var in ['forename', 'middlenm', 'last_name']:
     df = clean_name(df, var)
 
 # Derive full name
-df = concat(df, 'fullname', sep=' ', columns=['forename_clean', 'middlenm_clean', 'last_name_clean'])
+df = concat(df, output_col='fullname', sep=' ', columns=['forename_clean', 'middlenm_clean', 'last_name_clean'])
 
 # Derive Alphaname
-df = alpha_name(df, 'fullname', 'alpha_name')
+df = alpha_name(df, input_col='fullname', output_col='alpha_name')
 
 # Replace nulls
-df = replace_vals(df, dic={'-9': np.NaN},
+df = replace_vals(df, dic={'-8': np.NaN},
                   subset=['forename_clean', 'middlenm_clean', 'last_name_clean', 'fullname', 'alpha_name'])
 
 # Collect list of clean forenames in each household
-df = derive_list(df, 'hid', 'forename_clean', 'forename_list')
+df = derive_list(df, partition_var='hid', list_var='forename_clean', output_col='forename_list')
 
 # Forename Trigrams
-df = n_gram(df, 'forename_clean', 'forename_tri', '-9', 3)
+df = n_gram(df, input_col='forename_clean', output_col='forename_tri', missing_value='-8', n=3)
 
 # Soundex of forename
-df = soundex(df, 'forename_clean', 'forename_sdx', '-9')
+df = soundex(df, input_col='forename_clean', output_col='forename_sdx', missing_value='-8')
 
 # Clean Day, Month, Age & Derive full_dob
 df = replace_vals(df, dic={99: np.NaN}, subset=['month', 'age'])
 df = replace_vals(df, dic={9999: np.NaN}, subset=['year'])
-df = change_types(change_types(df, ['year', 'month', 'age'], 'int'), ['year', 'month', 'age'], 'str')
-df = pad_column(df, 'month', 'month', 2)
-df = concat(df, 'full_dob', sep='/', columns=['month', 'year'])
+df = change_types(change_types(df, input_cols=['year', 'month', 'age'], types='int'),
+                  input_cols=['year', 'month', 'age'], types='str')
+df = pad_column(df, input_col='month', output_col='month', length=2)
+df = concat(df, output_col='full_dob', sep='/', columns=['month', 'year'])
 
 # Selected columns
 df = select(df, columns=['hid', 'puid', 'month', 'year', 'age',
@@ -48,4 +49,4 @@ df = select(df, columns=['hid', 'puid', 'month', 'year', 'age',
 df = df.add_suffix('_pes')
 
 # Save
-df.to_csv(DATA_PATH + 'pes_cleaned_CT.csv', header=True, index=0)
+df.to_csv(DATA_PATH + 'pes_cleaned_CT.csv', header=True, index=False)
