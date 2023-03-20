@@ -1,5 +1,5 @@
 from library.crow import *
-from matchkeys.stage_1_matchkeys import *
+from matchkeys.stage_1_matchkeys import run_matchkeys
 
 # Cleaned data, dtypes read in from config
 CEN = pd.read_csv(DATA_PATH + 'cen_cleaned_CT.csv', index_col=False)

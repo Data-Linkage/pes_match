@@ -4,6 +4,7 @@ import glob
 from library.cluster import cluster_number
 from library.parameters import *
 
+
 def collect_uniques(df, id_1, id_2, match_type):
     """
     Collects unique matches from a set of matches, removing all non-unique cases.

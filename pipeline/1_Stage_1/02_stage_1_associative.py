@@ -15,7 +15,7 @@ crow_matches = combine_crow_results(stage='Stage_1')
 
 # Update format of matches and add flags
 crow_matches = crow_output_updater(output_df=crow_matches, id_column='puid', source_column='Source_Dataset',
-                                   df1_name='cen', df2_name='pes', match_type='Stage_1_Conflicts')
+                                   df1_name='_cen', df2_name='_pes', match_type='Stage_1_Conflicts')
 
 # Save clerical matches
 crow_matches.to_csv(CHECKPOINT_PATH + 'Stage_1_Matchkey_Conflict_Matches.csv', header=True, index=False)
@@ -24,7 +24,8 @@ crow_matches.to_csv(CHECKPOINT_PATH + 'Stage_1_Matchkey_Conflict_Matches.csv', h
 all_matches = pd.concat([unique_matches[OUTPUT_VARIABLES], crow_matches[OUTPUT_VARIABLES]])
 
 # Get associative candidates
-CEN, PES = get_assoc_candidates(CEN, PES, matches=all_matches, person_id='puid', hh_id='hid')
+CEN, PES = get_assoc_candidates(CEN, PES, suffix_1='_cen', suffix_2='_pes', matches=all_matches,
+                                person_id='puid', hh_id='hid')
 
 # Run associative matchkeys
 assoc_matches = run_matchkeys(CEN, PES, level='associative')
