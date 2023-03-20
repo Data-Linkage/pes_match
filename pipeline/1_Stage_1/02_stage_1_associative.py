@@ -1,7 +1,7 @@
 from library.crow import *
 from library.matching import *
 from library.parameters import *
-from matchkeys.stage_1_associative import *
+from matchkeys.Stage_1.associative_matchkeys import run_matchkeys
 
 # Cleaned data
 CEN = pd.read_csv(DATA_PATH + 'cen_cleaned_CT.csv', index_col=False)
