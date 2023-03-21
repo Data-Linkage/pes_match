@@ -57,7 +57,7 @@ def cluster_number(df, id_column, suffix_1, suffix_2):
     id_1 = id_column + suffix_1
     id_2 = id_column + suffix_2
     if not ((isinstance(id_1, str)) and (isinstance(id_2, str))):
-        raise TypeError('ID variables must be strings')
+        raise TypeError("ID variables must be strings")
     df_cluster = df[[id_1, id_2]].copy()
     g = nx.from_edgelist(df_cluster.to_numpy().tolist())
     results = []
@@ -65,5 +65,7 @@ def cluster_number(df, id_column, suffix_1, suffix_2):
         for ids in item:
             results.append([ids, i + 1])
     results_df = pd.DataFrame(results, columns=[id_column, "Cluster_Number"])
-    df_merged = df.merge(results_df, how="inner", left_on=id_1, right_on=id_column).drop([id_column], axis=1)
+    df_merged = df.merge(
+        results_df, how="inner", left_on=id_1, right_on=id_column
+    ).drop([id_column], axis=1)
     return df_merged
