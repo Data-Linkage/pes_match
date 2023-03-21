@@ -22,11 +22,17 @@ df = replace_vals(df, dic={'-8': np.NaN},
 # Collect list of clean forenames in each household
 df = derive_list(df, partition_var='hid', list_var='forename_clean', output_col='forename_list')
 
-# Forename Trigrams
-df = n_gram(df, input_col='forename_clean', output_col='forename_tri', missing_value='-8', n=3)
+# Initials
+df = n_gram(df, input_col='forename_clean', output_col='forename_init', missing_value='-8', n=1)
+df = n_gram(df, input_col='last_name_clean', output_col='last_name_init', missing_value='-8', n=1)
 
-# Soundex of forename
+# Trigrams
+df = n_gram(df, input_col='forename_clean', output_col='forename_tri', missing_value='-8', n=3)
+df = n_gram(df, input_col='last_name_clean', output_col='last_name_tri', missing_value='-8', n=3)
+
+# Soundex
 df = soundex(df, input_col='forename_clean', output_col='forename_sdx', missing_value='-8')
+df = soundex(df, input_col='last_name_clean', output_col='last_name_sdx', missing_value='-8')
 
 # Clean Day, Month, Age & Derive full_dob
 df = replace_vals(df, dic={99: np.NaN}, subset=['month', 'age'])
@@ -42,8 +48,10 @@ df = select(df, columns=['hid', 'puid', 'month', 'year', 'age',
                          'telephone', 'Eaid', 'forename_clean',
                          'middlenm_clean', 'last_name_clean',
                          'fullname', 'alpha_name',
-                         'forename_list', 'forename_tri',
-                         'forename_sdx', 'full_dob'])
+                         'forename_init', 'last_name_init',
+                         'forename_tri', 'last_name_tri',
+                         'forename_sdx', 'last_name_sdx',
+                         'full_dob', 'forename_list'])
 
 # Suffixes
 df = df.add_suffix('_pes')
