@@ -4,8 +4,8 @@ from library.parameters import *
 from matchkeys.Stage_1.associative_matchkeys import run_matchkeys
 
 # Cleaned data
-CEN = pd.read_csv(DATA_PATH + 'cen_cleaned_CT.csv', index_col=False)
-PES = pd.read_csv(DATA_PATH + 'pes_cleaned_CT.csv', index_col=False)
+CEN = pd.read_csv(CEN_CLEAN_DATA, dtype=cen_variable_types, index_col=False)
+PES = pd.read_csv(PES_CLEAN_DATA, dtype=pes_variable_types, index_col=False)
 
 # Read in unique matches
 unique_matches = pd.read_csv(CHECKPOINT_PATH + 'Stage_1_Matchkey_Unique_Matches.csv', index_col=False)
