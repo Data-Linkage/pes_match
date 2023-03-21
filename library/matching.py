@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import jellyfish
-from library.parameters import *
+from library.parameters import CLERICAL_VARIABLES
 
 
 def age_diff_filter(df, age_1, age_2):
@@ -27,7 +27,8 @@ def age_diff_filter(df, age_1, age_2):
     See Also
     --------
     age_tolerance
-        Function that returns True or False depending on whether two integer ages are within certain tolerances.
+        Function that returns True or False depending on whether two
+        integer ages are within certain tolerances.
 
     Example
     --------
@@ -48,15 +49,18 @@ def age_diff_filter(df, age_1, age_2):
     2     25     22
     3     50     52
     """
-    df['Age_Diff'] = df[[age_1, age_2]].apply(lambda x: age_tolerance((x[0]), (x[1])), axis=1)
-    df = df[df.Age_Diff == True].drop(['Age_Diff'], axis=1)
+    df["Age_Diff"] = df[[age_1, age_2]].apply(
+        lambda x: age_tolerance((x[0]), (x[1])), axis=1
+    )
+    df = df[df.Age_Diff].drop(["Age_Diff"], axis=1)
     return df
 
 
 def age_tolerance(val1, val2):
     """
-    Function that returns True or False depending on whether two integer ages are within certain tolerances.
-    Used in the age_diff_filter filtering function.
+    Function that returns True or False depending on whether two integer
+    ages are within certain tolerances. Used in the age_diff_filter
+    filtering function.
 
     Parameters
     ----------
@@ -95,15 +99,15 @@ def age_tolerance(val1, val2):
         return True
     if (abs(val1 - val2) < 5) & (val1 > 40) & (val2 > 40):
         return True
-    else:
-        return False
+    return False
 
 
 def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id):
     """
-    Associative Matching Function. Takes all person matches made between two datasets and collects their unique
-    household pairs. Unmatched person records from these household pairs are then grouped together (associatively). This
-    is done by merging on the household ID pair to each unmatched record.
+    Associative Matching Function. Takes all person matches made between two
+    datasets and collects their unique household pairs. Unmatched person
+    records from these household pairs are then grouped together (associatively).
+    This is done by merging on the household ID pair to each unmatched record.
 
     Parameters
     ----------
@@ -159,24 +163,35 @@ def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id
     1      23       2   STEPHEN       1
     2      24       2  SAMANTHA       1
 
-    Additional column added to each DataFrame which has associated households 1 and 2 together, using the existing
-    matches between persons 1 and 21 and persons 5 and 25
+    Additional column added to each DataFrame which has associated
+    households 1 and 2 together, using the existing matches between
+    persons 1 and 21 and persons 5 and 25.
     """
 
-    """Join on household IDs to person matches"""
-    matches = matches.merge(df1[[person_id+suffix_1, hh_id+suffix_1]], on=person_id+suffix_1, how='left')
-    matches = matches.merge(df2[[person_id+suffix_2, hh_id+suffix_2]], on=person_id+suffix_2, how='left')
+    # Join on household IDs to person matches
+    matches = matches.merge(
+        df1[[person_id + suffix_1, hh_id + suffix_1]],
+        on=person_id + suffix_1,
+        how="left",
+    )
+    matches = matches.merge(
+        df2[[person_id + suffix_2, hh_id + suffix_2]],
+        on=person_id + suffix_2,
+        how="left",
+    )
 
-    """Get residuals"""
-    df1 = get_residuals(all_records=df1, matched_records=matches,
-                        id_column=person_id+suffix_1).drop_duplicates([person_id+suffix_1])
-    df2 = get_residuals(all_records=df2, matched_records=matches,
-                        id_column=person_id+suffix_2).drop_duplicates([person_id+suffix_2])
+    # Get residuals
+    df1 = get_residuals(
+        all_records=df1, matched_records=matches, id_column=person_id + suffix_1
+    ).drop_duplicates([person_id + suffix_1])
+    df2 = get_residuals(
+        all_records=df2, matched_records=matches, id_column=person_id + suffix_2
+    ).drop_duplicates([person_id + suffix_2])
 
-    """Join on household matches to unmatched records"""
-    hh_pairs = matches[[hh_id+suffix_1, hh_id+suffix_2]].drop_duplicates()
-    df1 = df1.merge(hh_pairs, on=hh_id+suffix_1, how='inner')
-    df2 = df2.merge(hh_pairs, on=hh_id+suffix_2, how='inner')
+    # Join on household matches to unmatched records
+    hh_pairs = matches[[hh_id + suffix_1, hh_id + suffix_2]].drop_duplicates()
+    df1 = df1.merge(hh_pairs, on=hh_id + suffix_1, how="inner")
+    df2 = df2.merge(hh_pairs, on=hh_id + suffix_2, how="inner")
     return df1, df2
 
 
@@ -217,21 +232,28 @@ def get_residuals(all_records, matched_records, id_column):
     0       1      21
     1       2      22
     2       3      23
-    >>> residuals = get_residuals(all_records=all_records, matched_records=matched_records, id_column='puid_1')
+    >>> residuals = get_residuals(all_records=all_records,
+    ...                           matched_records=matched_records,
+    ...                           id_column='puid_1')
     >>> residuals.head(n=5)
        puid_1
     3       4
     4       5
     """
-    df = all_records.merge(matched_records[[id_column]].drop_duplicates(), on=id_column, how='left', indicator=True)
-    df = df[df['_merge'] == 'left_only'].drop('_merge', axis=1)
+    df = all_records.merge(
+        matched_records[[id_column]].drop_duplicates(),
+        on=id_column,
+        how="left",
+        indicator=True,
+    )
+    df = df[df["_merge"] == "left_only"].drop("_merge", axis=1)
     return df
 
 
 def mult_match(df, hh_id_1, hh_id_2):
     """
-    Filters a set of matched records by retaining only those where 2 or more matches have been made across a pair of
-    households.
+    Filters a set of matched records by retaining only those where 2 or
+    more matches have been made across a pair of households.
 
     Parameters
     ----------
@@ -249,26 +271,30 @@ def mult_match(df, hh_id_1, hh_id_2):
         Other cases are discarded.
     """
     counts = pd.DataFrame(df[[hh_id_1, hh_id_2]].value_counts()).reset_index()
-    counts.columns = [hh_id_1, hh_id_2, 'count']
-    df = df.merge(counts, on=[hh_id_1, hh_id_2], how='left')
-    df = df[df['count'] > 1].drop(['count'], axis=1)
+    counts.columns = [hh_id_1, hh_id_2, "count"]
+    df = df.merge(counts, on=[hh_id_1, hh_id_2], how="left")
+    df = df[df["count"] > 1].drop(["count"], axis=1)
     return df
 
 
-def run_single_matchkey(df1,
-                        df2,
-                        suffix_1,
-                        suffix_2,
-                        hh_id,
-                        level,
-                        matchkey,
-                        variables,
-                        swap_variables=None,
-                        lev_variables=None,
-                        age_threshold=None):
+def run_single_matchkey(
+        df1,
+        df2,
+        suffix_1,
+        suffix_2,
+        hh_id,
+        level,
+        matchkey,
+        variables,
+        swap_variables=None,
+        lev_variables=None,
+        age_threshold=None,
+):
     """
-    Function to collect unique matches from a chosen matchkey. Partial agreement can be included using std_lev_filter,
-    and age filters can be applied using age_threshold. Use swap_variables to match across different variables e.g.
+    Function to collect unique matches from a chosen matchkey.
+    Partial agreement can be included using std_lev_filter,
+    and age filters can be applied using age_threshold.
+    Use swap_variables to match across different variables e.g.
     forename = surname.
 
     Parameters
@@ -292,11 +318,14 @@ def run_single_matchkey(df1,
     variables: list of str
         List of variables to use in matchkey rule (exluding level of geography)
     swap_variables: list of tuple, optional
-        Use if you want to match a variable from one dataset to a different variable on the other dataset.
-        For example, to match forename on df1 to surname on df2, swap_variables = [('forename_1', 'surname_2')]
+        Use if you want to match a variable from one dataset to a
+        different variable on the other dataset.
+        For example, to match forename on df1 to surname on df2,
+        swap_variables = [('forename_1', 'surname_2')]
     lev_variables: list, optional
         Use if you want to apply the std_lev_filter function within the matchkey.
-        For example, to apply to forenames (threshold = 0.80): lev_variables = ['forename_1', 'forename_2', 0.80]
+        For example, to apply to forenames (threshold = 0.80):
+        lev_variables = ['forename_1', 'forename_2', 0.80]
     age_threshold: bool, optional
         Use if you want to apply the age_diff_filter function within the matchkey.
         To apply, simply set age_threshold = True
@@ -311,12 +340,18 @@ def run_single_matchkey(df1,
     std_lev_filter
     age_diff_filter
     """
-    if level != 'associative':
+    if level != "associative":
         df1_link_vars = [var + suffix_1 for var in variables] + [level + suffix_1]
         df2_link_vars = [var + suffix_2 for var in variables] + [level + suffix_2]
     else:
-        df1_link_vars = [var + suffix_1 for var in variables] + [hh_id + suffix_1, hh_id + suffix_2]
-        df2_link_vars = [var + suffix_2 for var in variables] + [hh_id + suffix_1, hh_id + suffix_2]
+        df1_link_vars = [var + suffix_1 for var in variables] + [
+            hh_id + suffix_1,
+            hh_id + suffix_2,
+        ]
+        df2_link_vars = [var + suffix_2 for var in variables] + [
+            hh_id + suffix_1,
+            hh_id + suffix_2,
+        ]
 
     if swap_variables:
         for i in swap_variables:
@@ -326,28 +361,29 @@ def run_single_matchkey(df1,
                 if j.endswith(suffix_1):
                     df1_link_vars.append(j)
 
-    matches = pd.merge(left=df1,
-                       right=df2,
-                       how="inner",
-                       left_on=df1_link_vars,
-                       right_on=df2_link_vars)
+    matches = pd.merge(
+        left=df1, right=df2, how="inner", left_on=df1_link_vars, right_on=df2_link_vars
+    )
 
     if lev_variables:
         for i in lev_variables:
             matches = std_lev_filter(matches, i[0], i[1], i[2])
     if age_threshold:
-        matches = age_diff_filter(matches, 'age'+suffix_1, 'age'+suffix_2)
+        matches = age_diff_filter(matches, "age" + suffix_1, "age" + suffix_2)
 
-    matches['MK'] = matchkey
-    variables = [x + '_cen' for x in CLERICAL_VARIABLES] + [x + '_pes' for x in CLERICAL_VARIABLES]
-    matches = matches[variables + ['MK']]
+    matches["MK"] = matchkey
+    variables = [x + "_cen" for x in CLERICAL_VARIABLES] + [
+        x + "_pes" for x in CLERICAL_VARIABLES
+    ]
+    matches = matches[variables + ["MK"]]
     return matches
 
 
 def std_lev(string1, string2):
     """
-    Function that compares two strings (usually names) and returns the standardised levenstein edit distance score,
-    between 0 and 1. Used in the std_lev_filter filtering function.
+    Function that compares two strings (usually names) and returns
+    the standardised levenstein edit distance score, between 0 and 1.
+    Used in the std_lev_filter filtering function.
 
     Parameters
     ----------
@@ -365,8 +401,8 @@ def std_lev(string1, string2):
     See Also
     --------
     std_lev_filter
-        Filters a set of matched records to keep only records where names have a similarity greater than
-        a chosen threshold.
+        Filters a set of matched records to keep only records where names
+        have a similarity greater than a chosen threshold.
 
     Example
     --------
@@ -379,16 +415,17 @@ def std_lev(string1, string2):
     """
     if string1 is None or string2 is None:
         return None
-    else:
-        length1, length2 = len(string1), len(string2)
-        max_length = max(length1, length2)
-        lev = jellyfish.levenshtein_distance(string1, string2)
-        return 1 - (lev/max_length)
+
+    length1, length2 = len(string1), len(string2)
+    max_length = max(length1, length2)
+    lev = jellyfish.levenshtein_distance(string1, string2)
+    return 1 - (lev / max_length)
 
 
 def std_lev_filter(df, column1, column2, threshold):
     """
-    Filters a set of matched records to keep only records where names have a similarity greater than a chosen threshold.
+    Filters a set of matched records to keep only records where names
+    have a similarity greater than a chosen threshold.
 
     Parameters
     ----------
@@ -410,8 +447,8 @@ def std_lev_filter(df, column1, column2, threshold):
     See Also
     --------
     std_lev
-        Function that compares two strings (usually names) and returns the standardised levenstein edit distance score,
-        between 0 and 1.
+        Function that compares two strings (usually names) and returns
+        the standardised levenstein edit distance score, between 0 and 1.
 
     Example
     --------
@@ -431,6 +468,8 @@ def std_lev_filter(df, column1, column2, threshold):
     0  CHARLES  CHARLIE
     4  CH4RL1E  CHARLIE
     """
-    df['EDIT'] = df[[column1, column2]].apply(lambda x: std_lev(str(x[0]), str(x[1])), axis=1)
-    df = df[df.EDIT >= threshold].drop(['EDIT'], axis=1)
+    df["EDIT"] = df[[column1, column2]].apply(
+        lambda x: std_lev(str(x[0]), str(x[1])), axis=1
+    )
+    df = df[df.EDIT >= threshold].drop(["EDIT"], axis=1)
     return df
