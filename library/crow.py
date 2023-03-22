@@ -1,8 +1,9 @@
+import os
 import pandas as pd
 import numpy as np
 import glob
 from library.cluster import cluster_number
-from library.parameters import *
+from library.parameters import CLERICAL_PATH, CLERICAL_VARIABLES
 
 
 def collect_uniques(df, id_1, id_2, match_type):
