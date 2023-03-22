@@ -52,7 +52,7 @@ def change_types(df, input_cols, types):
         The dataframe to which the function is applied.
     input_cols: str or list of str
         The subset of columns that are having their datatypes converted.
-    types: str
+    types:
         The datatype that the column values will be converted into.
 
     Returns
