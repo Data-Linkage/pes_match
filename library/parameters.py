@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 # This path should always set the working directory to the parent (project) folder so
 # all file paths work correctly (and dynamically!) regardless of file used
@@ -42,10 +43,10 @@ variable_types = {
     "month": str,
     "year": str,
     "age": str,
-    "marstat": float,
-    "relationship": float,
+    "marstat": np.int64,
+    "relationship": np.int64,
     "sex": str,
-    "telephone": float,
+    "telephone": np.int64,
     "Eaid": str,
 }
 cen_variable_types = {key + "_cen": val for key, val in variable_types.items()}

@@ -80,6 +80,14 @@ df = change_types(
 df = pad_column(df, input_col="month", output_col="month", length=2)
 df = concat(df, output_col="full_dob", sep="/", columns=["month", "year"])
 
+# Clean other matching variables
+df = change_types(replace_vals(df, dic={99: np.NaN}, subset=["marstat"]),
+                  input_cols="marstat", types=np.int64)
+df = change_types(replace_vals(df, dic={99: np.NaN}, subset=["relationship"]),
+                  input_cols="relationship", types=np.int64)
+df = change_types(replace_vals(df, dic={99: np.NaN}, subset=["telephone"]),
+                  input_cols="telephone", types=np.int64)
+
 # Selected columns
 df = select(
     df,

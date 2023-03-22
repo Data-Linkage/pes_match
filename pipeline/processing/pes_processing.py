@@ -70,8 +70,8 @@ df = soundex(
 )
 
 # Clean Day, Month, Age & Derive full_dob
-df = replace_vals(df, dic={99: np.NaN}, subset=["month", "age"])
-df = replace_vals(df, dic={9999: np.NaN}, subset=["year"])
+df = replace_vals(df, dic={88: np.NaN}, subset=["month", "age"])
+df = replace_vals(df, dic={8888: np.NaN}, subset=["year"])
 df = change_types(
     change_types(df, input_cols=["year", "month", "age"], types="int"),
     input_cols=["year", "month", "age"],
@@ -79,6 +79,14 @@ df = change_types(
 )
 df = pad_column(df, input_col="month", output_col="month", length=2)
 df = concat(df, output_col="full_dob", sep="/", columns=["month", "year"])
+
+# Clean other matching variables
+df = change_types(replace_vals(df, dic={88: np.NaN}, subset=["marstat"]),
+                  input_cols="marstat", types=np.int64)
+df = change_types(replace_vals(df, dic={88: np.NaN}, subset=["relationship"]),
+                  input_cols="relationship", types=np.int64)
+df = change_types(replace_vals(df, dic={88: np.NaN}, subset=["telephone"]),
+                  input_cols="telephone", types=np.int64)
 
 # Selected columns
 df = select(
