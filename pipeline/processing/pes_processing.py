@@ -1,23 +1,27 @@
 import pandas as pd
-from library.parameters import *
-from library.cleaning import *
+import numpy as np
+from library.parameters import DATA_PATH
+from library.cleaning import clean_name, concat, alpha_name, replace_vals, \
+    derive_list, n_gram, soundex, change_types, pad_column, select
 
 # Raw data
-df = pd.read_csv(DATA_PATH + 'Mock_Data_Pes.csv', index_col=False)
+df = pd.read_csv(DATA_PATH + 'Mock_Data_Pes.csv', iterator=False, index_col=False)
 
 # Derive clean names
 for var in ['forename', 'middlenm', 'last_name']:
     df = clean_name(df, var)
 
 # Derive full name
-df = concat(df, output_col='fullname', sep=' ', columns=['forename_clean', 'middlenm_clean', 'last_name_clean'])
+df = concat(df, output_col='fullname', sep=' ',
+            columns=['forename_clean', 'middlenm_clean', 'last_name_clean'])
 
 # Derive Alphaname
 df = alpha_name(df, input_col='fullname', output_col='alpha_name')
 
 # Replace nulls
 df = replace_vals(df, dic={'-8': np.NaN},
-                  subset=['forename_clean', 'middlenm_clean', 'last_name_clean', 'fullname', 'alpha_name'])
+                  subset=['forename_clean', 'middlenm_clean',
+                          'last_name_clean', 'fullname', 'alpha_name'])
 
 # Collect list of clean forenames in each household
 df = derive_list(df, partition_var='hid', list_var='forename_clean', output_col='forename_list')
