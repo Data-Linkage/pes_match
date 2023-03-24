@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from library.parameters import DATA_PATH
+from library.parameters import DATA_PATH, CEN_CLEAN_DATA
 from library.cleaning import (clean_name, concat, alpha_name,
                               replace_vals, derive_list, n_gram,
                               soundex, change_types, pad_column, select)
@@ -123,4 +123,4 @@ df = select(
 df = df.add_suffix("_cen")
 
 # Save
-df.to_csv(DATA_PATH + "cen_cleaned_CT.csv", header=True, index=False)
+df.to_csv(CEN_CLEAN_DATA, header=True, index=False)
