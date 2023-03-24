@@ -174,7 +174,8 @@ def concat(df, columns, output_col, sep=" "):
         columns = []
     df = replace_vals(df, dic={"": np.NaN}, subset=columns)
     df[output_col] = df[columns].agg(sep.join, axis=1)
-    df[output_col] = [" ".join(x.split()) for x in df[output_col]]
+    df[output_col] = [' '.join(x.split(sep)) for x in df[output_col].str.strip()]
+    df[output_col] = [sep.join(x.split()) for x in df[output_col]]
     df = replace_vals(df, dic={np.NaN: ""}, subset=columns)
     return df
 
