@@ -1,9 +1,8 @@
 import pandas as pd
 import numpy as np
 import pytest
-from library.cleaning import alpha_name, change_types, clean_name, concat
-# derive_list, derive_names, n_gram, pad_column, replace_vals,
-# select, soundex)
+from library.cleaning import (alpha_name, change_types, clean_name, concat, derive_list, derive_names)
+# n_gram, pad_column, replace_vals, select, soundex)
 
 
 @pytest.fixture()
@@ -72,3 +71,49 @@ def test_concat():
         columns=["forename_clean", "surname_clean"],
     )
     pd.testing.assert_frame_equal(intended[["fullname"]], result[["fullname"]])
+
+
+def test_derive_list():
+    test = pd.DataFrame(
+        {
+            "forename_clean": ["CHARLIE", "RACHEL", "JHON", "99"],
+            "puid": [1, 2, 3, 4],
+            "hhid": [1, 1, 15, 15],
+        }
+    )
+    intended = pd.DataFrame(
+        {
+            "puid": [1, 2, 3, 4],
+            "forename_list": [
+                ["CHARLIE", "RACHEL"],
+                ["CHARLIE", "RACHEL"],
+                ["JHON", "99"],
+                ["JHON", "99"],
+            ],
+        }
+    )
+    result = derive_list(
+        test,
+        partition_var="hhid",
+        list_var="forename_clean",
+        output_col="forename_list",
+    )
+    pd.testing.assert_frame_equal(
+        intended[["puid", "forename_list"]], result[["puid", "forename_list"]]
+    )
+
+
+def test_derive_names():
+    test = pd.DataFrame(
+        {"fullname_1": ["CHARLIE W TOMLIN", "RACHEL SMITH", "", "JAMES"]}
+    )
+    intended = pd.DataFrame(
+        {
+            "fullname_1": ["CHARLIE W TOMLIN", "RACHEL SMITH", "", "JAMES"],
+            "forename_1": ["CHARLIE", "RACHEL", np.NaN, "JAMES"],
+            "middle_name_1": ["W", np.NaN, np.NaN, np.NaN],
+            "last_name_1": ["TOMLIN", "SMITH", np.NaN, np.NaN],
+        }
+    )
+    result = derive_names(test, clean_fullname_column="fullname_1", suffix="_1")
+    pd.testing.assert_frame_equal(intended, result)
