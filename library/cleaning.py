@@ -174,7 +174,8 @@ def concat(df, columns, output_col, sep=" "):
         columns = []
     df = replace_vals(df, dic={"": np.NaN}, subset=columns)
     df[output_col] = df[columns].agg(sep.join, axis=1)
-    df[output_col] = [" ".join(x.split()) for x in df[output_col]]
+    df[output_col] = [" ".join(x.split(sep)) for x in df[output_col].str.strip()]
+    df[output_col] = [sep.join(x.split()) for x in df[output_col]]
     df = replace_vals(df, dic={np.NaN: ""}, subset=columns)
     return df
 
@@ -258,10 +259,18 @@ def derive_names(df, clean_fullname_column, suffix=""):
                Clean_Name forename middle_name last_name
     0  John William Smith     John     William     Smith
     """
-    df["forename" + suffix] = df[clean_fullname_column].str.split().str.get(0)
-    df["middle_name" + suffix] = df[clean_fullname_column].str.split().str.get(1)
-    df["last_name" + suffix] = df[clean_fullname_column].str.split().str.get(-1)
-    return df
+    df[clean_fullname_column] = df[clean_fullname_column].str.replace("-", " ")
+    df["Name_count"] = [len(x.split()) for x in df[clean_fullname_column]]
+    df["forename" + suffix] = np.where(
+        df["Name_count"] > 0, df[clean_fullname_column].str.split().str.get(0), np.NaN
+    )
+    df["middle_name" + suffix] = np.where(
+        df["Name_count"] > 2, df[clean_fullname_column].str.split().str.get(1), np.NaN
+    )
+    df["last_name" + suffix] = np.where(
+        df["Name_count"] > 1, df[clean_fullname_column].str.split().str.get(-1), np.NaN
+    )
+    return df.drop(["Name_count"], axis=1)
 
 
 def n_gram(df, input_col, output_col, missing_value, n):
