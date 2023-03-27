@@ -286,7 +286,6 @@ def run_single_matchkey(
         suffix_2,
         hh_id,
         level,
-        matchkey,
         variables,
         swap_variables=None,
         lev_variables=None,
@@ -315,8 +314,6 @@ def run_single_matchkey(
     level: str
         Level of geography to include in the matchkey e.g. household, enumeration area etc.
         If level = 'associative' then an associative matchkey is applied instead.
-    matchkey: int
-        Matchkey number to assign to the matches made on the single matchkey
     variables: list of str
         List of variables to use in matchkey rule (exluding level of geography)
     swap_variables: list of tuple, optional
@@ -372,8 +369,6 @@ def run_single_matchkey(
             matches = std_lev_filter(matches, i[0], i[1], i[2])
     if age_threshold:
         matches = age_diff_filter(matches, "age" + suffix_1, "age" + suffix_2)
-
-    matches["MK"] = matchkey
     return matches
 
 

@@ -5,7 +5,7 @@ from library.matching import run_single_matchkey
 def run_matchkeys(cen, pes, level):
     """Function to define and run Stage 2 Main Matchkeys"""
 
-    mk1 = run_single_matchkey(df1=cen, df2=pes, suffix_1="_cen", suffix_2="_pes", hh_id="hid", level=level, matchkey=1, variables=["forename_clean", "middlenm_clean", "full_dob"])
+    mk1 = run_single_matchkey(df1=cen, df2=pes, suffix_1="_cen", suffix_2="_pes", hh_id="hid", level=level, variables=["forename_clean", "middlenm_clean", "full_dob"])
 
     matchkey_list = [mk1]
 

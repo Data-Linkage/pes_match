@@ -158,7 +158,6 @@ def test_run_single_matchkey():
             "EA_2": [1, 2],
             "name_2": ["JOHN", "PAUL"],
             "age_2": [16, 99],
-            "MK": [1, 1],
         }
     )
     test_1 = pd.DataFrame(
@@ -186,7 +185,6 @@ def test_run_single_matchkey():
         suffix_2="_2",
         hh_id="hhid",
         level="EA",
-        matchkey=1,
         variables=["name"],
         age_threshold=True,
     )
