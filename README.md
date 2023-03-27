@@ -27,4 +27,4 @@ Descriptions of project directories and other significant files:
 * `CROW/` - contains the code and config files for the [Clerical Resolution Online Widget](https://github.com/Data-Linkage/Clerical_Resolution_Online_Widget)
 * `library/` - contains functions and a configurable parameter file
 * `matchkeys/` - functions that specify matchkey rules to use at each stage
-* `pipeline/` - scripts forming the record matching pipeline. Includes data processing
+* `pipeline/` - scripts forming the record matching pipeline. Includes data processing 
