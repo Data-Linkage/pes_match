@@ -4,7 +4,8 @@ from library.matching import get_assoc_candidates
 from matchkeys.Stage_1.associative_matchkeys import run_matchkeys
 from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
                                 cen_variable_types, pes_variable_types,
-                                CHECKPOINT_PATH, OUTPUT_VARIABLES)
+                                CHECKPOINT_PATH, OUTPUT_VARIABLES,
+                                CLERICAL_VARIABLES)
 
 # Cleaned data
 CEN = pd.read_csv(
@@ -55,6 +56,9 @@ CEN, PES = get_assoc_candidates(
 
 # Run associative matchkeys
 assoc_matches = run_matchkeys(CEN, PES, level="associative")
+assoc_matches = assoc_matches[[x + "_cen" for x in CLERICAL_VARIABLES] +
+                              [x + "_pes" for x in CLERICAL_VARIABLES] +
+                              ["MK"]]
 
 # Collect and save unique matches
 assoc_uniques = collect_uniques(

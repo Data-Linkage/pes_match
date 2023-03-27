@@ -44,8 +44,8 @@ def collect_uniques(df, id_1, id_2, match_type):
       id_1 id_2  CLERICAL         Match_Type
     0   A1   B1         0  Stage_X_Matchkeys
     1   A2   B2         0  Stage_X_Matchkeys
-    4   A5   B4         0  Stage_X_Matchkeys
-    5   A6   B5         0  Stage_X_Matchkeys
+    2   A5   B4         0  Stage_X_Matchkeys
+    3   A6   B5         0  Stage_X_Matchkeys
     """
     pd.options.mode.chained_assignment = None
     df["ID_count_1"] = df.groupby([id_1])[id_2].transform("count")
@@ -53,6 +53,7 @@ def collect_uniques(df, id_1, id_2, match_type):
     df["CLERICAL"] = np.where(((df["ID_count_1"] > 1) | (df["ID_count_2"] > 1)), 1, 0)
     df = df[df["CLERICAL"] == 0].drop(["ID_count_1", "ID_count_2"], axis=1)
     df["Match_Type"] = match_type
+    df = df.reset_index(drop=True)
     return df
 
 
@@ -90,14 +91,15 @@ def collect_conflicts(df, id_1, id_2):
     5   A6   B5
     >>> collect_conflicts(df, id_1='id_1', id_2='id_2')
       id_1 id_2  CLERICAL
-    2   A3   B3         1
-    3   A4   B3         1
+    0   A3   B3         1
+    1   A4   B3         1
     """
     pd.options.mode.chained_assignment = None
     df["ID_count_1"] = df.groupby([id_1])[id_2].transform("count")
     df["ID_count_2"] = df.groupby([id_2])[id_1].transform("count")
     df["CLERICAL"] = np.where(((df["ID_count_1"] > 1) | (df["ID_count_2"] > 1)), 1, 0)
     df = df[df["CLERICAL"] == 1].drop(["ID_count_1", "ID_count_2"], axis=1)
+    df = df.reset_index(drop=True)
     return df
 
 

@@ -5,8 +5,8 @@ from library.cleaning import (alpha_name, change_types, clean_name, concat, deri
                               derive_names, n_gram, pad_column, replace_vals, select, soundex)
 
 
-@pytest.fixture()
-def df(name="setup"):
+@pytest.fixture(name="df")
+def setup_fixture():
     test = pd.DataFrame(
         {
             "forename": ["Charlie", "RacH!el", "JHON", ""],
