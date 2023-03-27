@@ -30,8 +30,8 @@ crow_matches = crow_output_updater(
     output_df=crow_matches,
     id_column="puid",
     source_column="Source_Dataset",
-    df1_name="_cen",
-    df2_name="_pes",
+    suffix_1="_cen",
+    suffix_2="_pes",
     match_type="Stage_2_Conflicts",
 )
 
