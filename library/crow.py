@@ -103,7 +103,7 @@ def collect_conflicts(df, id_1, id_2):
     return df
 
 
-def crow_output_updater(output_df, id_column, source_column, df1_name, df2_name, match_type):
+def crow_output_updater(output_df, id_column, source_column, suffix_1, suffix_2, match_type):
     """
     Returns the outputs of CROW in a pairwise linked format.
     Only matched pairs are retained.
@@ -117,10 +117,10 @@ def crow_output_updater(output_df, id_column, source_column, df1_name, df2_name,
     source_column: str
         Name of column in CROW matched output identifying which
         data source the record is from
-    df1_name: str
-        Name of the first data source indicator value
-    df2_name: str
-        Name of the second data source indicator value
+    suffix_1: str
+        Suffix used for the first data source.
+    suffix_2: str
+        Suffix used for the second data source.
     match_type: str
         indicator to say which stage matches were made at
 
@@ -151,7 +151,7 @@ def crow_output_updater(output_df, id_column, source_column, df1_name, df2_name,
     6   B4               3  No match in cluster           _pes
     >>> df_updated = crow_output_updater(output_df = df, id_column = 'puid',
     ...                                  source_column = 'Source_Dataset',
-    ...                                  df1_name = '_cen', df2_name = '_pes',
+    ...                                  suffix_1 = '_cen', suffix_2 = '_pes',
     ...                                  match_type = 'Stage_1_Conflicts')
     >>> df_updated
       puid_cen puid_pes         Match_Type  CLERICAL  MK
@@ -189,10 +189,10 @@ def crow_output_updater(output_df, id_column, source_column, df1_name, df2_name,
 
     # Reorder ID columns to identify all duplicates (including cross duplicates)
     df["Record_1_FINAL"] = np.where(
-        df["Source_Dataset_1"] == df1_name, df["Record_1"], df["Record_2"]
+        df["Source_Dataset_1"] == suffix_1, df["Record_1"], df["Record_2"]
     )
     df["Record_2_FINAL"] = np.where(
-        df["Source_Dataset_2"] == df2_name, df["Record_2"], df["Record_1"]
+        df["Source_Dataset_2"] == suffix_2, df["Record_2"], df["Record_1"]
     )
 
     # Remove duplicate (df1 to df1 and/or df2 to df2) matches
@@ -207,8 +207,8 @@ def crow_output_updater(output_df, id_column, source_column, df1_name, df2_name,
     df = df[["Record_1_FINAL", "Record_2_FINAL"]].drop_duplicates()
     df = df.rename(
         columns={
-            "Record_1_FINAL": id_column + df1_name,
-            "Record_2_FINAL": id_column + df2_name,
+            "Record_1_FINAL": id_column + suffix_1,
+            "Record_2_FINAL": id_column + suffix_2,
         }
     )
     df.reset_index(drop=True, inplace=True)
