@@ -3,7 +3,7 @@ from library.crow import collect_uniques, collect_conflicts, save_for_crow
 from matchkeys.Stage_1.main_matchkeys import run_matchkeys
 from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
                                 cen_variable_types, pes_variable_types,
-                                CHECKPOINT_PATH)
+                                CHECKPOINT_PATH, CLERICAL_VARIABLES)
 
 # Cleaned data
 CEN = pd.read_csv(
@@ -15,6 +15,9 @@ PES = pd.read_csv(
 
 # Run matchkeys at chosen level
 matches = run_matchkeys(CEN, PES, level="hid")
+matches = matches[[x + "_cen" for x in CLERICAL_VARIABLES] +
+                  [x + "_pes" for x in CLERICAL_VARIABLES] +
+                  ["MK"]]
 
 # Collect and save unique matches
 unique_matches = collect_uniques(

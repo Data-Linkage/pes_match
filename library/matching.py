@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import jellyfish
-from library.parameters import CLERICAL_VARIABLES
 
 
 def age_diff_filter(df, age_1, age_2):
@@ -46,13 +45,14 @@ def age_diff_filter(df, age_1, age_2):
     >>> df.head(n=5)
        age_1  age_2
     0      5      5
-    2     25     22
-    3     50     52
+    1     25     22
+    2     50     52
     """
     df["Age_Diff"] = df[[age_1, age_2]].apply(
         lambda x: age_tolerance((x[0]), (x[1])), axis=1
     )
     df = df[df.Age_Diff].drop(["Age_Diff"], axis=1)
+    df = df.reset_index(drop=True)
     return df
 
 
@@ -163,7 +163,7 @@ def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id
     1      23       2   STEPHEN       1
     2      24       2  SAMANTHA       1
 
-    Additional column added to each DataFrame which has associated
+    Additional column added to each DataFrame of residuals, which has associated
     households 1 and 2 together, using the existing matches between
     persons 1 and 21 and persons 5 and 25.
     """
@@ -237,8 +237,8 @@ def get_residuals(all_records, matched_records, id_column):
     ...                           id_column='puid_1')
     >>> residuals.head(n=5)
        puid_1
-    3       4
-    4       5
+    0       4
+    1       5
     """
     df = all_records.merge(
         matched_records[[id_column]].drop_duplicates(),
@@ -247,6 +247,7 @@ def get_residuals(all_records, matched_records, id_column):
         indicator=True,
     )
     df = df[df["_merge"] == "left_only"].drop("_merge", axis=1)
+    df = df.reset_index(drop=True)
     return df
 
 
@@ -274,6 +275,7 @@ def mult_match(df, hh_id_1, hh_id_2):
     counts.columns = [hh_id_1, hh_id_2, "count"]
     df = df.merge(counts, on=[hh_id_1, hh_id_2], how="left")
     df = df[df["count"] > 1].drop(["count"], axis=1)
+    df = df.reset_index(drop=True)
     return df
 
 
@@ -372,10 +374,6 @@ def run_single_matchkey(
         matches = age_diff_filter(matches, "age" + suffix_1, "age" + suffix_2)
 
     matches["MK"] = matchkey
-    variables = [x + "_cen" for x in CLERICAL_VARIABLES] + [
-        x + "_pes" for x in CLERICAL_VARIABLES
-    ]
-    matches = matches[variables + ["MK"]]
     return matches
 
 
