@@ -52,7 +52,7 @@ def age_diff_filter(df, age_1, age_2):
         lambda x: age_tolerance((x[0]), (x[1])), axis=1
     )
     df = df[df.Age_Diff].drop(["Age_Diff"], axis=1)
-    df = df.reset_index(drop=True)
+    df.reset_index(drop=True, inplace=True)
     return df
 
 
@@ -247,7 +247,7 @@ def get_residuals(all_records, matched_records, id_column):
         indicator=True,
     )
     df = df[df["_merge"] == "left_only"].drop("_merge", axis=1)
-    df = df.reset_index(drop=True)
+    df.reset_index(drop=True, inplace=True)
     return df
 
 
@@ -275,7 +275,7 @@ def mult_match(df, hh_id_1, hh_id_2):
     counts.columns = [hh_id_1, hh_id_2, "count"]
     df = df.merge(counts, on=[hh_id_1, hh_id_2], how="left")
     df = df[df["count"] > 1].drop(["count"], axis=1)
-    df = df.reset_index(drop=True)
+    df.reset_index(drop=True, inplace=True)
     return df
 
 
@@ -464,10 +464,11 @@ def std_lev_filter(df, column1, column2, threshold):
     >>> df.head(n=5)
         name_1   name_2
     0  CHARLES  CHARLIE
-    4  CH4RL1E  CHARLIE
+    1  CH4RL1E  CHARLIE
     """
     df["EDIT"] = df[[column1, column2]].apply(
         lambda x: std_lev(str(x[0]), str(x[1])), axis=1
     )
     df = df[df.EDIT >= threshold].drop(["EDIT"], axis=1)
+    df.reset_index(drop=True, inplace=True)
     return df
