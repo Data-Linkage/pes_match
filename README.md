@@ -25,6 +25,7 @@ Files can be executed in the command line using `python file_name.py` or within 
 
 Descriptions of project directories and other significant files:
 * `CROW/` - contains the code and config files for the [Clerical Resolution Online Widget](https://github.com/Data-Linkage/Clerical_Resolution_Online_Widget)
+* `Data/` - contains mock data and stores cleaned data, clerical inputs/outputs, checkpoint files and final outputs
 * `library/` - contains functions and a configurable parameter file
 * `matchkeys/` - functions that specify matchkey rules to use at each stage
 * `pipeline/` - scripts forming the record matching pipeline. Includes data processing 
