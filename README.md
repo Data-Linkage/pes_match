@@ -21,6 +21,11 @@ residuals collected for the next stage of matching.
 An example of a typical matching pipeline is provided in the `pipeline/` repository, however users may wish to apply matching methods in their own chosen order.
 Files can be executed in the command line using `python file_name.py` or within Spyder using the inbuilt run function.
 
+## Pipeline running order
+* Step 1: Run scripts in `pipeline/processing/` to clean raw files
+* Step 2: Run auto & clerical matching stages at chosen levels of geography (`pipeline/X_Stage_X/`). 2 stages are included but more can be run if needed
+* Step 3 (Optional): Run clerical search (`pipeline/Clerical_Search/`) to find the remaining matches within chosen level of geography e.g., postcode or enumeration area
+
 ## Directories and files of note
 
 Descriptions of project directories and other significant files:
