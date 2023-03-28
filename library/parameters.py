@@ -42,7 +42,7 @@ variable_types = {
     "puid": str,
     "month": str,
     "year": str,
-    "age": str,
+    "age": np.int64,
     "marstat": np.int64,
     "relationship": np.int64,
     "sex": str,
