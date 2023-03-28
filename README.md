@@ -23,7 +23,7 @@ Files can be executed in the command line using `python file_name.py` or within 
 
 ## Pipeline running order
 * Step 1: Run scripts in `pipeline/processing/` to clean raw files
-* Step 2: Run auto & clerical matching stages at chosen levels of geography (`pipeline/X_Stage_X/`). 2 stages are included but more can be run if needed
+* Step 2: Update matchkeys in `pipeline/X_Stage_X/` before running the scripts in order. 2 stages are included but more can be run if needed
 * Step 3 (Optional): Run clerical search (`pipeline/Clerical_Search/`) to find the remaining matches within chosen level of geography e.g., postcode or enumeration area
 
 ## Directories and files of note
@@ -32,5 +32,4 @@ Descriptions of project directories and other significant files:
 * `CROW/` - contains the code and config files for the [Clerical Resolution Online Widget](https://github.com/Data-Linkage/Clerical_Resolution_Online_Widget)
 * `Data/` - contains mock data and stores cleaned data, clerical inputs/outputs, checkpoint files and final outputs
 * `library/` - contains functions and a configurable parameter file
-* `matchkeys/` - functions that specify matchkey rules to use at each stage
-* `pipeline/` - scripts forming the record matching pipeline. Includes data processing 
+* `pipeline/` - scripts forming the record matching pipeline. Matchkeys can be updated within the scripts
