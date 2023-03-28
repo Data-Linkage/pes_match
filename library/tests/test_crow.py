@@ -77,8 +77,8 @@ def test_crow_output_updater():
         output_df=test,
         id_column="puid",
         source_column="Source_Dataset",
-        df1_name="_1",
-        df2_name="_2",
+        suffix_1="_1",
+        suffix_2="_2",
         match_type="Matchkey_Conflicts",
     )
     pd.testing.assert_frame_equal(intended, result)

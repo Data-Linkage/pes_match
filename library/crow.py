@@ -228,7 +228,9 @@ def combine_crow_results(stage):
     ----------
     stage: str
         Chosen stage of matching e.g., 'Stage_1'. The function will look inside CLERICAL_PATH and
-        combine all clerically matched csv files that contain this string.
+        combine all clerically matched CSV files that contain this string. File names for completed
+        matches must also end in '_DONE.csv', otherwise they will not be included in the final set of
+        combined clerical matches.
 
     Returns
     -------
@@ -239,8 +241,9 @@ def combine_crow_results(stage):
     li = []
     for filename in all_files:
         if stage in filename:
-            df = pd.read_csv(filename, index_col=None, header=0)
-            li.append(df)
+            if filename.endswith("_DONE.csv"):
+                df = pd.read_csv(filename, index_col=None, header=0)
+                li.append(df)
     df = pd.concat(li, axis=0, ignore_index=True)
     return df
 
