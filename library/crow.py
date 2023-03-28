@@ -237,6 +237,8 @@ def combine_crow_results(stage):
     pandas.DataFrame
         Pandas dataframe with all clerically matched records from a selected stage combined.
     """
+    if not os.path.exists(CLERICAL_PATH):
+        os.makedirs(CLERICAL_PATH)
     all_files = glob.glob(os.path.join(CLERICAL_PATH, "*.csv"))
     li = []
     for filename in all_files:

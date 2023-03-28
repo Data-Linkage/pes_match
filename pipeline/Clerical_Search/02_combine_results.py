@@ -5,6 +5,9 @@ from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA, cen_variable_typ
                                 pes_variable_types, OUTPUT_PATH, CLERICAL_PATH,
                                 OUTPUT_VARIABLES)
 
+if not os.path.exists(CLERICAL_PATH + "CLERICAL_SEARCH_RESULTS/"):
+    os.makedirs(CLERICAL_PATH + "CLERICAL_SEARCH_RESULTS/")
+
 # Cleaned data
 CEN = pd.read_csv(
     CEN_CLEAN_DATA, dtype=cen_variable_types, iterator=False, index_col=False

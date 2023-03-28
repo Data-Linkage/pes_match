@@ -1,7 +1,11 @@
 import warnings
+import os
 import pandas as pd
 from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA, cen_variable_types,
                                 pes_variable_types, OUTPUT_PATH, CLERICAL_PATH)
+
+if not os.path.exists(CLERICAL_PATH + "CLERICAL_SEARCH_DATA/"):
+    os.makedirs(CLERICAL_PATH + "CLERICAL_SEARCH_DATA/")
 
 # Cleaned data
 CEN = pd.read_csv(

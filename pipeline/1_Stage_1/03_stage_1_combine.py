@@ -1,5 +1,9 @@
 import pandas as pd
+import os
 from library.parameters import CHECKPOINT_PATH, OUTPUT_PATH, OUTPUT_VARIABLES
+
+if not os.path.exists(OUTPUT_PATH):
+    os.makedirs(OUTPUT_PATH)
 
 # File names
 matchkey_unique = "Stage_1_Matchkey_Unique_Matches"

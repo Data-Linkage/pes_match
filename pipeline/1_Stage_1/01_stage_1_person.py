@@ -1,9 +1,13 @@
 import pandas as pd
+import os
 from library.crow import collect_uniques, collect_conflicts, save_for_crow
 from matchkeys.Stage_1.main_matchkeys import run_matchkeys
 from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
                                 cen_variable_types, pes_variable_types,
                                 CHECKPOINT_PATH, CLERICAL_VARIABLES)
+
+if not os.path.exists(CHECKPOINT_PATH):
+    os.makedirs(CHECKPOINT_PATH)
 
 # Cleaned data
 CEN = pd.read_csv(
