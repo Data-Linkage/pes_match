@@ -102,6 +102,85 @@ def age_tolerance(val1, val2):
     return False
 
 
+def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
+    """
+    Takes results from a set of matchkeys and combines into a
+    single deduplicated dataframe. If duplicate matches are made
+    across matchkeys, the version with the lowest matchkey
+    number is retained.
+
+    Parameters
+    ----------
+    matchkeys: list of pandas.DataFrame
+        List of dataframes containing matches made from
+        each matchkey
+    person_id: str
+        Name of person id used in both datasets (without suffix)
+    suffix_1: str
+        Suffix used for columns in the first dataframe
+    suffix_2: str
+        Suffix used for columns in the second dataframe
+    keep: list of str
+        List of variables to retain. Suffixes not required.
+        New matchkey column "MK" will also be retained
+
+    See Also
+    --------
+    run_single_matchkey
+        Function to collect matches from a chosen matchkey
+
+    Returns
+    --------
+    df: pandas.DataFrame
+        Combined dataset containing all matches made across matchkeys.
+
+    Example
+    --------
+    >>> import pandas as pd
+    >>> mk1 = pd.DataFrame({'puid_1': [1, 2, 3, 4, 5],
+    ...                     'puid_2': [21, 22, 23, 24, 25],
+    ...                     'name_1': ['CHARLIE', 'JOHN', 'STEVE', 'SAM', 'PAUL'],
+    ...                     'name_2': ['CHARLES', 'JON', 'STEPHEN', 'SAMM', 'PAUL']})
+    >>> mk1.head(n=5)
+       puid_1  puid_2   name_1   name_2
+    0       1      21  CHARLIE  CHARLES
+    1       2      22     JOHN      JON
+    2       3      23    STEVE  STEPHEN
+    3       4      24      SAM     SAMM
+    4       5      25     PAUL     PAUL
+    >>> mk2 = pd.DataFrame({'puid_1': [1, 2, 3, 6, 7],
+    ...                     'puid_2': [21, 22, 30, 31, 32],
+    ...                     'name_1': ['CHARLIE', 'JOHN', 'STEVE', 'MARK', 'DAVE'],
+    ...                     'name_2': ['CHARLES', 'JON', 'STEUE', 'MARL', 'DAVE']})
+    >>> mk2.head(n=5)
+       puid_1  puid_2   name_1   name_2
+    0       1      21  CHARLIE  CHARLES
+    1       2      22     JOHN      JON
+    2       3      30    STEVE    STEUE
+    3       6      31     MARK     MARL
+    4       7      32     DAVE     DAVE
+    >>> matches = combine(matchkeys=[mk1, mk2], suffix_1="_1", suffix_2="_2", person_id="puid", keep=['puid', 'name'])
+    >>> matches.head(n=7)
+       puid_1   name_1  puid_2   name_2  MK
+    0       1  CHARLIE      21  CHARLES   1
+    1       2     JOHN      22      JON   1
+    2       3    STEVE      23  STEPHEN   1
+    3       4      SAM      24     SAMM   1
+    4       5     PAUL      25     PAUL   1
+    5       3    STEVE      30    STEUE   2
+    6       6     MARK      31     MARL   2
+    """
+    df = pd.DataFrame()
+    for i, matches in enumerate(matchkeys):
+        matches["MK"] = i + 1
+        df = pd.concat([df, matches], axis=0)
+        df["Min_MK"] = df.groupby([person_id+suffix_1, person_id+suffix_2])["MK"].transform("min")
+        df = df[df.Min_MK == df.MK].drop(["Min_MK"], axis=1)
+        df = df[[x + suffix_1 for x in keep] + [x + suffix_2 for x in keep] + ["MK"]]
+        df = df.reset_index(drop=True)
+    return df
+
+
 def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id):
     """
     Associative Matching Function. Takes all person matches made between two
@@ -292,7 +371,7 @@ def run_single_matchkey(
         age_threshold=None,
 ):
     """
-    Function to collect unique matches from a chosen matchkey.
+    Function to collect matches from a chosen matchkey.
     Partial agreement can be included using std_lev_filter,
     and age filters can be applied using age_threshold.
     Use swap_variables to match across different variables e.g.
@@ -332,7 +411,7 @@ def run_single_matchkey(
     Returns
     -------
     matches: pandas.DataFrame
-        All unique matches made from chosen matchkey
+        All matches made from chosen matchkey (non-unique matches included)
 
     See Also
     --------
