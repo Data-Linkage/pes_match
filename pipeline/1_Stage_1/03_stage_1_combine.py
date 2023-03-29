@@ -20,7 +20,7 @@ df2 = pd.read_csv(
 df3 = pd.read_csv(
     CHECKPOINT_PATH + associative + ".csv", iterator=False, index_col=False
 )[OUTPUT_VARIABLES]
-all_matches = pd.concat([df1, df2, df3])
+all_matches = pd.concat([df1, df2, df3]).reset_index(drop=True)
 
 # Save to output folder
 all_matches.to_csv(OUTPUT_PATH + "Stage_1_All_Matches.csv", header=True, index=False)

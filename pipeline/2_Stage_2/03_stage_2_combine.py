@@ -16,7 +16,7 @@ df2 = pd.read_csv(
 df3 = pd.read_csv(
     CHECKPOINT_PATH + associative + ".csv", iterator=False, index_col=False
 )[OUTPUT_VARIABLES]
-Stage_2_matches = pd.concat([df1, df2, df3])
+Stage_2_matches = pd.concat([df1, df2, df3]).reset_index(drop=True)
 
 # Combine with Stage 1 matches
 Stage_1_matches = pd.read_csv(
