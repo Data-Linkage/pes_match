@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 from library.crow import collect_uniques, collect_conflicts, save_for_crow
-from matchkeys.Stage_1.main_matchkeys import run_matchkeys
+from library.matching import run_single_matchkey, combine
 from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
                                 cen_variable_types, pes_variable_types,
                                 CHECKPOINT_PATH, CLERICAL_VARIABLES)
@@ -17,11 +17,16 @@ PES = pd.read_csv(
     PES_CLEAN_DATA, dtype=pes_variable_types, iterator=False, index_col=False
 )
 
-# Run matchkeys at chosen level
-matches = run_matchkeys(CEN, PES, level="hid")
-matches = matches[[x + "_cen" for x in CLERICAL_VARIABLES] +
-                  [x + "_pes" for x in CLERICAL_VARIABLES] +
-                  ["MK"]]
+# MATCHKEY PARAMS
+mk_params = {'df1': CEN, 'df2': PES, 'suffix_1': "_cen", 'suffix_2': "_pes", 'hh_id': "hid", 'level': "hid"}
+
+# ---------- RUN MATCHKEYS ---------- #
+mk1 = run_single_matchkey(**mk_params, variables=["forename_clean", "last_name_clean", "full_dob"])
+mk2 = run_single_matchkey(**mk_params, variables=["telephone", "full_dob"])
+
+# Combine
+matches = combine(matchkeys=[mk1, mk2], suffix_1="_cen", suffix_2="_pes",
+                  person_id="puid", keep=CLERICAL_VARIABLES)
 
 # Collect and save unique matches
 unique_matches = collect_uniques(

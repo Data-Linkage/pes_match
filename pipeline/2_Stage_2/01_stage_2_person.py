@@ -1,7 +1,6 @@
 import pandas as pd
 from library.crow import collect_uniques, collect_conflicts, save_for_crow
-from library.matching import get_residuals
-from matchkeys.Stage_2.main_matchkeys import run_matchkeys
+from library.matching import get_residuals, run_single_matchkey, combine
 from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
                                 cen_variable_types, pes_variable_types,
                                 CHECKPOINT_PATH, OUTPUT_PATH,
@@ -22,11 +21,16 @@ prev_matches = pd.read_csv(OUTPUT_PATH + "Stage_1_All_Matches.csv", iterator=Fal
 CEN = get_residuals(all_records=CEN, matched_records=prev_matches, id_column="puid_cen")
 PES = get_residuals(all_records=PES, matched_records=prev_matches, id_column="puid_pes")
 
-# Run matchkeys at chosen level
-matches = run_matchkeys(CEN, PES, level="Eaid")
-matches = matches[[x + "_cen" for x in CLERICAL_VARIABLES] +
-                  [x + "_pes" for x in CLERICAL_VARIABLES] +
-                  ["MK"]]
+# MATCHKEY PARAMS
+mk_params = {'df1': CEN, 'df2': PES, 'suffix_1': "_cen", 'suffix_2': "_pes", 'hh_id': "hid", 'level': "Eaid"}
+
+# ---------- RUN MATCHKEYS ---------- #
+mk1 = run_single_matchkey(**mk_params, variables=["forename_clean", "middlenm_clean", "full_dob"])
+
+# Combine
+matches = combine(matchkeys=[mk1], suffix_1="_cen", suffix_2="_pes",
+                  person_id="puid", keep=CLERICAL_VARIABLES)
+
 # Collect and save unique matches
 unique_matches = collect_uniques(
     matches, id_1="puid_cen", id_2="puid_pes", match_type="Stage_2_Matchkeys"
