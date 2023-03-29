@@ -1,7 +1,8 @@
 import pandas as pd
 import pytest
-from library.matching import (age_diff_filter, age_tolerance, get_assoc_candidates,
-                              get_residuals, mult_match, run_single_matchkey, std_lev, std_lev_filter)
+from library.matching import (age_diff_filter, age_tolerance, combine,
+                              get_assoc_candidates, get_residuals, mult_match,
+                              run_single_matchkey, std_lev, std_lev_filter)
 
 
 @pytest.fixture(name="df")
@@ -58,6 +59,44 @@ def test_age_tolerance():
     intended = True
     result = age_tolerance(55, 59)
     assert intended == result
+
+
+def test_combine():
+    intended = pd.DataFrame(
+        {
+            "puid_1": [1, 2, 3, 4, 5, 3, 6, 6],
+            "name_1": ["CHARLIE", "JOHN", "STEVE", "SAM",
+                       "PAUL", "STEVE", "MARK", "DAVE"],
+            "puid_2": [21, 22, 23, 24, 25, 30, 31, 32],
+            "name_2": ["CHARLES", "JON", "STEPHEN", "SAMM",
+                       "PAUL", "STEUE", "MARL", "DAVE"],
+            "MK": [1, 1, 1, 1, 1, 2, 2, 2],
+        }
+    )
+    test_1 = pd.DataFrame(
+        {
+            "puid_1": [1, 2, 3, 4, 5],
+            "puid_2": [21, 22, 23, 24, 25],
+            "name_1": ["CHARLIE", "JOHN", "STEVE", "SAM", "PAUL"],
+            "name_2": ["CHARLES", "JON", "STEPHEN", "SAMM", "PAUL"],
+        }
+    )
+    test_2 = pd.DataFrame(
+        {
+            "puid_1": [1, 2, 3, 6, 6],
+            "puid_2": [21, 22, 30, 31, 32],
+            "name_1": ["CHARLIE", "JOHN", "STEVE", "MARK", "DAVE"],
+            "name_2": ["CHARLES", "JON", "STEUE", "MARL", "DAVE"],
+        }
+    )
+    result = combine(
+        matchkeys=[test_1, test_2],
+        suffix_1="_1",
+        suffix_2="_2",
+        person_id="puid",
+        keep=["puid", "name"],
+    )
+    pd.testing.assert_frame_equal(intended, result)
 
 
 def test_get_assoc_candidates():

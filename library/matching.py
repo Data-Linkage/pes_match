@@ -160,7 +160,7 @@ def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
     3       6      31     MARK     MARL
     4       7      32     DAVE     DAVE
     >>> matches = combine(matchkeys=[mk1, mk2], suffix_1="_1", suffix_2="_2", person_id="puid", keep=['puid', 'name'])
-    >>> matches.head(n=7)
+    >>> matches.head(n=8)
        puid_1   name_1  puid_2   name_2  MK
     0       1  CHARLIE      21  CHARLES   1
     1       2     JOHN      22      JON   1
@@ -169,6 +169,7 @@ def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
     4       5     PAUL      25     PAUL   1
     5       3    STEVE      30    STEUE   2
     6       6     MARK      31     MARL   2
+    7       6     DAVE      32     DAVE   2
     """
     df = pd.DataFrame()
     for i, matches in enumerate(matchkeys):
