@@ -23,10 +23,12 @@ CLERICAL_VARIABLES = [
     "fullname",
     "full_dob",
     "relationship",
+    "HoH",
     "sex",
     "marstat",
     "telephone",
-    "Eaid",
+    "forename_list",
+    "Eaid"
 ]
 OUTPUT_VARIABLES = [
     "puid_cen",
