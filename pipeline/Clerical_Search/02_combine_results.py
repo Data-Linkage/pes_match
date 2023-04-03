@@ -32,12 +32,12 @@ for EA in PES_EA_list:
     # Only loop through EAs where at least one match was made
     if os.path.exists(
             CLERICAL_PATH
-            + "CLERICAL_SEARCH_RESULTS/Clerical_Search_{}_RESULTS.csv".format(str(EA))
+            + f"CLERICAL_SEARCH_RESULTS/Clerical_Search_{str(EA)}_RESULTS.csv"
     ):
         # Read in results from an EA
         ea_results = pd.read_csv(
             CLERICAL_PATH
-            + "CLERICAL_SEARCH_RESULTS/Clerical_Search_{}_RESULTS.csv".format(str(EA)),
+            + f"CLERICAL_SEARCH_RESULTS/Clerical_Search_{str(EA)}_RESULTS.csv",
             iterator=False,
             index_col=False,
         )
@@ -46,7 +46,7 @@ for EA in PES_EA_list:
         all_ea_results = all_ea_results.append(ea_results[["puid_cen", "puid_pes"]])
 
     else:
-        warnings.warn("No clerical search matches made from EA {}".format(str(EA)))
+        warnings.warn(f"No clerical search matches made from EA {str(EA)}")
 
 if len(all_ea_results) < 1:
     warnings.warn("No clerical search matches made from any EA!")
