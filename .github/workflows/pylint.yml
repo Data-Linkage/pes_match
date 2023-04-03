@@ -2,7 +2,6 @@ name: Pylint
 
 on:
   push:
-    branches: [cont_int]
 
 jobs:
   build:
@@ -23,4 +22,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Analysing the code with pylint
       run: | 
-        pylint --ignore=CROW_clusters.py $(git ls-files '*.py') --threshold 2
+        pylint --ignore=CROW_clusters.py $(git ls-files '*.py')
