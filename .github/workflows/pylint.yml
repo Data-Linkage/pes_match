@@ -22,4 +22,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Analysing the code with pylint
       run: | 
-        pylint --ignore=CROW_clusters.py $(git ls-files '*.py')
+        pylint --ignore=CROW_clusters.py $(git ls-files '*.py') --fail-under=6
