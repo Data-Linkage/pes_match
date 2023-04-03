@@ -5,7 +5,6 @@ name: Python package
 
 on:
   push:
-    branches: [cont_int]
 
 jobs:
   build:

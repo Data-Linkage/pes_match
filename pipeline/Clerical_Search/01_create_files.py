@@ -53,10 +53,10 @@ for EA in PES_EA_list:
 
     # Warning if there are no CEN/PES residuals from an EA
     if len(df1) == 0:
-        warnings.warn("No PES residuals in EA {}".format(str(EA)))
+        warnings.warn(f"No PES residuals in EA {str(EA)}")
 
     if len(df1) == 0:
-        warnings.warn("No census residuals in EA {}".format(str(EA)))
+        warnings.warn(f"No census residuals in EA {str(EA)}")
 
     # Spaces between each HH
     df1 = df1.reset_index(drop=True)
@@ -76,14 +76,14 @@ for EA in PES_EA_list:
     df1.to_csv(
         CLERICAL_PATH
         + "CLERICAL_SEARCH_DATA/"
-        + "Clerical_Search_{}_PES_Records.csv".format(EA),
+        + f"Clerical_Search_{EA}_PES_Records.csv",
         header=True,
         index=False,
     )
     df2.to_csv(
         CLERICAL_PATH
         + "CLERICAL_SEARCH_DATA/"
-        + "Clerical_Search_{}_CEN_Records.csv".format(EA),
+        + f"Clerical_Search_{EA}_CEN_Records.csv",
         header=True,
         index=False,
     )

@@ -16,7 +16,8 @@ PES = pd.read_csv(
 
 # Read in unique matches
 unique_matches = pd.read_csv(
-    CHECKPOINT_PATH + "Stage_1_Matchkey_Unique_Matches.csv", index_col=False
+    CHECKPOINT_PATH + "Stage_1_Matchkey_Unique_Matches.csv",
+    index_col=False, iterator=False
 )
 
 # Combine matches made in CROW into single dataset

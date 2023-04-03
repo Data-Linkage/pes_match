@@ -1,5 +1,5 @@
-import pandas as pd
 import os
+import pandas as pd
 from library.parameters import CHECKPOINT_PATH, OUTPUT_PATH, OUTPUT_VARIABLES
 
 if not os.path.exists(OUTPUT_PATH):
