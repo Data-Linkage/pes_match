@@ -3,7 +3,7 @@ import numpy as np
 
 # This path should always set the working directory to the parent (project) folder so
 # all file paths work correctly (and dynamically!) regardless of file used
-os.chdir(os.path.join(os.path.join(__file__, os.pardir), os.pardir))
+# os.chdir(os.path.join(os.path.join(__file__, os.pardir), os.pardir))
 
 # Folder paths
 ROOT_DIR = os.getcwd()
