@@ -52,6 +52,7 @@ def collect_uniques(df, id_1, id_2, match_type):
     df["ID_count_2"] = df.groupby([id_2])[id_1].transform("count")
     df["CLERICAL"] = np.where(((df["ID_count_1"] > 1) | (df["ID_count_2"] > 1)), 1, 0)
     df = df[df["CLERICAL"] == 0].drop(["ID_count_1", "ID_count_2"], axis=1)
+    df["CLERICAL"] = df["CLERICAL"].astype(np.int32)
     df["Match_Type"] = match_type
     df = df.reset_index(drop=True)
     return df
@@ -99,6 +100,7 @@ def collect_conflicts(df, id_1, id_2):
     df["ID_count_2"] = df.groupby([id_2])[id_1].transform("count")
     df["CLERICAL"] = np.where(((df["ID_count_1"] > 1) | (df["ID_count_2"] > 1)), 1, 0)
     df = df[df["CLERICAL"] == 1].drop(["ID_count_1", "ID_count_2"], axis=1)
+    df["CLERICAL"] = df["CLERICAL"].astype(np.int32)
     df = df.reset_index(drop=True)
     return df
 
