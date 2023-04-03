@@ -1,7 +1,7 @@
+import glob
 import os
 import pandas as pd
 import numpy as np
-import glob
 from library.cluster import cluster_number
 from library.parameters import CLERICAL_PATH, CLERICAL_VARIABLES
 
@@ -246,7 +246,7 @@ def combine_crow_results(stage):
     for filename in all_files:
         if stage in filename:
             if filename.endswith("_DONE.csv"):
-                df = pd.read_csv(filename, index_col=None, header=0)
+                df = pd.read_csv(filename, index_col=None, iterator=False, header=0)
                 li.append(df)
     df = pd.concat(li, axis=0, ignore_index=True)
     return df
@@ -278,14 +278,14 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
     if not ((isinstance(id_1, str)) and (isinstance(id_2, str))):
         raise TypeError("ID variables must be strings")
 
-    """Cluster conflicts together"""
+    # Cluster conflicts together
     df = cluster_number(df, id_column=id_column, suffix_1=suffix_1, suffix_2=suffix_2)
 
-    """Remove large clusters"""
+    # Remove large clusters
     df["Size"] = df.groupby(["Cluster_Number"])["Cluster_Number"].transform("count")
     df = df[df.Size <= 12].drop(["Size"], axis=1)
 
-    """Convert to input needed for CROW"""
+    # Convert to input needed for CROW
     crow_variables = CLERICAL_VARIABLES
     crow_records_1 = df[
         [var + suffix_1 for var in crow_variables] + ["Cluster_Number"]
@@ -305,9 +305,9 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
         ["Cluster_Number", "Source_Dataset"]
     )
 
-    """Split into chosen number of files"""
+    # Split into chosen number of files
     clusters_split = np.array_split(crow_input["Cluster_Number"].unique(), no_of_files)
-    for i, group in enumerate(clusters_split):
+    for i in enumerate(clusters_split):
         crow_input_split = crow_input[
             crow_input["Cluster_Number"].isin(list(clusters_split[i]))
         ]

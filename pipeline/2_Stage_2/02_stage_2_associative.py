@@ -45,7 +45,8 @@ all_matches = pd.concat(
 )
 
 # Combine with Stage 1 matches before associative
-stage_1_matches = pd.read_csv(OUTPUT_PATH + "Stage_1_All_Matches.csv", index_col=False)
+stage_1_matches = pd.read_csv(OUTPUT_PATH + "Stage_1_All_Matches.csv",
+                              index_col=False, iterator=False)
 all_matches = pd.concat(
     [all_matches[OUTPUT_VARIABLES], stage_1_matches[OUTPUT_VARIABLES]]
 )
