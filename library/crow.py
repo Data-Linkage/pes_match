@@ -242,13 +242,15 @@ def combine_crow_results(stage):
     if not os.path.exists(CLERICAL_PATH):
         os.makedirs(CLERICAL_PATH)
     all_files = glob.glob(os.path.join(CLERICAL_PATH, "*.csv"))
-    li = []
+    completed_files = []
     for filename in all_files:
         if stage in filename:
             if filename.endswith("_DONE.csv"):
                 df = pd.read_csv(filename, index_col=None, iterator=False, header=0)
-                li.append(df)
-    df = pd.concat(li, axis=0, ignore_index=True)
+                completed_files.append(df)
+    assert len(completed_files) > 0, f"No completed clerical matching files" \
+                                     f" (ending with _DONE) found from {stage}"
+    df = pd.concat(completed_files, axis=0, ignore_index=True)
     return df
 
 
