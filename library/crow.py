@@ -307,9 +307,9 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
 
     # Split into chosen number of files
     clusters_split = np.array_split(crow_input["Cluster_Number"].unique(), no_of_files)
-    for i in enumerate(clusters_split):
+    for i, group in enumerate(clusters_split):
         crow_input_split = crow_input[
-            crow_input["Cluster_Number"].isin(list(clusters_split[i]))
+            crow_input["Cluster_Number"].isin(list(group))
         ]
         crow_input_split.to_csv(
             CLERICAL_PATH + file_name + "_" + str(i + 1) + ".csv",
