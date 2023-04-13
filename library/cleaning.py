@@ -182,8 +182,8 @@ def concat(df, columns, output_col, sep=" "):
 
 def derive_list(df, partition_var, list_var, output_col):
     """
-    Collects values from chosen column into a list after partitioning by
-    another column. Lists are then stored in a new column
+    Aggregate function: Collects list of values from one column after partitioning by
+    another column. Results stored in a new column
 
     Parameters
     ----------
@@ -229,7 +229,7 @@ def derive_list(df, partition_var, list_var, output_col):
 
 def derive_names(df, clean_fullname_column, suffix=""):
     """
-    Derives first, middle and last names from
+    Derives first name, middle name(s) and last name from
     a pandas dataframe column containing a cleaned fullname column.
 
     Parameters
@@ -245,19 +245,19 @@ def derive_names(df, clean_fullname_column, suffix=""):
     -------
     pandas.DataFrame
         derive_names returns the dataframe with additional columns
-        for first, middle (second) and last names.
+        for first name, middle name(s) and last name.
 
     Example
     -------
     >>> import pandas as pd
-    >>> df = pd.DataFrame({'Clean_Name': ['John William Smith']})
-    >>> df.head(n=1)
-               Clean_Name
-    0  John William Smith
+    >>> df = pd.DataFrame({'Clean_Name': ['John Paul William Smith']})
+    >>> df.head(1)
+                    Clean_Name
+    0  John Paul William Smith
     >>> df = derive_names(df, clean_fullname_column='Clean_Name', suffix="")
     >>> df.head(n=1)
-               Clean_Name forename middle_name last_name
-    0  John William Smith     John     William     Smith
+                    Clean_Name forename   middle_name last_name
+    0  John Paul William Smith     John  Paul William     Smith
     """
     df[clean_fullname_column] = df[clean_fullname_column].str.replace("-", " ")
     df["Name_count"] = [len(x.split()) for x in df[clean_fullname_column]]
@@ -265,7 +265,7 @@ def derive_names(df, clean_fullname_column, suffix=""):
         df["Name_count"] > 0, df[clean_fullname_column].str.split().str.get(0), np.NaN
     )
     df["middle_name" + suffix] = np.where(
-        df["Name_count"] > 2, df[clean_fullname_column].str.split().str.get(1), np.NaN
+        df["Name_count"] > 2, [" ".join(x.split()[1:-1]) for x in df[clean_fullname_column]], np.NaN
     )
     df["last_name" + suffix] = np.where(
         df["Name_count"] > 1, df[clean_fullname_column].str.split().str.get(-1), np.NaN
@@ -324,12 +324,14 @@ def n_gram(df, input_col, output_col, missing_value, n):
 def pad_column(df, input_col, output_col, length):
     """
     Pads a column (int or string type) with leading zeros.
+    Values in input_col that are longer than the chosen pad
+    length will not be padded and will remain unchanged.
 
     Parameters
     ----------
     df: pandas.DataFrame
         Input dataframe with input_col present
-    input_col: str
+    input_col: str or int
         name of column to apply pad_column to
     output_col: str
         name of column to be output
