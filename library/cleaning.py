@@ -264,12 +264,13 @@ def derive_names(df, clean_fullname_column, suffix=""):
     df["forename" + suffix] = np.where(
         df["Name_count"] > 0, df[clean_fullname_column].str.split().str.get(0), np.NaN
     )
-    df["middle_name" + suffix] = np.where(
-        df["Name_count"] > 2, [" ".join(x.split()[1:-1]) for x in df[clean_fullname_column]], np.NaN
-    )
+    df["middle_name" + suffix] = [" ".join(x.split()[1:-1]) for x in df[clean_fullname_column]]
     df["last_name" + suffix] = np.where(
         df["Name_count"] > 1, df[clean_fullname_column].str.split().str.get(-1), np.NaN
     )
+    df = replace_vals(df, dic={np.NaN: ''}, subset=["forename" + suffix,
+                                                    "middle_name" + suffix,
+                                                    "last_name" + suffix])
     return df.drop(["Name_count"], axis=1)
 
 
