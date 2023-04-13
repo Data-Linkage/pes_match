@@ -51,12 +51,12 @@ for EA in PES_EA_list:
     df1 = PES[PES.Eaid_pes == EA][variables_pes]
     df2 = CEN[CEN.Eaid_cen == EA][variables_cen]
 
-    # Warning if there are no CEN/PES residuals from an EA
+    # Warning if there are no CEN/PES records from an EA
     if len(df1) == 0:
-        warnings.warn(f"No PES residuals in EA {str(EA)}")
+        warnings.warn(f"No PES records in EA {str(EA)}")
 
     if len(df1) == 0:
-        warnings.warn(f"No census residuals in EA {str(EA)}")
+        warnings.warn(f"No census records in EA {str(EA)}")
 
     # Spaces between each HH
     df1 = df1.reset_index(drop=True)
