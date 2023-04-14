@@ -183,6 +183,87 @@ def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
     return df
 
 
+def generate_matchkey(
+        suffix_1,
+        suffix_2,
+        hh_id,
+        level,
+        variables,
+        swap_variables=None,
+):
+    """
+    Function to generate a single matchkey for matching
+    two dataframes together. 'swap_variables' enables different
+    variables to be used across dataframes e.g. require agreement
+    between forename (on dataframe 1) and surname (on dataframe 2).
+
+    Parameters
+    ----------
+    suffix_1: str
+        Suffix used for columns in the first dataframe to match
+    suffix_2: str
+        Suffix used for columns in the second dataframe to match
+    hh_id: str
+        Name of household ID column in dataframes to match (without suffixes)
+        Required when level='associative'.
+    level: str
+        Level of geography to include in the matchkey e.g. household, enumeration area etc.
+        If level = 'associative' then an associative matchkey is applied instead.
+    variables: list of str
+        List of variables to use in matchkey rule (exluding level of geography)
+    swap_variables: list of tuple, optional
+        Use if you want to match a variable from one dataframe to a
+        different variable on the other dataframe.
+        For example, to match forename on dataframe 1 to surname on dataframe 2,
+        swap_variables = [('forename_1', 'surname_2')]
+
+    Returns
+    -------
+    df1_link_vars: list
+        Variables to match on, suffixed with suffix_1
+    df2_link_vars: list
+        Variables to match on, suffixed with suffix_2
+
+    See Also
+    --------
+    run_single_matchkey
+
+    Example
+    --------
+    >>> mk = generate_matchkey(
+    ...     suffix_1="_cen",
+    ...     suffix_2="_pes",
+    ...     hh_id="hid",
+    ...     level="Eaid",
+    ...     variables=["forename", "dob", "sex"],
+    ...     swap_variables=[("middlename_cen", "surname_pes")])
+    >>> mk[0]
+    ['forename_cen', 'dob_cen', 'sex_cen', 'Eaid_cen', 'middlename_cen']
+    >>> mk[1]
+    ['forename_pes', 'dob_pes', 'sex_pes', 'Eaid_pes', 'surname_pes']
+    """
+    if level != "associative":
+        df1_link_vars = [var + suffix_1 for var in variables] + [level + suffix_1]
+        df2_link_vars = [var + suffix_2 for var in variables] + [level + suffix_2]
+    else:
+        df1_link_vars = [var + suffix_1 for var in variables] + [
+            hh_id + suffix_1,
+            hh_id + suffix_2,
+        ]
+        df2_link_vars = [var + suffix_2 for var in variables] + [
+            hh_id + suffix_1,
+            hh_id + suffix_2,
+        ]
+    if swap_variables:
+        for i in swap_variables:
+            for j in i:
+                if j.endswith(suffix_2):
+                    df2_link_vars.append(j)
+                if j.endswith(suffix_1):
+                    df1_link_vars.append(j)
+    return df1_link_vars, df2_link_vars
+
+
 def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id):
     """
     Associative Matching Function. Takes all person matches made between two
@@ -396,10 +477,10 @@ def run_single_matchkey(
         different variable on the other dataset.
         For example, to match forename on df1 to surname on df2,
         swap_variables = [('forename_1', 'surname_2')]
-    lev_variables: list, optional
+    lev_variables: list of tuple, optional
         Use if you want to apply the std_lev_filter function within the matchkey.
         For example, to apply to forenames (threshold = 0.80):
-        lev_variables = ['forename_1', 'forename_2', 0.80]
+        lev_variables = [('forename_1', 'forename_2', 0.80)]
     age_threshold: bool, optional
         Use if you want to apply the age_diff_filter function within the matchkey.
         To apply, simply set age_threshold = True
@@ -411,34 +492,23 @@ def run_single_matchkey(
 
     See Also
     --------
+    generate_matchkey
     std_lev_filter
     age_diff_filter
     """
-    if level != "associative":
-        df1_link_vars = [var + suffix_1 for var in variables] + [level + suffix_1]
-        df2_link_vars = [var + suffix_2 for var in variables] + [level + suffix_2]
-    else:
-        df1_link_vars = [var + suffix_1 for var in variables] + [
-            hh_id + suffix_1,
-            hh_id + suffix_2,
-        ]
-        df2_link_vars = [var + suffix_2 for var in variables] + [
-            hh_id + suffix_1,
-            hh_id + suffix_2,
-        ]
-
-    if swap_variables:
-        for i in swap_variables:
-            for j in i:
-                if j.endswith(suffix_2):
-                    df2_link_vars.append(j)
-                if j.endswith(suffix_1):
-                    df1_link_vars.append(j)
-
+    link_vars = generate_matchkey(
+        suffix_1=suffix_1,
+        suffix_2=suffix_2,
+        hh_id=hh_id,
+        level=level,
+        variables=variables,
+        swap_variables=swap_variables
+    )
+    df1_link_vars = link_vars[0]
+    df2_link_vars = link_vars[1]
     matches = pd.merge(
         left=df1, right=df2, how="inner", left_on=df1_link_vars, right_on=df2_link_vars
     )
-
     if lev_variables:
         for i in lev_variables:
             matches = std_lev_filter(matches, i[0], i[1], i[2])
