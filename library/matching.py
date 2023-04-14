@@ -93,14 +93,13 @@ def age_tolerance(val1, val2):
     """
     if (abs(val1 - val2) < 2) & (np.maximum(val1, val2) < 10):
         return True
-    elif (abs(val1 - val2) < 3) & (11 <= val1 <= 20) & (11 <= val2 <= 20):
+    if (abs(val1 - val2) < 3) & (11 <= val1 <= 20) & (11 <= val2 <= 20):
         return True
-    elif (abs(val1 - val2) < 4) & (21 <= val1 <= 40) & (21 <= val2 <= 40):
+    if (abs(val1 - val2) < 4) & (21 <= val1 <= 40) & (21 <= val2 <= 40):
         return True
-    elif (abs(val1 - val2) < 5) & (val1 > 40) & (val2 > 40):
+    if (abs(val1 - val2) < 5) & (val1 > 40) & (val2 > 40):
         return True
-    else:
-        return False
+    return False
 
 
 def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
