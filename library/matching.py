@@ -93,13 +93,14 @@ def age_tolerance(val1, val2):
     """
     if (abs(val1 - val2) < 2) & (np.maximum(val1, val2) < 10):
         return True
-    if (abs(val1 - val2) < 3) & (11 <= val1 <= 20) & (11 <= val2 <= 20):
+    elif (abs(val1 - val2) < 3) & (11 <= val1 <= 20) & (11 <= val2 <= 20):
         return True
-    if (abs(val1 - val2) < 4) & (21 <= val1 <= 40) & (21 <= val2 <= 40):
+    elif (abs(val1 - val2) < 4) & (21 <= val1 <= 40) & (21 <= val2 <= 40):
         return True
-    if (abs(val1 - val2) < 5) & (val1 > 40) & (val2 > 40):
+    elif (abs(val1 - val2) < 5) & (val1 > 40) & (val2 > 40):
         return True
-    return False
+    else:
+        return False
 
 
 def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
@@ -247,8 +248,6 @@ def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id
     households 1 and 2 together, using the existing matches between
     persons 1 and 21 and persons 5 and 25.
     """
-
-    # Join on household IDs to person matches
     matches = matches.merge(
         df1[[person_id + suffix_1, hh_id + suffix_1]],
         on=person_id + suffix_1,
@@ -259,16 +258,12 @@ def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id
         on=person_id + suffix_2,
         how="left",
     )
-
-    # Get residuals
     df1 = get_residuals(
         all_records=df1, matched_records=matches, id_column=person_id + suffix_1
     ).drop_duplicates([person_id + suffix_1])
     df2 = get_residuals(
         all_records=df2, matched_records=matches, id_column=person_id + suffix_2
     ).drop_duplicates([person_id + suffix_2])
-
-    # Join on household matches to unmatched records
     hh_pairs = matches[[hh_id + suffix_1, hh_id + suffix_2]].drop_duplicates()
     df1 = df1.merge(hh_pairs, on=hh_id + suffix_1, how="inner")
     df2 = df2.merge(hh_pairs, on=hh_id + suffix_2, how="inner")
