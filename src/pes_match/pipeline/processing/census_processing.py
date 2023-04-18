@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from library.parameters import DATA_PATH, CEN_CLEAN_DATA
-from library.cleaning import (clean_name, concat, alpha_name,
+from pes_match.parameters import DATA_PATH, CEN_CLEAN_DATA
+from pes_match.cleaning import (clean_name, concat, alpha_name,
                               replace_vals, derive_list, n_gram,
                               soundex, change_types, pad_column, select)
 

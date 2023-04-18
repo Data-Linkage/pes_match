@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from library.matching import (age_diff_filter, age_tolerance, combine,
+from pes_match.matching import (age_diff_filter, age_tolerance, combine,
                               get_assoc_candidates, get_residuals, mult_match,
                               run_single_matchkey, std_lev, std_lev_filter)
 

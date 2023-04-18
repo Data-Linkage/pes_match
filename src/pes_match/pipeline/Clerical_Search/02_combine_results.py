@@ -1,7 +1,7 @@
 import warnings
 import os
 import pandas as pd
-from library.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA, cen_variable_types,
+from pes_match.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA, cen_variable_types,
                                 pes_variable_types, OUTPUT_PATH, CLERICAL_PATH,
                                 OUTPUT_VARIABLES)
 

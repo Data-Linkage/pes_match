@@ -1,5 +1,5 @@
 import pandas as pd
-from library.cluster import cluster_number
+from pes_match.cluster import cluster_number
 
 
 def test_cluster_number():
