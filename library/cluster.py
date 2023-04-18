@@ -22,7 +22,7 @@ def cluster_number(df, id_column, suffix_1, suffix_2):
     Raises
     ------
     TypeError
-        if variables 'id'+suffix_1 or 'id_2'+suffix_2 are not strings.
+        if variables id_column, suffix_1 or suffix_2 are not strings.
 
     Returns
     ------
@@ -54,10 +54,11 @@ def cluster_number(df, id_column, suffix_1, suffix_2):
     4   C5   P1               1
     5   C6   P6               4
     """
+    if not ((isinstance(id_column, str)) and (isinstance(suffix_1, str)) and
+            (isinstance(suffix_2, str))):
+        raise TypeError("ID variable and suffixes must be strings")
     id_1 = id_column + suffix_1
     id_2 = id_column + suffix_2
-    if not ((isinstance(id_1, str)) and (isinstance(id_2, str))):
-        raise TypeError("ID variables must be strings")
     df_cluster = df[[id_1, id_2]].copy()
     g = nx.from_edgelist(df_cluster.to_numpy().tolist())
     results = []

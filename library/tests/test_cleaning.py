@@ -105,13 +105,13 @@ def test_derive_list():
 
 def test_derive_names():
     test = pd.DataFrame(
-        {"fullname_1": ["CHARLIE W TOMLIN", "RACHEL SMITH", "", "JAMES"]}
+        {"fullname_1": ["CHARLIE W J TOMLIN", "RACHEL K SMITH", "", "JAMES"]}
     )
     intended = pd.DataFrame(
         {
-            "fullname_1": ["CHARLIE W TOMLIN", "RACHEL SMITH", "", "JAMES"],
+            "fullname_1": ["CHARLIE W J TOMLIN", "RACHEL K SMITH", "", "JAMES"],
             "forename_1": ["CHARLIE", "RACHEL", np.NaN, "JAMES"],
-            "middle_name_1": ["W", np.NaN, np.NaN, np.NaN],
+            "middle_name_1": ["W J", "K", np.NaN, np.NaN],
             "last_name_1": ["TOMLIN", "SMITH", np.NaN, np.NaN],
         }
     )

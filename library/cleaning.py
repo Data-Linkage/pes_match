@@ -182,8 +182,8 @@ def concat(df, columns, output_col, sep=" "):
 
 def derive_list(df, partition_var, list_var, output_col):
     """
-    Collects values from chosen column into a list after partitioning by
-    another column. Lists are then stored in a new column
+    Aggregate function: Collects list of values from one column after partitioning by
+    another column. Results stored in a new column
 
     Parameters
     ----------
@@ -229,7 +229,7 @@ def derive_list(df, partition_var, list_var, output_col):
 
 def derive_names(df, clean_fullname_column, suffix=""):
     """
-    Derives first, middle and last names from
+    Derives first name, middle name(s) and last name from
     a pandas dataframe column containing a cleaned fullname column.
 
     Parameters
@@ -245,31 +245,32 @@ def derive_names(df, clean_fullname_column, suffix=""):
     -------
     pandas.DataFrame
         derive_names returns the dataframe with additional columns
-        for first, middle (second) and last names.
+        for first name, middle name(s) and last name.
 
     Example
     -------
     >>> import pandas as pd
-    >>> df = pd.DataFrame({'Clean_Name': ['John William Smith']})
-    >>> df.head(n=1)
-               Clean_Name
-    0  John William Smith
+    >>> df = pd.DataFrame({'Clean_Name': ['John Paul William Smith']})
+    >>> df.head(1)
+                    Clean_Name
+    0  John Paul William Smith
     >>> df = derive_names(df, clean_fullname_column='Clean_Name', suffix="")
     >>> df.head(n=1)
-               Clean_Name forename middle_name last_name
-    0  John William Smith     John     William     Smith
+                    Clean_Name forename   middle_name last_name
+    0  John Paul William Smith     John  Paul William     Smith
     """
     df[clean_fullname_column] = df[clean_fullname_column].str.replace("-", " ")
     df["Name_count"] = [len(x.split()) for x in df[clean_fullname_column]]
     df["forename" + suffix] = np.where(
         df["Name_count"] > 0, df[clean_fullname_column].str.split().str.get(0), np.NaN
     )
-    df["middle_name" + suffix] = np.where(
-        df["Name_count"] > 2, df[clean_fullname_column].str.split().str.get(1), np.NaN
-    )
+    df["middle_name" + suffix] = [" ".join(x.split()[1:-1]) for x in df[clean_fullname_column]]
     df["last_name" + suffix] = np.where(
         df["Name_count"] > 1, df[clean_fullname_column].str.split().str.get(-1), np.NaN
     )
+    df = replace_vals(df, dic={np.NaN: ''}, subset=["forename" + suffix,
+                                                    "middle_name" + suffix,
+                                                    "last_name" + suffix])
     return df.drop(["Name_count"], axis=1)
 
 
@@ -324,12 +325,14 @@ def n_gram(df, input_col, output_col, missing_value, n):
 def pad_column(df, input_col, output_col, length):
     """
     Pads a column (int or string type) with leading zeros.
+    Values in input_col that are longer than the chosen pad
+    length will not be padded and will remain unchanged.
 
     Parameters
     ----------
     df: pandas.DataFrame
         Input dataframe with input_col present
-    input_col: str
+    input_col: str or int
         name of column to apply pad_column to
     output_col: str
         name of column to be output
@@ -361,7 +364,7 @@ def pad_column(df, input_col, output_col, length):
     return df
 
 
-def replace_vals(df, subset=None, dic=None):
+def replace_vals(df, subset, dic):
     """
     Uses regular expressions to replace values within dataframe columns.
 
@@ -369,17 +372,15 @@ def replace_vals(df, subset=None, dic=None):
     ----------
     df : pandas.DataFrame
         The dataframe to which the function is applied.
-    dic : dict, default = None
+    dic : dict
         The values of the dictionary are the substrings
-        that are being replaced within the subset columns.
+        that are being replaced within the subset of columns.
         These must either be regex statements in the form of a
         string, or numpy nan values. The key is the replacement.
         The value is the regex to be replaced.
-    subset : str or list of str, default = None
+    subset : str or list of str
         The subset is the list of columns in the dataframe
         on which replace_vals is performing its actions.
-        If no subset is entered the None default makes sure
-        that all columns in the dataframe are in the subset.
 
     Returns
     -------
@@ -402,16 +403,11 @@ def replace_vals(df, subset=None, dic=None):
     0    MALE
     1  FEMALE
     """
-    if dic is None:
-        dic = {}
-    if subset is None:
-        subset = df.columns
     if not isinstance(subset, list):
         subset = [subset]
-    if subset is not None:
-        for col in subset:
-            for key, val in dic.items():
-                df[col] = df[col].replace(val, key)
+    for col in subset:
+        for key, val in dic.items():
+            df[col] = df[col].replace(val, key)
     return df
 
 
