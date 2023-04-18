@@ -364,7 +364,7 @@ def pad_column(df, input_col, output_col, length):
     return df
 
 
-def replace_vals(df, subset=None, dic=None):
+def replace_vals(df, subset, dic):
     """
     Uses regular expressions to replace values within dataframe columns.
 
@@ -372,17 +372,15 @@ def replace_vals(df, subset=None, dic=None):
     ----------
     df : pandas.DataFrame
         The dataframe to which the function is applied.
-    dic : dict, default = None
+    dic : dict
         The values of the dictionary are the substrings
-        that are being replaced within the subset columns.
+        that are being replaced within the subset of columns.
         These must either be regex statements in the form of a
         string, or numpy nan values. The key is the replacement.
         The value is the regex to be replaced.
-    subset : str or list of str, default = None
+    subset : str or list of str
         The subset is the list of columns in the dataframe
         on which replace_vals is performing its actions.
-        If no subset is entered the None default makes sure
-        that all columns in the dataframe are in the subset.
 
     Returns
     -------
@@ -405,16 +403,11 @@ def replace_vals(df, subset=None, dic=None):
     0    MALE
     1  FEMALE
     """
-    if dic is None:
-        dic = {}
-    if subset is None:
-        subset = df.columns
     if not isinstance(subset, list):
         subset = [subset]
-    if subset is not None:
-        for col in subset:
-            for key, val in dic.items():
-                df[col] = df[col].replace(val, key)
+    for col in subset:
+        for key, val in dic.items():
+            df[col] = df[col].replace(val, key)
     return df
 
 
