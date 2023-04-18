@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 from pes_match.parameters import DATA_PATH, PES_CLEAN_DATA
 from pes_match.cleaning import (clean_name, concat, alpha_name,
-                              replace_vals, derive_list, n_gram,
-                              soundex, change_types, pad_column, select)
+                                replace_vals, derive_list, n_gram,
+                                soundex, change_types, pad_column, select)
 
 # Raw data
 df = pd.read_csv(DATA_PATH + "Mock_Data_Pes.csv", iterator=False, index_col=False)

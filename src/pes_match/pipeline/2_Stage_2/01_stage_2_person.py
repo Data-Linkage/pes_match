@@ -2,9 +2,9 @@ import pandas as pd
 from pes_match.crow import collect_uniques, collect_conflicts, save_for_crow
 from pes_match.matching import get_residuals, run_single_matchkey, combine
 from pes_match.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
-                                cen_variable_types, pes_variable_types,
-                                CHECKPOINT_PATH, OUTPUT_PATH,
-                                CLERICAL_VARIABLES)
+                                  cen_variable_types, pes_variable_types,
+                                  CHECKPOINT_PATH, OUTPUT_PATH,
+                                  CLERICAL_VARIABLES)
 
 # Cleaned data
 CEN = pd.read_csv(

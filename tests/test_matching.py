@@ -1,8 +1,8 @@
 import pandas as pd
 import pytest
 from pes_match.matching import (age_diff_filter, age_tolerance, combine,
-                              get_assoc_candidates, get_residuals, mult_match,
-                              run_single_matchkey, std_lev, std_lev_filter)
+                                get_assoc_candidates, get_residuals, mult_match,
+                                run_single_matchkey, std_lev, std_lev_filter)
 
 
 @pytest.fixture(name="df")
