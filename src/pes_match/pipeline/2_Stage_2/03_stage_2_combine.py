@@ -1,5 +1,5 @@
 import pandas as pd
-from library.parameters import CHECKPOINT_PATH, OUTPUT_PATH, OUTPUT_VARIABLES
+from pes_match.parameters import CHECKPOINT_PATH, OUTPUT_PATH, OUTPUT_VARIABLES
 
 # Stage 2 File names
 matchkey_unique = "Stage_2_Matchkey_Unique_Matches"

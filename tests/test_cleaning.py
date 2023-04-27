@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 import pytest
-from library.cleaning import (alpha_name, change_types, clean_name, concat, derive_list,
-                              derive_names, n_gram, pad_column, replace_vals, select, soundex)
+from pes_match.cleaning import (alpha_name, change_types, clean_name, concat, derive_list,
+                                derive_names, n_gram, pad_column, replace_vals, select, soundex)
 
 
 @pytest.fixture(name="df")

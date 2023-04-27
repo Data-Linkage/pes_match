@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import pytest
-from library.crow import collect_uniques, collect_conflicts, crow_output_updater
+from pes_match.crow import collect_uniques, collect_conflicts, crow_output_updater
 
 
 @pytest.fixture(name="df")
