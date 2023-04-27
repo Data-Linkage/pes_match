@@ -1,8 +1,20 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pytest
-from pes_match.cleaning import (alpha_name, change_types, clean_name, concat, derive_list,
-                                derive_names, n_gram, pad_column, replace_vals, select, soundex)
+
+from pes_match.cleaning import (
+    alpha_name,
+    change_types,
+    clean_name,
+    concat,
+    derive_list,
+    derive_names,
+    n_gram,
+    pad_column,
+    replace_vals,
+    select,
+    soundex,
+)
 
 
 @pytest.fixture(name="df")
@@ -27,13 +39,16 @@ def test_alphaname(df):
     )
 
 
-def test_change_types(df):
-    intended = pd.DataFrame({"sex": ["1", "2", "1", "1"]})
-    result = change_types(df, input_cols="sex", types=str)
-    pd.testing.assert_frame_equal(intended[["sex"]], result[["sex"]])
-    intended = pd.DataFrame({"sex": [1.0, 2.0, 1.0, 1.0]})
-    result = change_types(df, input_cols="sex", types=np.float64)
-    pd.testing.assert_frame_equal(intended[["sex"]], result[["sex"]])
+class TestChangeTypes:
+    def test_type_string(self, df):
+        intended = pd.DataFrame({"sex": ["1", "2", "1", "1"]})
+        result = change_types(df, input_cols="sex", types=str)
+        pd.testing.assert_frame_equal(intended[["sex"]], result[["sex"]])
+
+    def test_type_float(self, df):
+        intended = pd.DataFrame({"sex": [1.0, 2.0, 1.0, 1.0]})
+        result = change_types(df, input_cols="sex", types=np.float64)
+        pd.testing.assert_frame_equal(intended[["sex"]], result[["sex"]])
 
 
 def test_clean_name(df):
