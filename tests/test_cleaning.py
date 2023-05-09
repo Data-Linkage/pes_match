@@ -51,22 +51,24 @@ class TestChangeTypes:
         pd.testing.assert_frame_equal(intended[["sex"]], result[["sex"]])
 
 
-def test_clean_name(df):
-    intended = pd.DataFrame(
-        {"forename_clean_pes": ["CHARLIE", "RACHEL", "JHON", np.nan]}
-    )
-    result = clean_name(df, name_column="forename", suffix="_pes")
-    pd.testing.assert_frame_equal(
-        intended[["forename_clean_pes"]], result[["forename_clean_pes"]]
-    )
+class TestCleanName:
+    def test_clean_name_forename(self, df):
+        intended = pd.DataFrame(
+            {"forename_clean_pes": ["CHARLIE", "RACHEL", "JHON", np.nan]}
+        )
+        result = clean_name(df, name_column="forename", suffix="_pes")
+        pd.testing.assert_frame_equal(
+            intended[["forename_clean_pes"]], result[["forename_clean_pes"]]
+        )
 
-    intended = pd.DataFrame(
-        {"surname_clean_pes": ["SMITH", "THOMPSON", np.nan, "JONES"]}
-    )
-    result = clean_name(df, name_column="surname", suffix="_pes")
-    pd.testing.assert_frame_equal(
-        intended[["surname_clean_pes"]], result[["surname_clean_pes"]]
-    )
+    def test_clean_name_surname(self, df):
+        intended = pd.DataFrame(
+            {"surname_clean_pes": ["SMITH", "THOMPSON", np.nan, "JONES"]}
+        )
+        result = clean_name(df, name_column="surname", suffix="_pes")
+        pd.testing.assert_frame_equal(
+            intended[["surname_clean_pes"]], result[["surname_clean_pes"]]
+        )
 
 
 def test_concat():
@@ -134,18 +136,20 @@ def test_derive_names():
     pd.testing.assert_frame_equal(intended, result)
 
 
-def test_n_gram(df):
-    intended = pd.DataFrame({"fn_first_3": ["CHA", "RAC", "JHO", ""]})
-    result = n_gram(
-        df, input_col="forename", output_col="fn_first_3", missing_value="", n=3
-    )
-    pd.testing.assert_frame_equal(intended[["fn_first_3"]], result[["fn_first_3"]])
+class TestNGram:
+    def test_n_gram_forename(self, df):
+        intended = pd.DataFrame({"fn_first_3": ["CHA", "RAC", "JHO", ""]})
+        result = n_gram(
+            df, input_col="forename", output_col="fn_first_3", missing_value="", n=3
+        )
+        pd.testing.assert_frame_equal(intended[["fn_first_3"]], result[["fn_first_3"]])
 
-    intended = pd.DataFrame({"sn_last_2": ["IE", "EL", "ON", ""]})
-    result = n_gram(
-        df, input_col="forename", output_col="sn_last_2", missing_value="", n=-2
-    )
-    pd.testing.assert_frame_equal(intended[["sn_last_2"]], result[["sn_last_2"]])
+    def test_n_gram_surname(self, df):
+        intended = pd.DataFrame({"sn_last_2": ["TH", "ON", "", "ES"]})
+        result = n_gram(
+            df, input_col="surname", output_col="sn_last_2", missing_value="", n=-2
+        )
+        pd.testing.assert_frame_equal(intended[["sn_last_2"]], result[["sn_last_2"]])
 
 
 def test_pad_column(df):
@@ -154,21 +158,23 @@ def test_pad_column(df):
     pd.testing.assert_frame_equal(intended[["hhid_pad"]], result[["hhid_pad"]])
 
 
-def test_replace_vals(df):
-    intended = pd.DataFrame(
-        {
-            "forename": ["Charlie", "RacH!el", "JHON", "99"],
-            "surname": ["Smith", "Thompson", "99", "Jones"],
-        }
-    )
-    result = replace_vals(df, subset=["forename", "surname"], dic={"99": ""})
-    pd.testing.assert_frame_equal(
-        intended[["forename", "surname"]], result[["forename", "surname"]]
-    )
+class TestReplaceValues:
+    def test_replace_vals_names(self, df):
+        intended = pd.DataFrame(
+            {
+                "forename": ["Charlie", "RacH!el", "JHON", "99"],
+                "surname": ["Smith", "Thompson", "99", "Jones"],
+            }
+        )
+        result = replace_vals(df, subset=["forename", "surname"], dic={"99": ""})
+        pd.testing.assert_frame_equal(
+            intended[["forename", "surname"]], result[["forename", "surname"]]
+        )
 
-    intended = pd.DataFrame({"sex": ["MALE", "FEMALE", "MALE", "MALE"]})
-    result = replace_vals(df, subset=["sex"], dic={"MALE": 1, "FEMALE": 2})
-    pd.testing.assert_frame_equal(intended[["sex"]], result[["sex"]])
+    def test_replace_vals_sex(self, df):
+        intended = pd.DataFrame({"sex": ["MALE", "FEMALE", "MALE", "MALE"]})
+        result = replace_vals(df, subset=["sex"], dic={"MALE": 1, "FEMALE": 2})
+        pd.testing.assert_frame_equal(intended[["sex"]], result[["sex"]])
 
 
 def test_select(df):
