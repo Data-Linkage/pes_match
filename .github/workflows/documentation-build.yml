@@ -21,7 +21,6 @@ jobs:
       - name: Install requirements, and build documentation
         run: make docs
       - name: Publish to GitHub Pages
-        if: startsWith(github.ref, 'refs/tags')
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           folder: docs/_build
