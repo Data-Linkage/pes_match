@@ -19,6 +19,8 @@ prepare_docs_folder:
 
 ## Compile the Sphinx documentation in HTML format in the docs/_build folder from a clean build
 docs: prepare_docs_folder requirements
+    pwd -p
+    ls
 	sphinx-build -b html ./docs ./docs/_build
 
 ## Get help on all make commands; referenced from https://github.com/drivendata/cookiecutter-data-science
