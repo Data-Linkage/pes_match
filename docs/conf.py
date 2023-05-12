@@ -55,11 +55,10 @@ html_theme = "govuk_tech_docs_sphinx_theme"
 
 # Variables to pass to each HTML page to help populate page-specific options
 html_context = {
-    "github_url": "https://www.github.com/best-practice-and-impact/govcookiecutter",
+    "github_url": "https://github.com/Data-Linkage/pes_match",
     "gitlab_url": None,
     "conf_py_path": "docs/",
     "version": "main",
-    "accessibility": "accessibility.md",
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme further.
