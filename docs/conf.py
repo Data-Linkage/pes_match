@@ -34,7 +34,6 @@ extensions = [
     "sphinx.ext.doctest",  # Test snippets in documentation
     "sphinx.ext.todo",  # to-do syntax highlighting
     "sphinx.ext.ifconfig",  # Content based configuration
-    "m2r2",  # Markdown support
 ]
 
 source_suffix = [".rst", ".md"]
