@@ -1,6 +1,7 @@
 .PHONY:
 	docs
 	help
+	prepare_docs_folder
 	requirements
 
 .DEFAULT_GOAL := help
@@ -17,7 +18,7 @@ prepare_docs_folder:
 	find ./docs/_build -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
 
 ## Compile the Sphinx documentation in HTML format in the docs/_build folder from a clean build
-docs: requirements
+docs: prepare_docs_folder requirements
 	sphinx-build -b html ./docs ./docs/_build
 
 ## Get help on all make commands; referenced from https://github.com/drivendata/cookiecutter-data-science
