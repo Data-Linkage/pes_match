@@ -1,7 +1,6 @@
 .PHONY:
 	docs
 	help
-	prepare_docs_folder
 	requirements
 
 .DEFAULT_GOAL := help
@@ -13,9 +12,9 @@ requirements:
 	pre-commit install
 
 ## Create a `docs/_build` folder, if it does not exist. Otherwise delete any sub-folders and their contents within it
-prepare_docs_folder:
-	if [ ! -d "./docs/_build" ]; then mkdir ./docs/_build; fi
-	find ./docs/_build -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
+# prepare_docs_folder:
+# 	if [ ! -d "./docs/_build" ]; then mkdir ./docs/_build; fi
+# 	find ./docs/_build -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
 
 ## Compile the Sphinx documentation in HTML format in the docs/_build folder from a clean build
 docs: prepare_docs_folder requirements
