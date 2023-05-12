@@ -16,6 +16,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
+      - name: Print dir
+        run: ls
       - name: Install requirements, and build documentation
         run: make docs
       - name: Publish to GitHub Pages
