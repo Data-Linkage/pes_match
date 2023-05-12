@@ -60,6 +60,7 @@ html_context = {
     "gitlab_url": None,
     "conf_py_path": "docs/",
     "version": "main",
+    "accessibility": "accessibility.md",
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme further.
