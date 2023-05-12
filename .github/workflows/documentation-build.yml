@@ -3,6 +3,7 @@ name: documentation build
 on:
   release:
     types: [ released ]
+  workflow_dispatch:
 
 jobs:
   documentation-build:
