@@ -6,7 +6,6 @@ __pycache__/
 # Ignore 'Data' folder
 Data/
 Package_Tools/
-docs/
 *.idea/
 
 # C extensions
