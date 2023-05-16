@@ -6,5 +6,6 @@ pes_match
 
    setup
    tests
+   CONTRIBUTING
 
 .. mdinclude:: ../README.md
