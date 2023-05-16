@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Contributing &#8212; PES MATCH  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -44,15 +44,15 @@ we’d be happy to help!</p>
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>To start contributing, install the required Python packages, and <a class="reference external" href="https://pre-commit.com/">pre-commit
 hooks</a> using:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-pre-commit<span class="w"> </span>install
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
+pre-commit install
 </pre></div>
 </div>
 <p>or the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>requirements
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make requirements
 </pre></div>
 </div>
-<p>The pre-commit hooks are a security feature to ensure, for example, no secrets<a class="footnote-reference brackets" href="#fn-1" id="id1">1</a>, and
+<p>The pre-commit hooks are a security feature to ensure, for example, no secrets<a class="footnote-reference brackets" href="#fn-1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, and
 large data files are accidentally committed into the repository. <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md">For more information
 on pre-commit hooks see our documentation</a>.</p>
 </section>
@@ -89,7 +89,7 @@ enforced in all cases, for example with long hyperlinks.</p>
 <p><cite>Tests are written using the ``pytest`</cite> framework &lt;<a class="reference external" href="https://docs.pytest.org/">https://docs.pytest.org/</a>&gt;`_, with its configuration in the
 <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file. Note, only the <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder in the root direcrtory of this project are to run. To run the tests, enter
 the following command in your terminal:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>tests
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest tests
 </pre></div>
 </div>
 <section id="code-coverage">
@@ -100,12 +100,12 @@ only extends to Python scripts in the <code class="docutils literal notranslate"
 <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">cookiecutter.repo_name</span> <span class="pre">}}/src</span></code> folders.</p>
 <p>To run code coverage, and view it as an HTML report, enter the following command in
 your terminal:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>coverage<span class="w"> </span>run<span class="w"> </span>-m<span class="w"> </span>pytest
-coverage<span class="w"> </span>html
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>coverage run -m pytest
+coverage html
 </pre></div>
 </div>
 <p>or use the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>coverage_html
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make coverage_html
 </pre></div>
 </div>
 <p>The HTML report can be accessed at <code class="docutils literal notranslate"><span class="pre">htmlcov/index.html</span></code>.</p>
@@ -127,11 +127,12 @@ build the documentation into an accessible, searchable website.</p>
 <code class="docutils literal notranslate"><span class="pre">.govcookiecutter/organisational_frameworks</span></code> folder. <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/.govcookiecutter/organisational_frameworks/README.md">If you would like to add your own
 organisation’s framework, follow the instructions</a> in
 the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file in that folder.</p>
-<dl class="footnote brackets">
-<dt class="label" id="fn-1"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p><a href="#id2"><span class="problematic" id="id3">`</span></a>Only secrets of specific patterns are detected by the pre-commit</p>
-</dd>
-</dl>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fn-1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a href="#id2"><span class="problematic" id="id3">`</span></a>Only secrets of specific patterns are detected by the pre-commit</p>
+</aside>
+</aside>
 <p>hooks &lt;<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md#definition-of-a-secret-according-to-detect-secrets">https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md#definition-of-a-secret-according-to-detect-secrets</a>&gt;`_.</p>
 </section>
 </section>
@@ -193,7 +194,7 @@ the <code class="docutils literal notranslate"><span class="pre">README.md</span
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/CONTRIBUTING.md.txt"
