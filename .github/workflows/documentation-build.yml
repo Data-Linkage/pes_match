@@ -19,8 +19,9 @@ jobs:
       - name: Print dir
         run: ls
       - name: Install requirements
-        run: make docs
+        run: make requirements
       - name: Build documentation
+        working-directory: ./docs
         run: make html
       - name: Publish to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
