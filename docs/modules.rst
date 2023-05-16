@@ -6,6 +6,8 @@ pes_match
 
    setup
    tests
+   functions
    CONTRIBUTING
+   CODE_OF_CONDUCT
 
 .. mdinclude:: ../README.md
