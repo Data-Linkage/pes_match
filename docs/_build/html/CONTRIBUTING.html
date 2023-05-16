@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contributing &#8212; PES MATCH  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>We love contributions! We’ve compiled this documentation to help you understand our
+contributing guidelines. <a class="reference external" href="mailto:gsshelp&#37;&#52;&#48;statistics&#46;gov&#46;uk">If you still have questions, please contact us</a> and
+we’d be happy to help!</p>
+<section id="code-of-conduct">
+<h2>Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permalink to this headline">¶</a></h2>
+<p><cite>Please read ``CODE_OF_CONDUCT.md`</cite> before contributing &lt;<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/CODE_OF_CONDUCT.md">https://github.com/best-practice-and-impact/govcookiecutter/blob/main/CODE_OF_CONDUCT.md</a>&gt;`_.</p>
+</section>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>To start contributing, install the required Python packages, and <a class="reference external" href="https://pre-commit.com/">pre-commit
+hooks</a> using:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
+pre-commit install
+</pre></div>
+</div>
+<p>or the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make requirements
+</pre></div>
+</div>
+<p>The pre-commit hooks are a security feature to ensure, for example, no secrets<a class="footnote-reference brackets" href="#fn-1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, and
+large data files are accidentally committed into the repository. <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md">For more information
+on pre-commit hooks see our documentation</a>.</p>
+</section>
+<section id="code-conventions">
+<h2>Code conventions<a class="headerlink" href="#code-conventions" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://gds-way.cloudapps.digital/">We mainly follow the GDS Way in our code conventions</a>.</p>
+<section id="git-and-github">
+<h3>Git and GitHub<a class="headerlink" href="#git-and-github" title="Permalink to this headline">¶</a></h3>
+<p>We use Git to version control the source code. <a class="reference external" href="https://gds-way.cloudapps.digital/standards/source-code.html">Please read the GDS Way for details on
+Git best practice</a>. This includes how to write good commit messages, use
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span></code> for local branches and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">--no-ff</span></code> for merges, as well as using
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--force-with-lease</span></code> instead of <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">-f</span></code>.</p>
+<p><cite>If you want to modify the `</cite>.gitignore`` files, see the template
+documentation &lt;<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/updating_gitignore.md">https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/updating_gitignore.md</a>&gt;`_ for further details.</p>
+<p>Our source code is stored on GitHub at
+<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter">https://github.com/best-practice-and-impact/govcookiecutter</a>. Pull
+requests into <code class="docutils literal notranslate"><span class="pre">main</span></code> require at least one approved review.</p>
+</section>
+<section id="python">
+<h3>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
+<p>For Python code, <a class="reference external" href="https://gds-way.cloudapps.digital/manuals/programming-languages/python/python.html#python-style-guide">we follow the GDS Way Python style guide</a> with a line
+length of 88; the flake8 pre-commit hook should help with this!</p>
+</section>
+<section id="markdown">
+<h3>Markdown<a class="headerlink" href="#markdown" title="Permalink to this headline">¶</a></h3>
+<p>To keep the file uniform, all links should be referenced at the bottom of the markdown
+file. This also helps to keep the markdown file organised.</p>
+<p>We also try to wrap Markdown to a line length of 88 characters. This is not strictly
+enforced in all cases, for example with long hyperlinks.</p>
+</section>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p><cite>Tests are written using the ``pytest`</cite> framework &lt;<a class="reference external" href="https://docs.pytest.org/">https://docs.pytest.org/</a>&gt;`_, with its configuration in the
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file. Note, only the <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder in the root direcrtory of this project are to run. To run the tests, enter
+the following command in your terminal:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest tests
+</pre></div>
+</div>
+<section id="code-coverage">
+<h3>Code coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline">¶</a></h3>
+<p><cite>Code coverage of Python scripts is measured using the ``coverage`</cite> Python
+package &lt;<a class="reference external" href="https://coverage.readthedocs.io/">https://coverage.readthedocs.io/</a>&gt;`_; its configuration can be found in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Note coverage
+only extends to Python scripts in the <code class="docutils literal notranslate"><span class="pre">hooks</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">cookiecutter.repo_name</span> <span class="pre">}}/src</span></code> folders.</p>
+<p>To run code coverage, and view it as an HTML report, enter the following command in
+your terminal:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>coverage run -m pytest
+coverage html
+</pre></div>
+</div>
+<p>or use the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make coverage_html
+</pre></div>
+</div>
+<p>The HTML report can be accessed at <code class="docutils literal notranslate"><span class="pre">htmlcov/index.html</span></code>.</p>
+</section>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://myst-parser.readthedocs.io/">We write our documentation in MyST Markdown for use in Sphinx</a>. This is mainly
+stored in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder, unless it’s more appropriate to store it elsewhere, like
+this file.</p>
+<p><a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/writing_accessible_documentation.md">Please read our guidance on how to write accessible
+documentation</a>, as well as our <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/writing_sphinx_documentation.md">guidance on
+writing Sphinx documentation</a>. This allows you to
+build the documentation into an accessible, searchable website.</p>
+</section>
+<section id="organisational-frameworks">
+<h2>Organisational frameworks<a class="headerlink" href="#organisational-frameworks" title="Permalink to this headline">¶</a></h2>
+<p>Organisational frameworks are stored in the
+<code class="docutils literal notranslate"><span class="pre">.govcookiecutter/organisational_frameworks</span></code> folder. <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/.govcookiecutter/organisational_frameworks/README.md">If you would like to add your own
+organisation’s framework, follow the instructions</a> in
+the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file in that folder.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fn-1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a href="#id2"><span class="problematic" id="id3">`</span></a>Only secrets of specific patterns are detected by the pre-commit</p>
+</aside>
+</aside>
+<p>hooks &lt;<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md#definition-of-a-secret-according-to-detect-secrets">https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md#definition-of-a-secret-according-to-detect-secrets</a>&gt;`_.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PES MATCH</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pes_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#ons-pes-matching-pipeline">ONS PES Matching Pipeline</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Charlie Tomlin.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/CONTRIBUTING.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
