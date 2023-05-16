@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.4.0
     hooks:
       - id: check-added-large-files
         name: Check for files larger than 5 MB
@@ -27,18 +27,18 @@ repos:
         types: [pyi]
         args: [ "--profile", "black", "--filter-files" ]
   - repo: https://github.com/psf/black
-    rev: 22.8.0 # Replace by any tag/version: https://github.com/psf/black/tags
+    rev: 23.3.0 # Replace by any tag/version: https://github.com/psf/black/tags
     hooks:
       - id: black
         name: black - consistent Python code formatting (auto-fixes)
         language_version: python # Should be a command that runs python3.6+
   - repo: https://github.com/PyCQA/flake8
-    rev: 5.0.4
+    rev: 6.0.0
     hooks:
       - id: flake8
         name: flake8 - Python linting
   - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.0.3
+    rev: v1.4.0
     hooks:
       - id: detect-secrets
         name: detect-secrets - Detect secrets in staged code
