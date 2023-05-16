@@ -38,6 +38,24 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src.html">src package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html">src.pes_match package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.cleaning">src.pes_match.cleaning module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.cluster">src.pes_match.cluster module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.crow">src.pes_match.crow module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.matching">src.pes_match.matching module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.parameters">src.pes_match.parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.pes_match.html#module-src.pes_match">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_cleaning">tests.test_cleaning module</a></li>
@@ -45,15 +63,6 @@
 <li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_crow">tests.test_crow module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_matching">tests.test_matching module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="functions.html">package functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#src-pes-match-cleaning-module">src.pes_match.cleaning module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#src-pes-match-cluster-module">src.pes_match.cluster module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#src-pes-match-crow-module">src.pes_match.crow module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#src-pes-match-matching-module">src.pes_match.matching module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#module-src.pes_match">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a><ul>
@@ -90,58 +99,6 @@
 </ul>
 </div>
 </section>
-<section id="ons-pes-matching-pipeline">
-<h1>ONS PES Matching Pipeline<a class="headerlink" href="#ons-pes-matching-pipeline" title="Permalink to this headline">¶</a></h1>
-<p>A python pipeline for matching census and post-enumeration survey (PES) data.
-For simplicity, only deterministic and clerical matching methods are provided.</p>
-<p>For additional information consider reading:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/developingstandardtoolsfordatalinkagefebruary2021">ONS data linkage working paper</a></p></li>
-<li><p><a class="reference external" href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/linkagemethodsforcensus2021inenglandandwales">Census 2021 to Census Coverage Survey matching methods, England &amp; Wales</a></p></li>
-</ul>
-<section id="setup-instructions">
-<h2>Setup instructions<a class="headerlink" href="#setup-instructions" title="Permalink to this headline">¶</a></h2>
-<section id="installing-python-and-an-ide">
-<h3>Installing Python and an IDE<a class="headerlink" href="#installing-python-and-an-ide" title="Permalink to this headline">¶</a></h3>
-<p>We recommend using IDEs Spyder or PyCharm, which are available through the anaconda navigator. They can be installed <a class="reference external" href="https://www.anaconda.com/products/distribution">here</a>.</p>
-</section>
-</section>
-<section id="using-this-code">
-<h2>Using this code<a class="headerlink" href="#using-this-code" title="Permalink to this headline">¶</a></h2>
-<p>Once Python is installed, download this repository and execute the command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install/update the required packages for this repository.</p>
-<p>The aim of this repository is to provide a set of functions for cleaning and then matching census and PES data. pes_match gives matchers the tools to automatically match records
-at the chosen level of geography and then resolve conflicts/difficult cases using the Clerical Resolution Online Widget (CROW). Associative matching can also be implemented to
-assist in finding all possible matches between census and PES households. Once all methods have been applied at a single level of geography, matches can be combined and
-residuals collected for the next stage of matching.</p>
-<p>An example of a typical matching pipeline is provided in the <code class="docutils literal notranslate"><span class="pre">pipeline/</span></code> repository, however users may wish to apply matching methods in their own chosen order.
-Files can be executed in the command line using <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">file_name.py</span></code> or within an IDE using the inbuilt run function.</p>
-</section>
-<section id="pipeline-running-order">
-<h2>Pipeline running order<a class="headerlink" href="#pipeline-running-order" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Step 1: Run scripts in <code class="docutils literal notranslate"><span class="pre">pipeline/processing/</span></code> to clean raw files</p></li>
-<li><p>Step 2: Update matchkeys in <code class="docutils literal notranslate"><span class="pre">pipeline/X_Stage_X/</span></code> before running the scripts in order. 2 stages are included but more can be created if needed</p></li>
-<li><p>Step 3 (Optional): Run clerical search (<code class="docutils literal notranslate"><span class="pre">pipeline/Clerical_Search/</span></code>) to find the remaining matches within chosen level of geography e.g., enumeration area (EA)</p></li>
-</ul>
-</section>
-<section id="when-is-crow-required">
-<h2>When is CROW required?<a class="headerlink" href="#when-is-crow-required" title="Permalink to this headline">¶</a></h2>
-<p>CROW is required for clerical matching (to resolve non-unique matches) after running the following scripts:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pipeline/1_Stage_1/01_stage_1_person.py</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pipeline/2_Stage_2/01_stage_2_person.py</span></code></p></li>
-</ul>
-</section>
-<section id="directories">
-<h2>Directories<a class="headerlink" href="#directories" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CROW/</span></code> - contains the code and config files for the <a class="reference external" href="https://github.com/Data-Linkage/Clerical_Resolution_Online_Widget">Clerical Resolution Online Widget</a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Data/</span></code> - contains mock data and stores cleaned data, clerical inputs/outputs, checkpoint files and final outputs</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">library/</span></code> - contains functions and a configurable parameter file</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pipeline/</span></code> - scripts forming the record matching pipeline. Matchkeys can be updated within the scripts</p></li>
-</ul>
-</section>
-</section>
 
 
           </div>
@@ -164,18 +121,10 @@ Files can be executed in the command line using <code class="docutils literal no
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">pes_match</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html">src package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html">package functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of conduct for <code class="docutils literal notranslate"><span class="pre">govcookiecutter</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#ons-pes-matching-pipeline">ONS PES Matching Pipeline</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#setup-instructions">Setup instructions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#using-this-code">Using this code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pipeline-running-order">Pipeline running order</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#when-is-crow-required">When is CROW required?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#directories">Directories</a></li>
 </ul>
 </li>
 </ul>

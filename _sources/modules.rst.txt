@@ -5,9 +5,7 @@ pes_match
    :maxdepth: 4
 
    setup
+   src
    tests
-   functions
    CONTRIBUTING
    CODE_OF_CONDUCT
-
-.. mdinclude:: ../README.md
