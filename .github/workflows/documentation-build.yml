@@ -18,8 +18,10 @@ jobs:
           python-version: 3.9
       - name: Print dir
         run: ls
-      - name: Install requirements, and build documentation
+      - name: Install requirements
         run: make docs
+      - name: Build documentation
+        run: make html
       - name: Publish to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
