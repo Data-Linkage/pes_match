@@ -1,0 +1,1360 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>package functions &#8212; PES MATCH  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="CONTRIBUTING.html" />
+    <link rel="prev" title="tests package" href="tests.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="package-functions">
+<h1>package functions<a class="headerlink" href="#package-functions" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="src-pes-match-cleaning-module">
+<h2>src.pes_match.cleaning module<a class="headerlink" href="#src-pes-match-cleaning-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-src.pes_match.cleaning"></span><dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.alpha_name">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">alpha_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_col</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.alpha_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orders string columns alphabetically, after removing whitespace/special
+characters and setting strings to upper case.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>input_col</strong> (<em>str</em>) – Name of column to be sorted alphabetically</p></li>
+<li><p><strong>output_col</strong> (<em>str</em>) – Name of column to be output</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pandas dataframe with output_col appended</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;forename&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Charlie&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;forename&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">0    Charlie</span>
+<span class="go">Name: forename, dtype: object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">alpha_name</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">input_col</span><span class="o">=</span><span class="s1">&#39;forename&#39;</span><span class="p">,</span> <span class="n">output_col</span><span class="o">=</span><span class="s1">&#39;alphaname&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;alphaname&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">0    ACEHILR</span>
+<span class="go">Name: alphaname, dtype: object</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.change_types">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">change_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.change_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Casts specific dataframe columns to a specified type.
+The function can either take a single column or a list of columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>input_cols</strong> (<em>str</em><em> or </em><em>list of str</em>) – The subset of columns that are having their datatypes converted.</p></li>
+<li><p><strong>types</strong> – The datatype that the column values will be converted into.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the complete dataframe with changes to the datatypes on specified
+columns.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">dtype(&#39;int64&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">change_types</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">input_cols</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">dtype(&#39;O&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.clean_name">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">clean_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.clean_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derives a cleaned version of a column contained in a pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – Input dataframe with name_column present</p></li>
+<li><p><strong>name_column</strong> (<em>str</em>) – Name of column containing name as string type</p></li>
+<li><p><strong>suffix</strong> (<em>str</em><em>, </em><em>default = &quot;&quot;</em>) – Optional suffix to append to name component column names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>clean_name returns the dataframe with a cleaned version of name_column.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Charlie!&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">       Name</span>
+<span class="go">0  Charlie!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">clean_name</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">name_column</span><span class="o">=</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_cen&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">       Name Name_clean_cen</span>
+<span class="go">0  Charlie!        CHARLIE</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.concat">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.concat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenates strings from specified columns into a single string and stores
+the new string value in a new column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – Dataframe to which the function is applied.</p></li>
+<li><p><strong>columns</strong> (<em>list of strings</em><em>, </em><em>default =</em><em> [</em><em>]</em>) – The list of columns being concatenated into
+one string</p></li>
+<li><p><strong>output_col</strong> (<em>str</em>) – The name, in string format, of the
+output column for the new concatenated
+strings to be stored in.</p></li>
+<li><p><strong>sep</strong> (<em>str</em><em>, </em><em>default = ' '</em>) – This is the value used to separate the
+strings in the different columns when
+combining them into a single string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns dataframe with ‘output_col’ column
+containing the concatenated string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#src.pes_match.cleaning.replace_vals" title="src.pes_match.cleaning.replace_vals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_vals</span></code></a></dt><dd><p>Uses regular expressions to replace values within dataframe columns.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Forename&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s1">&#39;Surname&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Smith&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">  Forename Surname</span>
+<span class="go">0     John   Smith</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Forename&#39;</span><span class="p">,</span> <span class="s1">&#39;Surname&#39;</span><span class="p">],</span> <span class="n">output_col</span><span class="o">=</span><span class="s1">&#39;Fullname&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">  Forename Surname    Fullname</span>
+<span class="go">0     John   Smith  John Smith</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.derive_list">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">derive_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_col</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.derive_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregate function: Collects list of values from one column after partitioning by
+another column. Results stored in a new column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – Input dataframe with partition_var and list_var present</p></li>
+<li><p><strong>partition_var</strong> (<em>str</em>) – Name of column to partition on e.g. household ID</p></li>
+<li><p><strong>list_var</strong> (<em>str</em>) – Variable to collect list of values over chosen partition e.g. names</p></li>
+<li><p><strong>output_col</strong> (<em>str</em>) – Name of list column to be output</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>derive_list returns the dataframe with additional column output_col</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Forename&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Steve&#39;</span><span class="p">,</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s1">&#39;Household&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">  Forename  Household</span>
+<span class="go">0     John          1</span>
+<span class="go">1    Steve          1</span>
+<span class="go">2  Charlie          2</span>
+<span class="go">3    James          2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">derive_list</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">partition_var</span><span class="o">=</span><span class="s1">&#39;Household&#39;</span><span class="p">,</span> <span class="n">list_var</span><span class="o">=</span><span class="s1">&#39;Forename&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="n">output_col</span><span class="o">=</span><span class="s1">&#39;Forename_List&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">  Forename  Household     Forename_List</span>
+<span class="go">0     John          1     [John, Steve]</span>
+<span class="go">1    Steve          1     [John, Steve]</span>
+<span class="go">2  Charlie          2  [Charlie, James]</span>
+<span class="go">3    James          2  [Charlie, James]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.derive_names">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">derive_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean_fullname_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.derive_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derives first name, middle name(s) and last name from
+a pandas dataframe column containing a cleaned fullname column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – Input dataframe with clean_fullname_column present</p></li>
+<li><p><strong>clean_fullname_column</strong> (<em>str</em>) – Name of column containing fullname as string type</p></li>
+<li><p><strong>suffix</strong> (<em>str</em><em>, </em><em>default = &quot;&quot;</em>) – Optional suffix to append to name component column names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>derive_names returns the dataframe with additional columns
+for first name, middle name(s) and last name.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Clean_Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;John Paul William Smith&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">                Clean_Name</span>
+<span class="go">0  John Paul William Smith</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">derive_names</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">clean_fullname_column</span><span class="o">=</span><span class="s1">&#39;Clean_Name&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">                Clean_Name forename   middle_name last_name</span>
+<span class="go">0  John Paul William Smith     John  Paul William     Smith</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.n_gram">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">n_gram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.n_gram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the upper case n-gram sequence for all strings in a column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – Input dataframe with input_col present</p></li>
+<li><p><strong>input_col</strong> (<em>str</em>) – name of column to apply n_gram to</p></li>
+<li><p><strong>output_col</strong> (<em>str</em>) – name of column to be output</p></li>
+<li><p><strong>missing_value</strong> – value that is used for missingness in input_col
+will also be used for missingness in output_col</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Chosen n-gram</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>n_gram returns the dataframe with additional column output_col</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Forename&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Jonathon&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">   Forename</span>
+<span class="go">0  Jonathon</span>
+<span class="go">1       NaN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">n_gram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">input_col</span><span class="o">=</span><span class="s1">&#39;Forename&#39;</span><span class="p">,</span> <span class="n">output_col</span><span class="o">=</span><span class="s1">&#39;First_Two&#39;</span><span class="p">,</span> <span class="n">missing_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">n_gram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">input_col</span><span class="o">=</span><span class="s1">&#39;Forename&#39;</span><span class="p">,</span> <span class="n">output_col</span><span class="o">=</span><span class="s1">&#39;Last_Two&#39;</span><span class="p">,</span> <span class="n">missing_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">n</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">   Forename First_Two Last_Two</span>
+<span class="go">0  Jonathon        JO       ON</span>
+<span class="go">1       NaN       NaN      NaN</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.pad_column">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">pad_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.pad_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pads a column (int or string type) with leading zeros.
+Values in input_col that are longer than the chosen pad
+length will not be padded and will remain unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – Input dataframe with input_col present</p></li>
+<li><p><strong>input_col</strong> (<em>str</em><em> or </em><em>int</em>) – name of column to apply pad_column to</p></li>
+<li><p><strong>output_col</strong> (<em>str</em>) – name of column to be output</p></li>
+<li><p><strong>length</strong> (<em>int</em>) – Chosen length of strings in column AFTER padding with zeros</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pad_column returns the dataframe with additional column output_col</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">   Age</span>
+<span class="go">0    2</span>
+<span class="go">1    5</span>
+<span class="go">2  100</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pad_column</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Age_Padded&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">   Age Age_Padded</span>
+<span class="go">0    2        002</span>
+<span class="go">1    5        005</span>
+<span class="go">2  100        100</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.replace_vals">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">replace_vals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.replace_vals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses regular expressions to replace values within dataframe columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>dic</strong> (<em>dict</em>) – The values of the dictionary are the substrings
+that are being replaced within the subset of columns.
+These must either be regex statements in the form of a
+string, or numpy nan values. The key is the replacement.
+The value is the regex to be replaced.</p></li>
+<li><p><strong>subset</strong> (<em>str</em><em> or </em><em>list of str</em>) – The subset is the list of columns in the dataframe
+on which replace_vals is performing its actions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>replace_vals returns the dataframe with the column values
+changed appropriately.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Sex&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">  Sex</span>
+<span class="go">0   M</span>
+<span class="go">1   F</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">replace_vals</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dic</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MALE&#39;</span><span class="p">:</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;FEMALE&#39;</span><span class="p">:</span><span class="s1">&#39;F&#39;</span><span class="p">},</span> <span class="n">subset</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">      Sex</span>
+<span class="go">0    MALE</span>
+<span class="go">1  FEMALE</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.select">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retains only specified list of columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>columns</strong> (<em>str</em><em> or </em><em>list of str</em><em>, </em><em>default = None</em>) – This argument can be entered as a list of column headers
+that are the columns to be selected. If a single string
+that is a name of a column is entered, it will select
+only that column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dataframe with only selected columns included</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Sex&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">  Sex  Age</span>
+<span class="go">0   M   10</span>
+<span class="go">1   F   29</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s1">&#39;Sex&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">  Sex</span>
+<span class="go">0   M</span>
+<span class="go">1   F</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cleaning.soundex">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cleaning.</span></span><span class="sig-name descname"><span class="pre">soundex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cleaning.soundex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the soundex phonetic encoding for all strings in a column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>input_col</strong> (<em>str</em>) – name of column to apply soundex to</p></li>
+<li><p><strong>output_col</strong> (<em>str</em>) – name of column to be output</p></li>
+<li><p><strong>missing_value</strong> – value that is used for missing value in input_col
+will also be used for missing value in output_col</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>soundex returns the dataframe with additional column output_col</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">jellyfish</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Forename&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;Rachel&#39;</span><span class="p">,</span> <span class="s1">&#39;-9&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">  Forename</span>
+<span class="go">0  Charlie</span>
+<span class="go">1   Rachel</span>
+<span class="go">2       -9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">soundex</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">input_col</span><span class="o">=</span><span class="s1">&#39;Forename&#39;</span><span class="p">,</span> <span class="n">output_col</span><span class="o">=</span><span class="s1">&#39;sdx_Forename&#39;</span><span class="p">,</span> <span class="n">missing_value</span><span class="o">=</span><span class="s1">&#39;-9&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">  Forename sdx_Forename</span>
+<span class="go">0  Charlie         C640</span>
+<span class="go">1   Rachel         R240</span>
+<span class="go">2       -9           -9</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="src-pes-match-cluster-module">
+<h2>src.pes_match.cluster module<a class="headerlink" href="#src-pes-match-cluster-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-src.pes_match.cluster"></span><dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.cluster.cluster_number">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.cluster.</span></span><span class="sig-name descname"><span class="pre">cluster_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.cluster.cluster_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes dataframe of matches with two id columns and assigns
+a cluster number to the dataframe based on the unique id pairings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame to add new column ‘Cluster_Number’ to.</p></li>
+<li><p><strong>id_column</strong> (<em>str</em>) – ID column that should be common to both DataFrames (excluding
+suffixes).</p></li>
+<li><p><strong>suffix_1</strong> (<em>str</em>) – Suffix used for id_column in first DataFrame.</p></li>
+<li><p><strong>suffix_2</strong> (<em>str</em>) – Suffix used for id_column in second DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – if variables id_column, suffix_1 or suffix_2 are not strings.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>df</strong> – dataframe with Cluster_Number added</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;id_1&quot;</span><span class="p">:[</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span><span class="s2">&quot;C2&quot;</span><span class="p">,</span><span class="s2">&quot;C3&quot;</span><span class="p">,</span><span class="s2">&quot;C4&quot;</span><span class="p">,</span><span class="s2">&quot;C5&quot;</span><span class="p">,</span><span class="s2">&quot;C6&quot;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s2">&quot;id_2&quot;</span><span class="p">:[</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">,</span><span class="s2">&quot;P3&quot;</span><span class="p">,</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P6&quot;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">  id_1 id_2</span>
+<span class="go">0   C1   P1</span>
+<span class="go">1   C2   P2</span>
+<span class="go">2   C3   P2</span>
+<span class="go">3   C4   P3</span>
+<span class="go">4   C5   P1</span>
+<span class="go">5   C6   P6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">cluster_number</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span> <span class="n">id_column</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">suffix_1</span><span class="o">=</span><span class="s2">&quot;_1&quot;</span><span class="p">,</span> <span class="n">suffix_2</span><span class="o">=</span><span class="s2">&quot;_2&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">  id_1 id_2  Cluster_Number</span>
+<span class="go">0   C1   P1               1</span>
+<span class="go">1   C2   P2               2</span>
+<span class="go">2   C3   P2               2</span>
+<span class="go">3   C4   P3               3</span>
+<span class="go">4   C5   P1               1</span>
+<span class="go">5   C6   P6               4</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="src-pes-match-crow-module">
+<h2>src.pes_match.crow module<a class="headerlink" href="#src-pes-match-crow-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-src.pes_match.crow"></span><dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.crow.collect_conflicts">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.crow.</span></span><span class="sig-name descname"><span class="pre">collect_conflicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.crow.collect_conflicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects non-unique matches from a set of matches, removing all unique cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>id_1</strong> (<em>str</em>) – ID column in first DataFrame (including suffix).</p></li>
+<li><p><strong>id_2</strong> (<em>str</em>) – ID column in second DataFrame (including suffix).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pandas dataframe with unique matches removed</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;id_1&quot;</span><span class="p">:[</span><span class="s2">&quot;A1&quot;</span><span class="p">,</span><span class="s2">&quot;A2&quot;</span><span class="p">,</span><span class="s2">&quot;A3&quot;</span><span class="p">,</span><span class="s2">&quot;A4&quot;</span><span class="p">,</span><span class="s2">&quot;A5&quot;</span><span class="p">,</span><span class="s2">&quot;A6&quot;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s2">&quot;id_2&quot;</span><span class="p">:[</span><span class="s2">&quot;B1&quot;</span><span class="p">,</span><span class="s2">&quot;B2&quot;</span><span class="p">,</span><span class="s2">&quot;B3&quot;</span><span class="p">,</span><span class="s2">&quot;B3&quot;</span><span class="p">,</span><span class="s2">&quot;B4&quot;</span><span class="p">,</span><span class="s2">&quot;B5&quot;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">  id_1 id_2</span>
+<span class="go">0   A1   B1</span>
+<span class="go">1   A2   B2</span>
+<span class="go">2   A3   B3</span>
+<span class="go">3   A4   B3</span>
+<span class="go">4   A5   B4</span>
+<span class="go">5   A6   B5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collect_conflicts</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">id_1</span><span class="o">=</span><span class="s1">&#39;id_1&#39;</span><span class="p">,</span> <span class="n">id_2</span><span class="o">=</span><span class="s1">&#39;id_2&#39;</span><span class="p">)</span>
+<span class="go">  id_1 id_2  CLERICAL</span>
+<span class="go">0   A3   B3         1</span>
+<span class="go">1   A4   B3         1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.crow.collect_uniques">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.crow.</span></span><span class="sig-name descname"><span class="pre">collect_uniques</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.crow.collect_uniques" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects unique matches from a set of matches, removing all non-unique cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>id_1</strong> (<em>str</em>) – ID column in first DataFrame (including suffix).</p></li>
+<li><p><strong>id_2</strong> (<em>str</em>) – ID column in second DataFrame (including suffix).</p></li>
+<li><p><strong>match_type</strong> (<em>str</em>) – Indicator that is added to specify which stage the matches were made on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pandas dataframe with non-unique matches removed and indicator column appended</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;id_1&quot;</span><span class="p">:[</span><span class="s2">&quot;A1&quot;</span><span class="p">,</span><span class="s2">&quot;A2&quot;</span><span class="p">,</span><span class="s2">&quot;A3&quot;</span><span class="p">,</span><span class="s2">&quot;A4&quot;</span><span class="p">,</span><span class="s2">&quot;A5&quot;</span><span class="p">,</span><span class="s2">&quot;A6&quot;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s2">&quot;id_2&quot;</span><span class="p">:[</span><span class="s2">&quot;B1&quot;</span><span class="p">,</span><span class="s2">&quot;B2&quot;</span><span class="p">,</span><span class="s2">&quot;B3&quot;</span><span class="p">,</span><span class="s2">&quot;B3&quot;</span><span class="p">,</span><span class="s2">&quot;B4&quot;</span><span class="p">,</span><span class="s2">&quot;B5&quot;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">  id_1 id_2</span>
+<span class="go">0   A1   B1</span>
+<span class="go">1   A2   B2</span>
+<span class="go">2   A3   B3</span>
+<span class="go">3   A4   B3</span>
+<span class="go">4   A5   B4</span>
+<span class="go">5   A6   B5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collect_uniques</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">id_1</span><span class="o">=</span><span class="s1">&#39;id_1&#39;</span><span class="p">,</span> <span class="n">id_2</span><span class="o">=</span><span class="s1">&#39;id_2&#39;</span><span class="p">,</span> <span class="n">match_type</span><span class="o">=</span><span class="s1">&#39;Stage_X_Matchkeys&#39;</span><span class="p">)</span>
+<span class="go">  id_1 id_2  CLERICAL         Match_Type</span>
+<span class="go">0   A1   B1         0  Stage_X_Matchkeys</span>
+<span class="go">1   A2   B2         0  Stage_X_Matchkeys</span>
+<span class="go">2   A5   B4         0  Stage_X_Matchkeys</span>
+<span class="go">3   A6   B5         0  Stage_X_Matchkeys</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.crow.combine_crow_results">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.crow.</span></span><span class="sig-name descname"><span class="pre">combine_crow_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.crow.combine_crow_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes all matches made in CROW from a chosen stage and combines
+them into a single pandas DataFrame. All matching in CROW for
+the chosen stage must be completed before running this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stage</strong> (<em>str</em>) – Chosen stage of matching e.g., ‘Stage_1’. The function will look inside CLERICAL_PATH and
+combine all clerically matched CSV files that contain this string. File names for completed
+matches must also end in ‘_DONE.csv’, otherwise they will not be included in the final set of
+combined clerical matches.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pandas dataframe with all clerically matched records from a selected stage combined.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.crow.crow_output_updater">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.crow.</span></span><span class="sig-name descname"><span class="pre">crow_output_updater</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.crow.crow_output_updater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the outputs of CROW in a pairwise linked format.
+Only matched pairs are retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_df</strong> (<em>pandas.DataFrame</em>) – The dataframe containing CROW matched output</p></li>
+<li><p><strong>id_column</strong> (<em>str</em>) – Name of record_id column in CROW matched output</p></li>
+<li><p><strong>source_column</strong> (<em>str</em>) – Name of column in CROW matched output identifying which
+data source the record is from</p></li>
+<li><p><strong>suffix_1</strong> (<em>str</em>) – Suffix used for the first data source.</p></li>
+<li><p><strong>suffix_2</strong> (<em>str</em>) – Suffix used for the second data source.</p></li>
+<li><p><strong>match_type</strong> (<em>str</em>) – indicator to say which stage matches were made at</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>df</strong> – CROW matches in pairwise format</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;puid&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A1&quot;</span><span class="p">,</span> <span class="s2">&quot;B1&quot;</span><span class="p">,</span> <span class="s2">&quot;A2&quot;</span><span class="p">,</span> <span class="s2">&quot;B2&quot;</span><span class="p">,</span> <span class="s2">&quot;B3&quot;</span><span class="p">,</span> <span class="s2">&quot;A4&quot;</span><span class="p">,</span> <span class="s2">&quot;B4&quot;</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="s2">&quot;Cluster_Number&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="s2">&quot;Match&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A1,B1&quot;</span><span class="p">,</span> <span class="s2">&quot;A1,B1&quot;</span><span class="p">,</span> <span class="s2">&quot;A2,B2,B3&quot;</span><span class="p">,</span> <span class="s2">&quot;A2,B2,B3&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="s2">&quot;A2,B2,B3&quot;</span><span class="p">,</span> <span class="s2">&quot;No match in cluster&quot;</span><span class="p">,</span> <span class="s2">&quot;No match in cluster&quot;</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="s2">&quot;Source_Dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;_cen&quot;</span><span class="p">,</span> <span class="s2">&quot;_pes&quot;</span><span class="p">,</span> <span class="s2">&quot;_cen&quot;</span><span class="p">,</span> <span class="s2">&quot;_pes&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="s2">&quot;_pes&quot;</span><span class="p">,</span> <span class="s2">&quot;_cen&quot;</span><span class="p">,</span> <span class="s2">&quot;_pes&quot;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">  puid  Cluster_Number                Match Source_Dataset</span>
+<span class="go">0   A1               1                A1,B1           _cen</span>
+<span class="go">1   B1               1                A1,B1           _pes</span>
+<span class="go">2   A2               2             A2,B2,B3           _cen</span>
+<span class="go">3   B2               2             A2,B2,B3           _pes</span>
+<span class="go">4   B3               2             A2,B2,B3           _pes</span>
+<span class="go">5   A4               3  No match in cluster           _cen</span>
+<span class="go">6   B4               3  No match in cluster           _pes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_updated</span> <span class="o">=</span> <span class="n">crow_output_updater</span><span class="p">(</span><span class="n">output_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span> <span class="n">id_column</span> <span class="o">=</span> <span class="s1">&#39;puid&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                 <span class="n">source_column</span> <span class="o">=</span> <span class="s1">&#39;Source_Dataset&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                 <span class="n">suffix_1</span> <span class="o">=</span> <span class="s1">&#39;_cen&#39;</span><span class="p">,</span> <span class="n">suffix_2</span> <span class="o">=</span> <span class="s1">&#39;_pes&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                 <span class="n">match_type</span> <span class="o">=</span> <span class="s1">&#39;Stage_1_Conflicts&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_updated</span>
+<span class="go">  puid_cen puid_pes         Match_Type  CLERICAL  MK</span>
+<span class="go">0       A1       B1  Stage_1_Conflicts         1   0</span>
+<span class="go">1       A2       B2  Stage_1_Conflicts         1   0</span>
+<span class="go">2       A2       B3  Stage_1_Conflicts         1   0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.crow.remove_large_clusters">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.crow.</span></span><span class="sig-name descname"><span class="pre">remove_large_clusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.crow.remove_large_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters out clusters containing n or more unique records. This
+can be required if clusters are too large for the CROW system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame containing all clusters ready for CROW.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Minimum size of clusters that will be removed.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#src.pes_match.crow.save_for_crow" title="src.pes_match.crow.save_for_crow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_for_crow</span></code></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pandas dataframe with clusters &gt;= size n removed.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;puid&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A1&quot;</span><span class="p">,</span> <span class="s2">&quot;B1&quot;</span><span class="p">,</span> <span class="s2">&quot;A2&quot;</span><span class="p">,</span> <span class="s2">&quot;B2&quot;</span><span class="p">,</span> <span class="s2">&quot;B3&quot;</span><span class="p">,</span> <span class="s2">&quot;A4&quot;</span><span class="p">,</span> <span class="s2">&quot;B4&quot;</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="s2">&quot;Cluster_Number&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="s2">&quot;Source_Dataset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;_cen&quot;</span><span class="p">,</span> <span class="s2">&quot;_pes&quot;</span><span class="p">,</span> <span class="s2">&quot;_cen&quot;</span><span class="p">,</span> <span class="s2">&quot;_pes&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="s2">&quot;_pes&quot;</span><span class="p">,</span> <span class="s2">&quot;_cen&quot;</span><span class="p">,</span> <span class="s2">&quot;_pes&quot;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">  puid  Cluster_Number Source_Dataset</span>
+<span class="go">0   A1               1           _cen</span>
+<span class="go">1   B1               1           _pes</span>
+<span class="go">2   A2               2           _cen</span>
+<span class="go">3   B2               2           _pes</span>
+<span class="go">4   B3               2           _pes</span>
+<span class="go">5   A4               3           _cen</span>
+<span class="go">6   B4               3           _pes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">remove_large_clusters</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">  puid  Cluster_Number Source_Dataset</span>
+<span class="go">0   A1               1           _cen</span>
+<span class="go">1   B1               1           _pes</span>
+<span class="go">2   A4               3           _cen</span>
+<span class="go">3   B4               3           _pes</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.crow.save_for_crow">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.crow.</span></span><span class="sig-name descname"><span class="pre">save_for_crow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_of_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.crow.save_for_crow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes candidate matches, updates their format ready for CROW
+and then saves them. Split matches into multiple files if desired.
+Large clusters (size 12+) that are too big for CROW are removed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame containing all candidate pairs ready for CROW.</p></li>
+<li><p><strong>id_column</strong> (<em>str</em>) – Name of record_id column in CROW candidates.</p></li>
+<li><p><strong>suffix_1</strong> (<em>str</em>) – Suffix used for the first data source.</p></li>
+<li><p><strong>suffix_2</strong> (<em>str</em>) – Suffix used for the second data source.</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – Name of file that will be saved. If multiple files are
+saved, each file will have a different suffix
+e.g. “_1”, “_2”, etc.</p></li>
+<li><p><strong>no_of_files</strong> (<em>int</em><em>, </em><em>default = 1</em>) – Number of csv files that the output will be split into.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cluster_number</span></code>, <a class="reference internal" href="#src.pes_match.crow.remove_large_clusters" title="src.pes_match.crow.remove_large_clusters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_large_clusters</span></code></a>, <a class="reference internal" href="#src.pes_match.crow.split_save" title="src.pes_match.crow.split_save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_save</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.crow.split_save">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.crow.</span></span><span class="sig-name descname"><span class="pre">split_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_of_files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.crow.split_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits clusters (that are already in a format ready for
+CROW) into multiple smaller files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame containing all clusters ready for CROW.</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – Name of files that will be saved. Each file will have a
+different suffix e.g. “_1”, “_2”, etc.</p></li>
+<li><p><strong>no_of_files</strong> (<em>int</em>) – Number of csv files that the output will be split into.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#src.pes_match.crow.save_for_crow" title="src.pes_match.crow.save_for_crow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_for_crow</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="src-pes-match-matching-module">
+<h2>src.pes_match.matching module<a class="headerlink" href="#src-pes-match-matching-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-src.pes_match.matching"></span><dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.age_diff_filter">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">age_diff_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">age_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">age_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.age_diff_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a set of matched records to keep only records within certain age tolerances.
+Age tolerances increase slightly as age increases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>age_1</strong> (<em>str</em>) – Name of age column (integer type) from first dataset</p></li>
+<li><p><strong>age_2</strong> (<em>str</em>) – Name of age column (integer type) from second dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered pandas dataframe which only includes records that
+meet the age tolerance criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#src.pes_match.matching.age_tolerance" title="src.pes_match.matching.age_tolerance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">age_tolerance</span></code></a></dt><dd><p>Function that returns True or False depending on whether two integer ages are within certain tolerances.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;age_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">99</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s1">&#39;age_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">90</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">   age_1  age_2</span>
+<span class="go">0      5      5</span>
+<span class="go">1     15     20</span>
+<span class="go">2     25     22</span>
+<span class="go">3     50     52</span>
+<span class="go">4     99     90</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">age_diff_filter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;age_1&#39;</span><span class="p">,</span> <span class="s1">&#39;age_2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   age_1  age_2</span>
+<span class="go">0      5      5</span>
+<span class="go">1     25     22</span>
+<span class="go">2     50     52</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.age_tolerance">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">age_tolerance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.age_tolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that returns True or False depending on whether two integer
+ages are within certain tolerances. Used in the age_diff_filter
+filtering function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>val1</strong> (<em>int</em>) – First age value</p></li>
+<li><p><strong>val2</strong> (<em>int</em>) – Second age value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The return value is True for cases that meet the age tolerance rules, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#src.pes_match.matching.age_diff_filter" title="src.pes_match.matching.age_diff_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">age_diff_filter</span></code></a></dt><dd><p>Filters a set of matched records to keep only records within certain age tolerances. Age tolerances increase slightly as age increases.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">age_tolerance</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age_tolerance</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age_tolerance</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mi">49</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age_tolerance</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.combine">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">combine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matchkeys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">person_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes results from a set of matchkeys and combines into a
+single deduplicated dataframe. If duplicate matches are made
+across matchkeys, the version with the lowest matchkey
+number is retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matchkeys</strong> (<em>list of pandas.DataFrame</em>) – List of dataframes containing matches made from
+each matchkey</p></li>
+<li><p><strong>person_id</strong> (<em>str</em>) – Name of person id used in both datasets (without suffix)</p></li>
+<li><p><strong>suffix_1</strong> (<em>str</em>) – Suffix used for columns in the first dataframe</p></li>
+<li><p><strong>suffix_2</strong> (<em>str</em>) – Suffix used for columns in the second dataframe</p></li>
+<li><p><strong>keep</strong> (<em>list of str</em>) – List of variables to retain. Suffixes not required.
+New matchkey column “MK” will also be retained</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#src.pes_match.matching.run_single_matchkey" title="src.pes_match.matching.run_single_matchkey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_single_matchkey</span></code></a></dt><dd><p>Function to collect matches from a chosen matchkey</p>
+</dd>
+</dl>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>df</strong> – Combined dataset containing all matches made across matchkeys.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mk1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;puid_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;puid_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;name_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span> <span class="s1">&#39;JOHN&#39;</span><span class="p">,</span> <span class="s1">&#39;STEVE&#39;</span><span class="p">,</span> <span class="s1">&#39;SAM&#39;</span><span class="p">,</span> <span class="s1">&#39;PAUL&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;name_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLES&#39;</span><span class="p">,</span> <span class="s1">&#39;JON&#39;</span><span class="p">,</span> <span class="s1">&#39;STEPHEN&#39;</span><span class="p">,</span> <span class="s1">&#39;SAMM&#39;</span><span class="p">,</span> <span class="s1">&#39;PAUL&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mk1</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   puid_1  puid_2   name_1   name_2</span>
+<span class="go">0       1      21  CHARLIE  CHARLES</span>
+<span class="go">1       2      22     JOHN      JON</span>
+<span class="go">2       3      23    STEVE  STEPHEN</span>
+<span class="go">3       4      24      SAM     SAMM</span>
+<span class="go">4       5      25     PAUL     PAUL</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mk2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;puid_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;puid_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;name_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span> <span class="s1">&#39;JOHN&#39;</span><span class="p">,</span> <span class="s1">&#39;STEVE&#39;</span><span class="p">,</span> <span class="s1">&#39;MARK&#39;</span><span class="p">,</span> <span class="s1">&#39;DAVE&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;name_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLES&#39;</span><span class="p">,</span> <span class="s1">&#39;JON&#39;</span><span class="p">,</span> <span class="s1">&#39;STEUE&#39;</span><span class="p">,</span> <span class="s1">&#39;MARL&#39;</span><span class="p">,</span> <span class="s1">&#39;DAVE&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mk2</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   puid_1  puid_2   name_1   name_2</span>
+<span class="go">0       1      21  CHARLIE  CHARLES</span>
+<span class="go">1       2      22     JOHN      JON</span>
+<span class="go">2       3      30    STEVE    STEUE</span>
+<span class="go">3       6      31     MARK     MARL</span>
+<span class="go">4       7      32     DAVE     DAVE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matches</span> <span class="o">=</span> <span class="n">combine</span><span class="p">(</span><span class="n">matchkeys</span><span class="o">=</span><span class="p">[</span><span class="n">mk1</span><span class="p">,</span> <span class="n">mk2</span><span class="p">],</span> <span class="n">suffix_1</span><span class="o">=</span><span class="s2">&quot;_1&quot;</span><span class="p">,</span> <span class="n">suffix_2</span><span class="o">=</span><span class="s2">&quot;_2&quot;</span><span class="p">,</span> <span class="n">person_id</span><span class="o">=</span><span class="s2">&quot;puid&quot;</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;puid&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matches</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="go">   puid_1   name_1  puid_2   name_2  MK</span>
+<span class="go">0       1  CHARLIE      21  CHARLES   1</span>
+<span class="go">1       2     JOHN      22      JON   1</span>
+<span class="go">2       3    STEVE      23  STEPHEN   1</span>
+<span class="go">3       4      SAM      24     SAMM   1</span>
+<span class="go">4       5     PAUL      25     PAUL   1</span>
+<span class="go">5       3    STEVE      30    STEUE   2</span>
+<span class="go">6       6     MARK      31     MARL   2</span>
+<span class="go">7       6     DAVE      32     DAVE   2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.generate_matchkey">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">generate_matchkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hh_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">swap_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.generate_matchkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to generate a single matchkey for matching
+two dataframes together. ‘swap_variables’ enables different
+variables to be used across dataframes e.g. require agreement
+between forename (on dataframe 1) and surname (on dataframe 2).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>suffix_1</strong> (<em>str</em>) – Suffix used for columns in the first dataframe to match</p></li>
+<li><p><strong>suffix_2</strong> (<em>str</em>) – Suffix used for columns in the second dataframe to match</p></li>
+<li><p><strong>hh_id</strong> (<em>str</em>) – Name of household ID column in dataframes to match (without suffixes)
+Required when level=’associative’.</p></li>
+<li><p><strong>level</strong> (<em>str</em>) – Level of geography to include in the matchkey e.g. household, enumeration area etc.
+If level = ‘associative’ then an associative matchkey is applied instead.</p></li>
+<li><p><strong>variables</strong> (<em>list of str</em>) – List of variables to use in matchkey rule (exluding level of geography)</p></li>
+<li><p><strong>swap_variables</strong> (<em>list of tuple</em><em>, </em><em>optional</em>) – Use if you want to match a variable from one dataframe to a
+different variable on the other dataframe.
+For example, to match forename on dataframe 1 to surname on dataframe 2,
+swap_variables = [(‘forename_1’, ‘surname_2’)]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df1_link_vars</strong> (<em>list</em>) – Variables to match on, suffixed with suffix_1</p></li>
+<li><p><strong>df2_link_vars</strong> (<em>list</em>) – Variables to match on, suffixed with suffix_2</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#src.pes_match.matching.run_single_matchkey" title="src.pes_match.matching.run_single_matchkey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_single_matchkey</span></code></a></p>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mk</span> <span class="o">=</span> <span class="n">generate_matchkey</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">suffix_1</span><span class="o">=</span><span class="s2">&quot;_cen&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">suffix_2</span><span class="o">=</span><span class="s2">&quot;_pes&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">hh_id</span><span class="o">=</span><span class="s2">&quot;hid&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">level</span><span class="o">=</span><span class="s2">&quot;Eaid&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;forename&quot;</span><span class="p">,</span> <span class="s2">&quot;dob&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">swap_variables</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;middlename_cen&quot;</span><span class="p">,</span> <span class="s2">&quot;surname_pes&quot;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[&#39;forename_cen&#39;, &#39;dob_cen&#39;, &#39;sex_cen&#39;, &#39;Eaid_cen&#39;, &#39;middlename_cen&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mk</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">[&#39;forename_pes&#39;, &#39;dob_pes&#39;, &#39;sex_pes&#39;, &#39;Eaid_pes&#39;, &#39;surname_pes&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.get_assoc_candidates">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">get_assoc_candidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">person_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hh_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.get_assoc_candidates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associative Matching Function. Takes all person matches made between two
+datasets and collects their unique household pairs. Unmatched person
+records from these household pairs are then grouped together (associatively).
+This is done by merging on the household ID pair to each unmatched record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df1</strong> (<em>pandas.DataFrame</em>) – The first dataframe being matched - must contain a person_id and hh_id</p></li>
+<li><p><strong>df2</strong> (<em>pandas.DataFrame</em>) – The second dataframe being matched - must contain a person_id and hh_id</p></li>
+<li><p><strong>suffix_1</strong> (<em>str</em>) – Suffix used for columns in the first dataframe</p></li>
+<li><p><strong>suffix_2</strong> (<em>str</em>) – Suffix used for columns in the second dataframe</p></li>
+<li><p><strong>matches</strong> (<em>pandas.DataFrame</em>) – All unique person matches that will be used to make additional associative matches
+This DataFrame should contain two person ID columns only</p></li>
+<li><p><strong>person_id</strong> (<em>str</em>) – Name of person ID column (without suffixes)</p></li>
+<li><p><strong>hh_id</strong> (<em>str</em>) – Name of household ID column (without suffixes)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df1</strong> (<em>pandas.DataFrame</em>) – Unmatched person records from df1 with additional household ID column from df2</p></li>
+<li><p><strong>df2</strong> (<em>pandas.DataFrame</em>) – Unmatched person records from df2 with additional household ID column from df1</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#src.pes_match.matching.get_residuals" title="src.pes_match.matching.get_residuals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_residuals</span></code></a></dt><dd><p>Function for collecting person records not yet matched</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;puid_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;hhid_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;name_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span> <span class="s1">&#39;JOHN&#39;</span><span class="p">,</span> <span class="s1">&#39;STEVE&#39;</span><span class="p">,</span> <span class="s1">&#39;SAM&#39;</span><span class="p">,</span> <span class="s1">&#39;PAUL&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;puid_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;hhid_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="s1">&#39;name_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLES&#39;</span><span class="p">,</span> <span class="s1">&#39;JON&#39;</span><span class="p">,</span> <span class="s1">&#39;STEPHEN&#39;</span><span class="p">,</span> <span class="s1">&#39;SAMANTHA&#39;</span><span class="p">,</span> <span class="s1">&#39;PAUL&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matches</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;puid_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+<span class="gp">... </span>                        <span class="s1">&#39;puid_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">25</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span> <span class="o">=</span> <span class="n">get_assoc_candidates</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">suffix_1</span><span class="o">=</span><span class="s1">&#39;_1&#39;</span><span class="p">,</span> <span class="n">suffix_2</span><span class="o">=</span><span class="s1">&#39;_2&#39;</span><span class="p">,</span> <span class="n">matches</span><span class="o">=</span><span class="n">matches</span><span class="p">,</span>
+<span class="gp">... </span>                                <span class="n">person_id</span><span class="o">=</span><span class="s1">&#39;puid&#39;</span><span class="p">,</span> <span class="n">hh_id</span><span class="o">=</span><span class="s1">&#39;hhid&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df1</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   puid_1  hhid_1 name_1  hhid_2</span>
+<span class="go">0       2       1   JOHN       2</span>
+<span class="go">1       3       1  STEVE       2</span>
+<span class="go">2       4       1    SAM       2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   puid_2  hhid_2    name_2  hhid_1</span>
+<span class="go">0      22       2       JON       1</span>
+<span class="go">1      23       2   STEPHEN       1</span>
+<span class="go">2      24       2  SAMANTHA       1</span>
+</pre></div>
+</div>
+<p>Additional column added to each DataFrame of residuals, which has associated
+households 1 and 2 together, using the existing matches between
+persons 1 and 21 and persons 5 and 25.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.get_residuals">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">get_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matched_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.get_residuals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a set of matched records to keep only records within certain age tolerances.
+Age tolerances increase slightly as age increases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>all_records</strong> (<em>pandas.DataFrame</em>) – The dataframe containing all person records.</p></li>
+<li><p><strong>matched_records</strong> (<em>pandas.DataFrame</em>) – The dataframe containing all matched person records</p></li>
+<li><p><strong>id_column</strong> (<em>str</em>) – Name of person ID column (including suffixes)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Matched records removed, leaving only the residuals.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_records</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;puid_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_records</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   puid_1</span>
+<span class="go">0       1</span>
+<span class="go">1       2</span>
+<span class="go">2       3</span>
+<span class="go">3       4</span>
+<span class="go">4       5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matched_records</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;puid_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>                                <span class="s1">&#39;puid_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matched_records</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   puid_1  puid_2</span>
+<span class="go">0       1      21</span>
+<span class="go">1       2      22</span>
+<span class="go">2       3      23</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residuals</span> <span class="o">=</span> <span class="n">get_residuals</span><span class="p">(</span><span class="n">all_records</span><span class="o">=</span><span class="n">all_records</span><span class="p">,</span>
+<span class="gp">... </span>                          <span class="n">matched_records</span><span class="o">=</span><span class="n">matched_records</span><span class="p">,</span>
+<span class="gp">... </span>                          <span class="n">id_column</span><span class="o">=</span><span class="s1">&#39;puid_1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residuals</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">   puid_1</span>
+<span class="go">0       4</span>
+<span class="go">1       5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.mult_match">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">mult_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hh_id_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hh_id_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.mult_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a set of matched records by retaining only those where 2 or
+more matches have been made across a pair of households.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – dataframe to filter containing all person matches / candidates.</p></li>
+<li><p><strong>hh_id_1</strong> (<em>str</em>) – Name of household ID column in first dataset (including suffix)</p></li>
+<li><p><strong>hh_id_2</strong> (<em>str</em>) – Name of household ID column in second dataset (including suffix)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Retains cases where mutliple matches have been made between two households.
+Other cases are discarded.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.run_single_matchkey">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">run_single_matchkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hh_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">swap_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lev_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">age_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.run_single_matchkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to collect matches from a chosen matchkey.
+Partial agreement can be included using std_lev_filter,
+and age filters can be applied using age_threshold.
+Use swap_variables to match across different variables e.g.
+forename = surname.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df1</strong> (<em>pandas.DataFrame</em>) – The first dataframe being matched</p></li>
+<li><p><strong>df2</strong> (<em>pandas.DataFrame</em>) – The second dataframe being matched</p></li>
+<li><p><strong>suffix_1</strong> (<em>str</em>) – Suffix used for columns in the first dataframe</p></li>
+<li><p><strong>suffix_2</strong> (<em>str</em>) – Suffix used for columns in the second dataframe</p></li>
+<li><p><strong>hh_id</strong> (<em>str</em>) – Name of household ID column in df1 and df2 (without suffixes)
+Required when level=’associative’.</p></li>
+<li><p><strong>level</strong> (<em>str</em>) – Level of geography to include in the matchkey e.g. household, enumeration area etc.
+If level = ‘associative’ then an associative matchkey is applied instead.</p></li>
+<li><p><strong>variables</strong> (<em>list of str</em>) – List of variables to use in matchkey rule (exluding level of geography)</p></li>
+<li><p><strong>swap_variables</strong> (<em>list of tuple</em><em>, </em><em>optional</em>) – Use if you want to match a variable from one dataset to a
+different variable on the other dataset.
+For example, to match forename on df1 to surname on df2,
+swap_variables = [(‘forename_1’, ‘surname_2’)]</p></li>
+<li><p><strong>lev_variables</strong> (<em>list of tuple</em><em>, </em><em>optional</em>) – Use if you want to apply the std_lev_filter function within the matchkey.
+For example, to apply to forenames (threshold = 0.80):
+lev_variables = [(‘forename_1’, ‘forename_2’, 0.80)]</p></li>
+<li><p><strong>age_threshold</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use if you want to apply the age_diff_filter function within the matchkey.
+To apply, simply set age_threshold = True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>matches</strong> – All matches made from chosen matchkey (non-unique matches included)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#src.pes_match.matching.generate_matchkey" title="src.pes_match.matching.generate_matchkey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_matchkey</span></code></a>, <a class="reference internal" href="#src.pes_match.matching.std_lev_filter" title="src.pes_match.matching.std_lev_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">std_lev_filter</span></code></a>, <a class="reference internal" href="#src.pes_match.matching.age_diff_filter" title="src.pes_match.matching.age_diff_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">age_diff_filter</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.std_lev">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">std_lev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.std_lev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that compares two strings (usually names) and returns
+the standardised levenstein edit distance score, between 0 and 1.
+Used in the std_lev_filter filtering function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string1</strong> (<em>str</em><em> or </em><em>None</em>) – First string for comparison</p></li>
+<li><p><strong>string2</strong> (<em>str</em><em> or </em><em>None</em>) – Second string for comparison</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Score between 0 and 1. The closer to 1, the stronger the similarity between the two strings
+(1 = full agreeement / exact matches).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#src.pes_match.matching.std_lev_filter" title="src.pes_match.matching.std_lev_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">std_lev_filter</span></code></a></dt><dd><p>Filters a set of matched records to keep only records where names have a similarity greater than a chosen threshold.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">std_lev</span><span class="p">(</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">)</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">std_lev</span><span class="p">(</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span><span class="s1">&#39;CHARLES&#39;</span><span class="p">)</span>
+<span class="go">0.7142857142857143</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">std_lev</span><span class="p">(</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.pes_match.matching.std_lev_filter">
+<span class="sig-prename descclassname"><span class="pre">src.pes_match.matching.</span></span><span class="sig-name descname"><span class="pre">std_lev_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pes_match.matching.std_lev_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a set of matched records to keep only records where names
+have a similarity greater than a chosen threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to which the function is applied.</p></li>
+<li><p><strong>column1</strong> (<em>str</em>) – Name column (string type) from first dataset</p></li>
+<li><p><strong>column2</strong> (<em>str</em>) – Name column (string type) from second dataset</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Record pairs with a std levenstein edit distance below this threshold will be discarded</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered pandas dataframe which only includes records that
+meet the edit distance filter criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#src.pes_match.matching.std_lev" title="src.pes_match.matching.std_lev"><code class="xref py py-obj docutils literal notranslate"><span class="pre">std_lev</span></code></a></dt><dd><p>Function that compares two strings (usually names) and returns the standardised levenstein edit distance score, between 0 and 1.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;name_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLES&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;CHRLEI&#39;</span><span class="p">,</span> <span class="s1">&#39;CH4RL1E&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s1">&#39;name_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span> <span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span> <span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span> <span class="s1">&#39;CHARLIE&#39;</span><span class="p">,</span> <span class="s1">&#39;CHARLIE&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">    name_1   name_2</span>
+<span class="go">0  CHARLES  CHARLIE</span>
+<span class="go">1     None  CHARLIE</span>
+<span class="go">2        C  CHARLIE</span>
+<span class="go">3   CHRLEI  CHARLIE</span>
+<span class="go">4  CH4RL1E  CHARLIE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">std_lev_filter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column1</span><span class="o">=</span><span class="s1">&#39;name_1&#39;</span><span class="p">,</span> <span class="n">column2</span><span class="o">=</span><span class="s1">&#39;name_2&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.60</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">    name_1   name_2</span>
+<span class="go">0  CHARLES  CHARLIE</span>
+<span class="go">1  CH4RL1E  CHARLIE</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-src.pes_match">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.pes_match" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PES MATCH</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pes_match</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">package functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of conduct for <code class="docutils literal notranslate"><span class="pre">govcookiecutter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#ons-pes-matching-pipeline">ONS PES Matching Pipeline</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pes_match</a><ul>
+      <li>Previous: <a href="tests.html" title="previous chapter">tests package</a></li>
+      <li>Next: <a href="CONTRIBUTING.html" title="next chapter">Contributing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Charlie Tomlin.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
