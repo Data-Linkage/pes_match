@@ -12,6 +12,8 @@ Welcome to PES MATCH's documentation!
 
    modules
 
+.. mdinclude:: ../README.md
+
 Indices and tables
 ==================
 

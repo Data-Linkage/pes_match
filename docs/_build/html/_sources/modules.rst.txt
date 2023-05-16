@@ -5,7 +5,5 @@ pes_match
    :maxdepth: 4
 
    setup
-   tests
    src
-
-.. mdinclude:: ../README.md
+   tests

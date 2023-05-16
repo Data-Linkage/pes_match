@@ -1,46 +1,45 @@
-tests package
+package functions
 =============
 
 Submodules
 ----------
 
-tests.test\_cleaning module
+src.pes\_match.cleaning module
 ---------------------------
 
-.. automodule:: tests.test_cleaning
+.. automodule:: src.pes_match.cleaning
    :members:
    :undoc-members:
    :show-inheritance:
 
-tests.test\_cluster module
+src.pes\_match.cluster module
 --------------------------
 
-.. automodule:: tests.test_cluster
+.. automodule:: src.pes_match.cluster
    :members:
    :undoc-members:
    :show-inheritance:
 
-tests.test\_crow module
+src.pes\_match.crow module
 -----------------------
 
-.. automodule:: tests.test_crow
+.. automodule:: src.pes_match.crow
    :members:
    :undoc-members:
    :show-inheritance:
 
-tests.test\_matching module
+src.pes\_match.matching module
 ---------------------------
 
-.. automodule:: tests.test_matching
+.. automodule:: src.pes_match.matching
    :members:
    :undoc-members:
    :show-inheritance:
-
 
 Module contents
 ---------------
 
-.. automodule:: tests
+.. automodule:: src.pes_match
    :members:
    :undoc-members:
    :show-inheritance:
