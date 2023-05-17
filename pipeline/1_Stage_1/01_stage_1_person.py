@@ -1,10 +1,17 @@
 import os
+
 import pandas as pd
-from pes_match.crow import collect_uniques, collect_conflicts, save_for_crow
-from pes_match.matching import run_single_matchkey, combine
-from pes_match.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
-                                  cen_variable_types, pes_variable_types,
-                                  CHECKPOINT_PATH, CLERICAL_VARIABLES)
+
+from pes_match.crow import collect_conflicts, collect_uniques, save_for_crow
+from pes_match.matching import combine, run_single_matchkey
+from pes_match.parameters import (
+    CEN_CLEAN_DATA,
+    CHECKPOINT_PATH,
+    CLERICAL_VARIABLES,
+    PES_CLEAN_DATA,
+    cen_variable_types,
+    pes_variable_types,
+)
 
 if not os.path.exists(CHECKPOINT_PATH):
     os.makedirs(CHECKPOINT_PATH)
@@ -18,15 +25,29 @@ PES = pd.read_csv(
 )
 
 # MATCHKEY PARAMS
-mk_params = {'df1': CEN, 'df2': PES, 'suffix_1': "_cen", 'suffix_2': "_pes", 'hh_id': "hid", 'level': "hid"}
+mk_params = {
+    "df1": CEN,
+    "df2": PES,
+    "suffix_1": "_cen",
+    "suffix_2": "_pes",
+    "hh_id": "hid",
+    "level": "hid",
+}
 
 # ---------- RUN MATCHKEYS ---------- #
-mk1 = run_single_matchkey(**mk_params, variables=["forename_clean", "last_name_clean", "full_dob"])
+mk1 = run_single_matchkey(
+    **mk_params, variables=["forename_clean", "last_name_clean", "full_dob"]
+)
 mk2 = run_single_matchkey(**mk_params, variables=["telephone", "full_dob"])
 
 # Combine
-matches = combine(matchkeys=[mk1, mk2], suffix_1="_cen", suffix_2="_pes",
-                  person_id="puid", keep=CLERICAL_VARIABLES)
+matches = combine(
+    matchkeys=[mk1, mk2],
+    suffix_1="_cen",
+    suffix_2="_pes",
+    person_id="puid",
+    keep=CLERICAL_VARIABLES,
+)
 
 # Collect and save unique matches
 unique_matches = collect_uniques(
@@ -44,5 +65,5 @@ save_for_crow(
     suffix_1="_cen",
     suffix_2="_pes",
     file_name="Stage_1_Matchkey_CROW_Conflicts",
-    no_of_files=1
+    no_of_files=1,
 )

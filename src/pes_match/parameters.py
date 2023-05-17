@@ -1,8 +1,6 @@
-import os
 import numpy as np
 
 # Folder paths
-ROOT_DIR = os.getcwd()
 DATA_PATH = "Data/"
 CHECKPOINT_PATH = DATA_PATH + "Checkpoints/"
 CLERICAL_PATH = DATA_PATH + "Clerical/"
@@ -24,15 +22,9 @@ CLERICAL_VARIABLES = [
     "marstat",
     "telephone",
     "forename_list",
-    "Eaid"
+    "Eaid",
 ]
-OUTPUT_VARIABLES = [
-    "puid_cen",
-    "puid_pes",
-    "MK",
-    "Match_Type",
-    "CLERICAL"
-]
+OUTPUT_VARIABLES = ["puid_cen", "puid_pes", "MK", "Match_Type", "CLERICAL"]
 
 # Variable types for cleaned data
 variable_types = {

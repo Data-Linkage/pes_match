@@ -1,6 +1,6 @@
-# Code of conduct for `govcookiecutter`
+# Code of conduct for `pes_match`
 
-Contributors to this repository hosted by `best-practice-and-impact` are expected to
+Contributors to this repository hosted by `Data-Linkage` are expected to
 follow the Contributor Covenant Code of Conduct. Contributors working within Her
 Majesty's Government are also expected to follow the Civil Service Code.
 
@@ -15,9 +15,9 @@ Code][civil-service-code], and are expected to follow it in their contributions.
 
 Where this Code of Conduct says:
 
-- "Project", we mean this `govcookiecutter` GitHub repository;
-- "Maintainer", we mean the `best-practice-and-impact` organisation owners; and
-- "Leadership", we mean both `best-practice-and-impact` organisation owners, line
+- "Project", we mean this `pes_match` GitHub repository;
+- "Maintainer", we mean the `Data-Linkage` organisation owners; and
+- "Leadership", we mean both `Data-Linkage` organisation owners, line
   managers, and other leadership within the Office for National Statistics.
 
 ### Our Pledge

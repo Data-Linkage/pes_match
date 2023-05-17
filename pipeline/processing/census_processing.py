@@ -1,9 +1,19 @@
-import pandas as pd
 import numpy as np
-from pes_match.parameters import DATA_PATH, CEN_CLEAN_DATA
-from pes_match.cleaning import (clean_name, concat, alpha_name,
-                                replace_vals, derive_list, n_gram,
-                                soundex, change_types, pad_column, select)
+import pandas as pd
+
+from pes_match.cleaning import (
+    alpha_name,
+    change_types,
+    clean_name,
+    concat,
+    derive_list,
+    n_gram,
+    pad_column,
+    replace_vals,
+    select,
+    soundex,
+)
+from pes_match.parameters import CEN_CLEAN_DATA, DATA_PATH
 
 # Raw data
 df = pd.read_csv(DATA_PATH + "Mock_Data_Census.csv", iterator=False, index_col=False)
@@ -81,12 +91,21 @@ df = pad_column(df, input_col="month", output_col="month", length=2)
 df = concat(df, output_col="full_dob", sep="/", columns=["month", "year"])
 
 # Clean other matching variables
-df = change_types(replace_vals(df, dic={99: np.NaN}, subset=["marstat"]),
-                  input_cols="marstat", types=np.int64)
-df = change_types(replace_vals(df, dic={99: np.NaN}, subset=["relationship"]),
-                  input_cols="relationship", types=np.int64)
-df = change_types(replace_vals(df, dic={99: np.NaN}, subset=["telephone"]),
-                  input_cols="telephone", types=np.int64)
+df = change_types(
+    replace_vals(df, dic={99: np.NaN}, subset=["marstat"]),
+    input_cols="marstat",
+    types=np.int64,
+)
+df = change_types(
+    replace_vals(df, dic={99: np.NaN}, subset=["relationship"]),
+    input_cols="relationship",
+    types=np.int64,
+)
+df = change_types(
+    replace_vals(df, dic={99: np.NaN}, subset=["telephone"]),
+    input_cols="telephone",
+    types=np.int64,
+)
 
 # Selected columns
 df = select(

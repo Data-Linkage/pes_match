@@ -1,10 +1,17 @@
 import pandas as pd
-from pes_match.crow import combine_crow_results, crow_output_updater, collect_uniques
-from pes_match.matching import get_assoc_candidates, run_single_matchkey, combine
-from pes_match.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
-                                  cen_variable_types, pes_variable_types,
-                                  CHECKPOINT_PATH, OUTPUT_VARIABLES,
-                                  OUTPUT_PATH, CLERICAL_VARIABLES)
+
+from pes_match.crow import collect_uniques, combine_crow_results, crow_output_updater
+from pes_match.matching import combine, get_assoc_candidates, run_single_matchkey
+from pes_match.parameters import (
+    CEN_CLEAN_DATA,
+    CHECKPOINT_PATH,
+    CLERICAL_VARIABLES,
+    OUTPUT_PATH,
+    OUTPUT_VARIABLES,
+    PES_CLEAN_DATA,
+    cen_variable_types,
+    pes_variable_types,
+)
 
 # Cleaned data
 CEN = pd.read_csv(
@@ -45,8 +52,9 @@ all_matches = pd.concat(
 )
 
 # Combine with Stage 1 matches before associative
-stage_1_matches = pd.read_csv(OUTPUT_PATH + "Stage_1_All_Matches.csv",
-                              index_col=False, iterator=False)
+stage_1_matches = pd.read_csv(
+    OUTPUT_PATH + "Stage_1_All_Matches.csv", index_col=False, iterator=False
+)
 all_matches = pd.concat(
     [all_matches[OUTPUT_VARIABLES], stage_1_matches[OUTPUT_VARIABLES]]
 )
@@ -63,14 +71,26 @@ CEN, PES = get_assoc_candidates(
 )
 
 # MATCHKEY PARAMS
-mk_params = {'df1': CEN, 'df2': PES, 'suffix_1': "_cen", 'suffix_2': "_pes", 'hh_id': "hid", 'level': "associative"}
+mk_params = {
+    "df1": CEN,
+    "df2": PES,
+    "suffix_1": "_cen",
+    "suffix_2": "_pes",
+    "hh_id": "hid",
+    "level": "associative",
+}
 
 # ---------- RUN MATCHKEYS ---------- #
 mk1 = run_single_matchkey(**mk_params, variables=["forename_tri", "year"])
 
 # Combine
-assoc_matches = combine(matchkeys=[mk1], suffix_1="_cen", suffix_2="_pes",
-                        person_id="puid", keep=CLERICAL_VARIABLES)
+assoc_matches = combine(
+    matchkeys=[mk1],
+    suffix_1="_cen",
+    suffix_2="_pes",
+    person_id="puid",
+    keep=CLERICAL_VARIABLES,
+)
 
 # Collect and save unique matches
 assoc_uniques = collect_uniques(

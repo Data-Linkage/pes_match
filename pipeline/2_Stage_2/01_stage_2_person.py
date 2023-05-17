@@ -1,10 +1,16 @@
 import pandas as pd
-from pes_match.crow import collect_uniques, collect_conflicts, save_for_crow
-from pes_match.matching import get_residuals, run_single_matchkey, combine
-from pes_match.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
-                                  cen_variable_types, pes_variable_types,
-                                  CHECKPOINT_PATH, OUTPUT_PATH,
-                                  CLERICAL_VARIABLES)
+
+from pes_match.crow import collect_conflicts, collect_uniques, save_for_crow
+from pes_match.matching import combine, get_residuals, run_single_matchkey
+from pes_match.parameters import (
+    CEN_CLEAN_DATA,
+    CHECKPOINT_PATH,
+    CLERICAL_VARIABLES,
+    OUTPUT_PATH,
+    PES_CLEAN_DATA,
+    cen_variable_types,
+    pes_variable_types,
+)
 
 # Cleaned data
 CEN = pd.read_csv(
@@ -15,21 +21,37 @@ PES = pd.read_csv(
 )
 
 # Matches from previous stage
-prev_matches = pd.read_csv(OUTPUT_PATH + "Stage_1_All_Matches.csv", iterator=False, index_col=False)
+prev_matches = pd.read_csv(
+    OUTPUT_PATH + "Stage_1_All_Matches.csv", iterator=False, index_col=False
+)
 
 # Get residuals
 CEN = get_residuals(all_records=CEN, matched_records=prev_matches, id_column="puid_cen")
 PES = get_residuals(all_records=PES, matched_records=prev_matches, id_column="puid_pes")
 
 # MATCHKEY PARAMS
-mk_params = {'df1': CEN, 'df2': PES, 'suffix_1': "_cen", 'suffix_2': "_pes", 'hh_id': "hid", 'level': "Eaid"}
+mk_params = {
+    "df1": CEN,
+    "df2": PES,
+    "suffix_1": "_cen",
+    "suffix_2": "_pes",
+    "hh_id": "hid",
+    "level": "Eaid",
+}
 
 # ---------- RUN MATCHKEYS ---------- #
-mk1 = run_single_matchkey(**mk_params, variables=["forename_clean", "middlenm_clean", "full_dob"])
+mk1 = run_single_matchkey(
+    **mk_params, variables=["forename_clean", "middlenm_clean", "full_dob"]
+)
 
 # Combine
-matches = combine(matchkeys=[mk1], suffix_1="_cen", suffix_2="_pes",
-                  person_id="puid", keep=CLERICAL_VARIABLES)
+matches = combine(
+    matchkeys=[mk1],
+    suffix_1="_cen",
+    suffix_2="_pes",
+    person_id="puid",
+    keep=CLERICAL_VARIABLES,
+)
 
 # Collect and save unique matches
 unique_matches = collect_uniques(
