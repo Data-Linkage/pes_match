@@ -6,7 +6,7 @@
 
 .DEFAULT_GOAL := help
 
-## Install the Python requirements for contributors, and install pre-commit hooks
+## Install the Python package for contributors, and install pre-commit hooks
 install:
 	python -m pip install -U pip setuptools
 	python -m pip install -e .
