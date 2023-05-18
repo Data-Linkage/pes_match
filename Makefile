@@ -1,8 +1,10 @@
 .PHONY:
+	coverage
+	coverage_xml
 	docs
 	help
+    install
 	prepare_docs_folder
-	install
 
 .DEFAULT_GOAL := help
 
@@ -20,6 +22,14 @@ prepare_docs_folder:
 ## Compile the Sphinx documentation in HTML format in the docs/_build folder from a clean build
 docs: prepare_docs_folder install
 	sphinx-build -b html ./docs ./docs/_build
+
+## Run code coverage
+coverage: install
+	coverage run -m pytest
+
+## Run code coverage, and produce an XML output
+coverage_xml: coverage
+	coverage xml
 
 ## Get help on all make commands; referenced from https://github.com/drivendata/cookiecutter-data-science
 help:
