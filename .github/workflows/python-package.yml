@@ -28,10 +28,5 @@ jobs:
         pip install -e .
     - name: Execute tests, and create coverage report
       run: |
-        coverage run -m pytest
-        coverage xml
-    - name: Upload coverage report to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        files: ./coverage.xml
-        env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python }}
+        coverage run -m pytest src
+        coverage report

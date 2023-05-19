@@ -1,6 +1,5 @@
 .PHONY:
 	coverage
-	coverage_xml
 	docs
 	help
     install
@@ -25,11 +24,8 @@ docs: prepare_docs_folder install
 
 ## Run code coverage
 coverage: install
-	coverage run -m pytest
-
-## Run code coverage, and produce an XML output
-coverage_xml: coverage
-	coverage xml
+	coverage run -m pytest src
+	coverage report
 
 ## Get help on all make commands; referenced from https://github.com/drivendata/cookiecutter-data-science
 help:
