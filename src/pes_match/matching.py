@@ -1,6 +1,6 @@
-import pandas as pd
-import numpy as np
 import jellyfish
+import numpy as np
+import pandas as pd
 
 
 def age_diff_filter(df, age_1, age_2):
@@ -72,13 +72,14 @@ def age_tolerance(val1, val2):
     Returns
     -------
     bool
-        The return value is True for cases that meet the age tolerance rules, False otherwise.
+        The return value is True for cases that meet the age tolerance rules,
+        False otherwise.
 
     See Also
     --------
     age_diff_filter
-        Filters a set of matched records to keep only records within certain age tolerances.
-        Age tolerances increase slightly as age increases.
+        Filters a set of matched records to keep only records within certain
+        age tolerances. Age tolerances increase slightly as age increases.
 
     Example
     --------
@@ -159,7 +160,8 @@ def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
     2       3      30    STEVE    STEUE
     3       6      31     MARK     MARL
     4       7      32     DAVE     DAVE
-    >>> matches = combine(matchkeys=[mk1, mk2], suffix_1="_1", suffix_2="_2", person_id="puid", keep=['puid', 'name'])
+    >>> matches = combine(matchkeys=[mk1, mk2], suffix_1="_1", suffix_2="_2",
+    ...                   person_id="puid", keep=['puid', 'name'])
     >>> matches.head(n=8)
        puid_1   name_1  puid_2   name_2  MK
     0       1  CHARLIE      21  CHARLES   1
@@ -169,13 +171,15 @@ def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
     4       5     PAUL      25     PAUL   1
     5       3    STEVE      30    STEUE   2
     6       6     MARK      31     MARL   2
-    7       6     DAVE      32     DAVE   2
+    7       7     DAVE      32     DAVE   2
     """
     df = pd.DataFrame()
     for i, matches in enumerate(matchkeys):
         matches["MK"] = i + 1
         df = pd.concat([df, matches], axis=0)
-        df["Min_MK"] = df.groupby([person_id+suffix_1, person_id+suffix_2])["MK"].transform("min")
+        df["Min_MK"] = df.groupby([person_id + suffix_1, person_id + suffix_2])[
+            "MK"
+        ].transform("min")
         df = df[df.Min_MK == df.MK].drop(["Min_MK"], axis=1)
         df = df[[x + suffix_1 for x in keep] + [x + suffix_2 for x in keep] + ["MK"]]
         df = df.reset_index(drop=True)
@@ -183,12 +187,12 @@ def combine(matchkeys, person_id, suffix_1, suffix_2, keep):
 
 
 def generate_matchkey(
-        suffix_1,
-        suffix_2,
-        hh_id,
-        level,
-        variables,
-        swap_variables=None,
+    suffix_1,
+    suffix_2,
+    hh_id,
+    level,
+    variables,
+    swap_variables=None,
 ):
     """
     Function to generate a single matchkey for matching
@@ -206,7 +210,8 @@ def generate_matchkey(
         Name of household ID column in dataframes to match (without suffixes)
         Required when level='associative'.
     level: str
-        Level of geography to include in the matchkey e.g. household, enumeration area etc.
+        Level of geography to include in the matchkey
+        e.g. household, enumeration area etc.
         If level = 'associative' then an associative matchkey is applied instead.
     variables: list of str
         List of variables to use in matchkey rule (exluding level of geography)
@@ -281,8 +286,9 @@ def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id
     suffix_2: str
         Suffix used for columns in the second dataframe
     matches: pandas.DataFrame
-        All unique person matches that will be used to make additional associative matches
-        This DataFrame should contain two person ID columns only
+        All unique person matches that will be used to make additional
+        associative matches. This DataFrame should contain two person
+        ID columns only
     person_id: str
         Name of person ID column (without suffixes)
     hh_id: str
@@ -305,14 +311,17 @@ def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id
     >>> import pandas as pd
     >>> df1 = pd.DataFrame({'puid_1': [1, 2, 3, 4, 5],
     ...                     'hhid_1': [1, 1, 1, 1, 1],
-    ...                     'name_1': ['CHARLIE', 'JOHN', 'STEVE', 'SAM', 'PAUL']})
+    ...                     'name_1': ['CHARLIE', 'JOHN', 'STEVE',
+    ...                                'SAM', 'PAUL']})
     >>> df2 = pd.DataFrame({'puid_2': [21, 22, 23, 24, 25],
     ...                     'hhid_2': [2, 2, 2, 2, 2],
-    ...                     'name_2': ['CHARLES', 'JON', 'STEPHEN', 'SAMANTHA', 'PAUL']})
+    ...                     'name_2': ['CHARLES', 'JON',
+    ...                                'STEPHEN', 'SAMANTHA', 'PAUL']})
     >>> matches = pd.DataFrame({'puid_1': [1, 5],
     ...                         'puid_2': [21, 25]})
-    >>> df1, df2 = get_assoc_candidates(df1, df2, suffix_1='_1', suffix_2='_2', matches=matches,
-    ...                                 person_id='puid', hh_id='hhid')
+    >>> df1, df2 = get_assoc_candidates(df1, df2, suffix_1='_1', suffix_2='_2',
+    ...                                 matches=matches,person_id='puid',
+    ...                                 hh_id='hhid')
     >>> df1.head(n=5)
        puid_1  hhid_1 name_1  hhid_2
     0       2       1   JOHN       2
@@ -352,8 +361,8 @@ def get_assoc_candidates(df1, df2, suffix_1, suffix_2, matches, person_id, hh_id
 
 def get_residuals(all_records, matched_records, id_column):
     """
-    Filters a set of matched records to keep only records within certain age tolerances.
-    Age tolerances increase slightly as age increases.
+    Filters a set of matched records to keep only records within
+    certain age tolerances. Age tolerances increase slightly as age increases.
 
     Parameters
     ----------
@@ -435,16 +444,16 @@ def mult_match(df, hh_id_1, hh_id_2):
 
 
 def run_single_matchkey(
-        df1,
-        df2,
-        suffix_1,
-        suffix_2,
-        hh_id,
-        level,
-        variables,
-        swap_variables=None,
-        lev_variables=None,
-        age_threshold=None,
+    df1,
+    df2,
+    suffix_1,
+    suffix_2,
+    hh_id,
+    level,
+    variables,
+    swap_variables=None,
+    lev_variables=None,
+    age_threshold=None,
 ):
     """
     Function to collect matches from a chosen matchkey.
@@ -467,7 +476,7 @@ def run_single_matchkey(
         Name of household ID column in df1 and df2 (without suffixes)
         Required when level='associative'.
     level: str
-        Level of geography to include in the matchkey e.g. household, enumeration area etc.
+        Level of geography to include in the matchkey e.g. household, EA etc.
         If level = 'associative' then an associative matchkey is applied instead.
     variables: list of str
         List of variables to use in matchkey rule (exluding level of geography)
@@ -501,7 +510,7 @@ def run_single_matchkey(
         hh_id=hh_id,
         level=level,
         variables=variables,
-        swap_variables=swap_variables
+        swap_variables=swap_variables,
     )
     df1_link_vars = link_vars[0]
     df2_link_vars = link_vars[1]
@@ -532,7 +541,8 @@ def std_lev(string1, string2):
     Returns
     -------
     float
-        Score between 0 and 1. The closer to 1, the stronger the similarity between the two strings
+        Score between 0 and 1.
+        The closer to 1, the stronger the similarity between the two strings
         (1 = full agreeement / exact matches).
 
     See Also
@@ -573,7 +583,8 @@ def std_lev_filter(df, column1, column2, threshold):
     column2: str
         Name column (string type) from second dataset
     threshold: float
-        Record pairs with a std levenstein edit distance below this threshold will be discarded
+        Record pairs with a std levenstein edit distance
+        Below this threshold will be discarded
 
     Returns
     -------
@@ -591,7 +602,8 @@ def std_lev_filter(df, column1, column2, threshold):
     --------
     >>> import pandas as pd
     >>> df = pd.DataFrame({'name_1': ['CHARLES', None, 'C', 'CHRLEI', 'CH4RL1E'],
-    ...                    'name_2': ['CHARLIE', 'CHARLIE', 'CHARLIE', 'CHARLIE', 'CHARLIE']})
+    ...                    'name_2': ['CHARLIE', 'CHARLIE', 'CHARLIE', 'CHARLIE',
+    ...                               'CHARLIE']})
     >>> df.head(n=5)
         name_1   name_2
     0  CHARLES  CHARLIE
