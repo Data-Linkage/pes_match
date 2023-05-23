@@ -2,7 +2,7 @@
 	coverage
 	docs
 	help
-    install
+	install
 	prepare_docs_folder
 
 .DEFAULT_GOAL := help
