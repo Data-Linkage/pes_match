@@ -1,9 +1,17 @@
-import warnings
 import os
+import warnings
+
 import pandas as pd
-from pes_match.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA, cen_variable_types,
-                                  pes_variable_types, OUTPUT_PATH, CLERICAL_PATH,
-                                  OUTPUT_VARIABLES)
+
+from pes_match.parameters import (
+    CEN_CLEAN_DATA,
+    CLERICAL_PATH,
+    OUTPUT_PATH,
+    OUTPUT_VARIABLES,
+    PES_CLEAN_DATA,
+    cen_variable_types,
+    pes_variable_types,
+)
 
 if not os.path.exists(CLERICAL_PATH + "CLERICAL_SEARCH_RESULTS/"):
     os.makedirs(CLERICAL_PATH + "CLERICAL_SEARCH_RESULTS/")
@@ -28,11 +36,9 @@ all_ea_results = pd.DataFrame()
 
 # Loop through EAs and combine all clerical results from EA
 for EA in PES_EA_list:
-
     # Only loop through EAs where at least one match was made
     if os.path.exists(
-            CLERICAL_PATH
-            + f"CLERICAL_SEARCH_RESULTS/Clerical_Search_{str(EA)}_RESULTS.csv"
+        CLERICAL_PATH + f"CLERICAL_SEARCH_RESULTS/Clerical_Search_{str(EA)}_RESULTS.csv"
     ):
         # Read in results from an EA
         ea_results = pd.read_csv(

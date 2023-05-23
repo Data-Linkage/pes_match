@@ -1,13 +1,14 @@
 .PHONY:
+	coverage
 	docs
 	help
+    install
 	prepare_docs_folder
-	requirements
 
 .DEFAULT_GOAL := help
 
-## Install the Python requirements for contributors, and install pre-commit hooks
-requirements:
+## Install the Python package for contributors, and install pre-commit hooks
+install:
 	python -m pip install -U pip setuptools
 	python -m pip install -e .
 	pre-commit install
@@ -18,8 +19,13 @@ prepare_docs_folder:
 	find ./docs/_build -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
 
 ## Compile the Sphinx documentation in HTML format in the docs/_build folder from a clean build
-docs: prepare_docs_folder requirements
+docs: prepare_docs_folder install
 	sphinx-build -b html ./docs ./docs/_build
+
+## Run code coverage
+coverage: install
+	coverage run -m pytest src
+	coverage report
 
 ## Get help on all make commands; referenced from https://github.com/drivendata/cookiecutter-data-science
 help:

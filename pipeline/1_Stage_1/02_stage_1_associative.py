@@ -1,10 +1,16 @@
 import pandas as pd
-from pes_match.crow import combine_crow_results, crow_output_updater, collect_uniques
-from pes_match.matching import get_assoc_candidates, run_single_matchkey, combine
-from pes_match.parameters import (CEN_CLEAN_DATA, PES_CLEAN_DATA,
-                                  cen_variable_types, pes_variable_types,
-                                  CHECKPOINT_PATH, OUTPUT_VARIABLES,
-                                  CLERICAL_VARIABLES)
+
+from pes_match.crow import collect_uniques, combine_crow_results, crow_output_updater
+from pes_match.matching import combine, get_assoc_candidates, run_single_matchkey
+from pes_match.parameters import (
+    CEN_CLEAN_DATA,
+    CHECKPOINT_PATH,
+    CLERICAL_VARIABLES,
+    OUTPUT_VARIABLES,
+    PES_CLEAN_DATA,
+    cen_variable_types,
+    pes_variable_types,
+)
 
 # Cleaned data
 CEN = pd.read_csv(
@@ -17,7 +23,8 @@ PES = pd.read_csv(
 # Read in unique matches
 unique_matches = pd.read_csv(
     CHECKPOINT_PATH + "Stage_1_Matchkey_Unique_Matches.csv",
-    index_col=False, iterator=False
+    index_col=False,
+    iterator=False,
 )
 
 # Combine matches made in CROW into single dataset
@@ -55,15 +62,27 @@ CEN, PES = get_assoc_candidates(
 )
 
 # MATCHKEY PARAMS
-mk_params = {'df1': CEN, 'df2': PES, 'suffix_1': "_cen", 'suffix_2': "_pes", 'hh_id': "hid", 'level': "associative"}
+mk_params = {
+    "df1": CEN,
+    "df2": PES,
+    "suffix_1": "_cen",
+    "suffix_2": "_pes",
+    "hh_id": "hid",
+    "level": "associative",
+}
 
 # ---------- RUN MATCHKEYS ---------- #
 mk1 = run_single_matchkey(**mk_params, variables=["forename_clean", "last_name_clean"])
 mk2 = run_single_matchkey(**mk_params, variables=["full_dob"])
 
 # Combine
-assoc_matches = combine(matchkeys=[mk1, mk2], suffix_1="_cen", suffix_2="_pes",
-                        person_id="puid", keep=CLERICAL_VARIABLES)
+assoc_matches = combine(
+    matchkeys=[mk1, mk2],
+    suffix_1="_cen",
+    suffix_2="_pes",
+    person_id="puid",
+    keep=CLERICAL_VARIABLES,
+)
 
 # Collect and save unique matches
 assoc_uniques = collect_uniques(

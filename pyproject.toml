@@ -1,7 +1,7 @@
 # `coverage` configurations
 [tool.coverage.run]
 source = [
-    "./"
+    "./src",
 ]
 
 [tool.coverage.report]
