@@ -14,19 +14,19 @@ To start contributing, install the required Python packages, and [pre-commit
 hooks][pre-commit] using:
 
 ```shell
-pip install -r requirements.txt
+pip install -e .
 pre-commit install
 ```
 
 or the `make` command:
 
 ```shell
-make requirements
+make install
 ```
 
 The pre-commit hooks are a security feature to ensure, for example, no secrets[^1], and
 large data files are accidentally committed into the repository. [For more information
-on pre-commit hooks see our documentation][docs-pre-commit-hooks].
+on pre-commit hooks see the following documentation][docs-pre-commit-hooks].
 
 [^1]: [Only secrets of specific patterns are detected by the pre-commit
       hooks][docs-pre-commit-hooks-secrets-definition].
@@ -42,11 +42,11 @@ Git best practice][gds-way-git]. This includes how to write good commit messages
 `git rebase` for local branches and `git merge --no-ff` for merges, as well as using
 `git push --force-with-lease` instead of `git push -f`.
 
-[If you want to modify the `.gitignore` files, see the template
+[If you want to modify the `.gitignore` files, see this template
 documentation][docs-updating-gitignore] for further details.
 
 Our source code is stored on GitHub at
-[https://github.com/best-practice-and-impact/govcookiecutter][govcookiecutter]. Pull
+[https://github.com/Data-Linkage/pes_match][pes_match]. Pull
 requests into `main` require at least one approved review.
 
 ### Python
@@ -65,7 +65,7 @@ enforced in all cases, for example with long hyperlinks.
 ## Testing
 
 [Tests are written using the `pytest` framework][pytest], with its configuration in the
-`pyproject.toml` file. Note, only the `tests` folder in the root direcrtory of this project are to run. To run the tests, enter
+`pyproject.toml` file. Note, only the `tests` folder in the root directory of this project are to run. To run the tests, enter
 the following command in your terminal:
 
 ```shell
@@ -75,10 +75,7 @@ pytest tests
 ### Code coverage
 
 [Code coverage of Python scripts is measured using the `coverage` Python
-package][coverage]; its configuration can be found in `pyproject.toml`. Note coverage
-only extends to Python scripts in the `hooks`, and
-`{{ cookiecutter.repo_name }}/src` folders.
-
+package][coverage]; its configuration can be found in `pyproject.toml`.
 To run code coverage, and view it as an HTML report, enter the following command in
 your terminal:
 
@@ -106,26 +103,18 @@ documentation][docs-write-accessible-documentation], as well as our [guidance on
 writing Sphinx documentation][docs-write-sphinx-documentation]. This allows you to
 build the documentation into an accessible, searchable website.
 
-## Organisational frameworks
-
-Organisational frameworks are stored in the
-`.govcookiecutter/organisational_frameworks` folder. [If you would like to add your own
-organisation's framework, follow the instructions][docs-govcookiecutter-frameworks] in
-the `README.md` file in that folder.
-
-[code-of-conduct]: https://github.com/best-practice-and-impact/govcookiecutter/blob/main/CODE_OF_CONDUCT.md
+[code-of-conduct]: https://github.com/Data-Linkage/pes_match/blob/main/docs/CODE_OF_CONDUCT.md
 [coverage]: https://coverage.readthedocs.io/
-[docs-govcookiecutter-frameworks]: https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/.govcookiecutter/organisational_frameworks/README.md
 [docs-pre-commit-hooks]: https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md
 [docs-pre-commit-hooks-secrets-definition]: https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md#definition-of-a-secret-according-to-detect-secrets
 [docs-updating-gitignore]: https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/updating_gitignore.md
 [docs-write-accessible-documentation]: https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/writing_accessible_documentation.md
 [docs-write-sphinx-documentation]: https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/writing_sphinx_documentation.md
-[email]: mailto:gsshelp@statistics.gov.uk
+[email]: mailto:datalinkage@ons.gov.uk
 [gds-way]: https://gds-way.cloudapps.digital/
 [gds-way-git]: https://gds-way.cloudapps.digital/standards/source-code.html
 [gds-way-python]: https://gds-way.cloudapps.digital/manuals/programming-languages/python/python.html#python-style-guide
-[govcookiecutter]: https://github.com/best-practice-and-impact/govcookiecutter
+[pes_match]: https://github.com/Data-Linkage/pes_match
 [myst]: https://myst-parser.readthedocs.io/
 [pre-commit]: https://pre-commit.com/
 [pytest]: https://docs.pytest.org/

@@ -15,7 +15,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Code of conduct for govcookiecutter" href="CODE_OF_CONDUCT.html" />
+    <link rel="next" title="Code of conduct for pes_match" href="CODE_OF_CONDUCT.html" />
     <link rel="prev" title="tests package" href="tests.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -36,27 +36,27 @@
   <section id="contributing">
 <h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
 <p>We love contributions! We’ve compiled this documentation to help you understand our
-contributing guidelines. <a class="reference external" href="mailto:gsshelp&#37;&#52;&#48;statistics&#46;gov&#46;uk">If you still have questions, please contact us</a> and
+contributing guidelines. <a class="reference external" href="mailto:datalinkage&#37;&#52;&#48;ons&#46;gov&#46;uk">If you still have questions, please contact us</a> and
 we’d be happy to help!</p>
 <section id="code-of-conduct">
 <h2>Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permalink to this headline">¶</a></h2>
-<p><cite>Please read ``CODE_OF_CONDUCT.md`</cite> before contributing &lt;<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/CODE_OF_CONDUCT.md">https://github.com/best-practice-and-impact/govcookiecutter/blob/main/CODE_OF_CONDUCT.md</a>&gt;`_.</p>
+<p><cite>Please read ``CODE_OF_CONDUCT.md`</cite> before contributing &lt;<a class="reference external" href="https://github.com/Data-Linkage/pes_match/blob/main/docs/CODE_OF_CONDUCT.md">https://github.com/Data-Linkage/pes_match/blob/main/docs/CODE_OF_CONDUCT.md</a>&gt;`_.</p>
 </section>
 <section id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>To start contributing, install the required Python packages, and <a class="reference external" href="https://pre-commit.com/">pre-commit
 hooks</a> using:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
 <p>or the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>requirements
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>install
 </pre></div>
 </div>
 <p>The pre-commit hooks are a security feature to ensure, for example, no secrets<a class="footnote-reference brackets" href="#fn-1" id="id1">1</a>, and
 large data files are accidentally committed into the repository. <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/pre_commit_hooks.md">For more information
-on pre-commit hooks see our documentation</a>.</p>
+on pre-commit hooks see the following documentation</a>.</p>
 </section>
 <section id="code-conventions">
 <h2>Code conventions<a class="headerlink" href="#code-conventions" title="Permalink to this headline">¶</a></h2>
@@ -67,10 +67,10 @@ on pre-commit hooks see our documentation</a>.</p>
 Git best practice</a>. This includes how to write good commit messages, use
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span></code> for local branches and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">--no-ff</span></code> for merges, as well as using
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--force-with-lease</span></code> instead of <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">-f</span></code>.</p>
-<p><cite>If you want to modify the `</cite>.gitignore`` files, see the template
+<p><cite>If you want to modify the `</cite>.gitignore`` files, see this template
 documentation &lt;<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/updating_gitignore.md">https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/updating_gitignore.md</a>&gt;`_ for further details.</p>
 <p>Our source code is stored on GitHub at
-<a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter">https://github.com/best-practice-and-impact/govcookiecutter</a>. Pull
+<a class="reference external" href="https://github.com/Data-Linkage/pes_match">https://github.com/Data-Linkage/pes_match</a>. Pull
 requests into <code class="docutils literal notranslate"><span class="pre">main</span></code> require at least one approved review.</p>
 </section>
 <section id="python">
@@ -89,7 +89,7 @@ enforced in all cases, for example with long hyperlinks.</p>
 <section id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <p><cite>Tests are written using the ``pytest`</cite> framework &lt;<a class="reference external" href="https://docs.pytest.org/">https://docs.pytest.org/</a>&gt;`_, with its configuration in the
-<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file. Note, only the <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder in the root direcrtory of this project are to run. To run the tests, enter
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file. Note, only the <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder in the root directory of this project are to run. To run the tests, enter
 the following command in your terminal:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>tests
 </pre></div>
@@ -97,10 +97,8 @@ the following command in your terminal:</p>
 <section id="code-coverage">
 <h3>Code coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline">¶</a></h3>
 <p><cite>Code coverage of Python scripts is measured using the ``coverage`</cite> Python
-package &lt;<a class="reference external" href="https://coverage.readthedocs.io/">https://coverage.readthedocs.io/</a>&gt;`_; its configuration can be found in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Note coverage
-only extends to Python scripts in the <code class="docutils literal notranslate"><span class="pre">hooks</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">cookiecutter.repo_name</span> <span class="pre">}}/src</span></code> folders.</p>
-<p>To run code coverage, and view it as an HTML report, enter the following command in
+package &lt;<a class="reference external" href="https://coverage.readthedocs.io/">https://coverage.readthedocs.io/</a>&gt;`_; its configuration can be found in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.
+To run code coverage, and view it as an HTML report, enter the following command in
 your terminal:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>coverage<span class="w"> </span>run<span class="w"> </span>-m<span class="w"> </span>pytest
 coverage<span class="w"> </span>html
@@ -122,13 +120,6 @@ this file.</p>
 documentation</a>, as well as our <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/docs/contributor_guide/writing_sphinx_documentation.md">guidance on
 writing Sphinx documentation</a>. This allows you to
 build the documentation into an accessible, searchable website.</p>
-</section>
-<section id="organisational-frameworks">
-<h2>Organisational frameworks<a class="headerlink" href="#organisational-frameworks" title="Permalink to this headline">¶</a></h2>
-<p>Organisational frameworks are stored in the
-<code class="docutils literal notranslate"><span class="pre">.govcookiecutter/organisational_frameworks</span></code> folder. <a class="reference external" href="https://github.com/best-practice-and-impact/govcookiecutter/blob/main/%7B%7B%20cookiecutter.repo_name%20%7D%7D/.govcookiecutter/organisational_frameworks/README.md">If you would like to add your own
-organisation’s framework, follow the instructions</a> in
-the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file in that folder.</p>
 <dl class="footnote brackets">
 <dt class="label" id="fn-1"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p><a href="#id2"><span class="problematic" id="id3">`</span></a>Only secrets of specific patterns are detected by the pre-commit</p>
@@ -162,7 +153,7 @@ the <code class="docutils literal notranslate"><span class="pre">README.md</span
 <li class="toctree-l2"><a class="reference internal" href="src.html">src package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Contributing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of conduct for <code class="docutils literal notranslate"><span class="pre">govcookiecutter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of conduct for <code class="docutils literal notranslate"><span class="pre">pes_match</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -173,7 +164,7 @@ the <code class="docutils literal notranslate"><span class="pre">README.md</span
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="modules.html">pes_match</a><ul>
       <li>Previous: <a href="tests.html" title="previous chapter">tests package</a></li>
-      <li>Next: <a href="CODE_OF_CONDUCT.html" title="next chapter">Code of conduct for <code class="docutils literal notranslate"><span class="pre">govcookiecutter</span></code></a></li>
+      <li>Next: <a href="CODE_OF_CONDUCT.html" title="next chapter">Code of conduct for <code class="docutils literal notranslate"><span class="pre">pes_match</span></code></a></li>
   </ul></li>
   </ul></li>
 </ul>

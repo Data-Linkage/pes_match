@@ -42,15 +42,15 @@
 <li class="toctree-l2"><a class="reference internal" href="src.html">src package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of conduct for <code class="docutils literal notranslate"><span class="pre">govcookiecutter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of conduct for <code class="docutils literal notranslate"><span class="pre">pes_match</span></code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </section>
-<section id="ons-pes-matching-pipeline">
-<h1>ONS PES Matching Pipeline<a class="headerlink" href="#ons-pes-matching-pipeline" title="Permalink to this headline">¶</a></h1>
-<p>A python pipeline for matching census and post-enumeration survey (PES) data.
+<section id="pes-match">
+<h1>PES MATCH<a class="headerlink" href="#pes-match" title="Permalink to this headline">¶</a></h1>
+<p>Python package and example pipeline for matching census and post-enumeration survey (PES) data.
 For simplicity, only deterministic and clerical matching methods are provided.</p>
 <p>For additional information consider reading:</p>
 <ul class="simple">
@@ -59,15 +59,11 @@ For simplicity, only deterministic and clerical matching methods are provided.</
 </ul>
 <section id="setup-instructions">
 <h2>Setup instructions<a class="headerlink" href="#setup-instructions" title="Permalink to this headline">¶</a></h2>
-<section id="installing-python-and-an-ide">
-<h3>Installing Python and an IDE<a class="headerlink" href="#installing-python-and-an-ide" title="Permalink to this headline">¶</a></h3>
-<p>We recommend using IDEs Spyder or PyCharm, which are available through the anaconda navigator. They can be installed <a class="reference external" href="https://www.anaconda.com/products/distribution">here</a>.</p>
-</section>
+<p>Once Python is installed, download this repository and execute the command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> or <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> to install/update the package and its dependencies.</p>
 </section>
 <section id="using-this-code">
 <h2>Using this code<a class="headerlink" href="#using-this-code" title="Permalink to this headline">¶</a></h2>
-<p>Once Python is installed, download this repository and execute the command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install/update the required packages for this repository.</p>
-<p>The aim of this repository is to provide a set of functions for cleaning and then matching census and PES data. pes_match gives matchers the tools to automatically match records
+<p>The aim of this repository is to provide a set of functions for cleaning and then matching census and PES data. The package gives matchers the tools to automatically match records
 at the chosen level of geography and then resolve conflicts/difficult cases using the Clerical Resolution Online Widget (CROW). Associative matching can also be implemented to
 assist in finding all possible matches between census and PES households. Once all methods have been applied at a single level of geography, matches can be combined and
 residuals collected for the next stage of matching.</p>
@@ -84,19 +80,36 @@ Files can be executed in the command line using <code class="docutils literal no
 </section>
 <section id="when-is-crow-required">
 <h2>When is CROW required?<a class="headerlink" href="#when-is-crow-required" title="Permalink to this headline">¶</a></h2>
-<p>CROW is required for clerical matching (to resolve non-unique matches) after running the following scripts:</p>
+<p>CROW is required for clerical matching (to manually resolve non-unique matches) after running the following scripts:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pipeline/1_Stage_1/01_stage_1_person.py</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pipeline/2_Stage_2/01_stage_2_person.py</span></code></p></li>
 </ul>
 </section>
-<section id="directories">
-<h2>Directories<a class="headerlink" href="#directories" title="Permalink to this headline">¶</a></h2>
+<section id="directories-and-files-of-note">
+<h2>Directories and files of note<a class="headerlink" href="#directories-and-files-of-note" title="Permalink to this headline">¶</a></h2>
+<p>Descriptions of project directories and other significant files:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CROW/</span></code> - contains the code and config files for the <a class="reference external" href="https://github.com/Data-Linkage/Clerical_Resolution_Online_Widget">Clerical Resolution Online Widget</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/pes_match/</span></code> - the core package in the project.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/pes_match/cleaning.py</span></code> - functions to clean and prepare census / PES data for matching</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/pes_match/cluster.py</span></code> - function to cluster together non-unique matches between census / PES data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/pes_match/crow.py</span></code> - functions to prepare datasets for CROW and read in outputs from CROW</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/pes_match/matching.py</span></code> - functions to match census and PES data together</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/pes_match/parameters.py</span></code> - parameters that can be updated before or during matching</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pipeline/</span></code> - example pipeline that can be used as a starting point for matching census and PES data. Matchkeys can be updated within the scripts</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CROW/</span></code> -  contains the code and config files for the <a class="reference external" href="https://github.com/Data-Linkage/Clerical_Resolution_Online_Widget">Clerical Resolution Online Widget</a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Data/</span></code> - contains mock data and stores cleaned data, clerical inputs/outputs, checkpoint files and final outputs</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">library/</span></code> - contains functions and a configurable parameter file</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pipeline/</span></code> - scripts forming the record matching pipeline. Matchkeys can be updated within the scripts</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/</span></code> - tests for the code under <code class="docutils literal notranslate"><span class="pre">src/pes_match/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/</span></code> - <a class="reference external" href="https://data-linkage.github.io/pes_match/">package documentation</a> that is built and hosted as HTML by GitHub Actions based on the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch code. See <a class="reference external" href="https://www.sphinx-doc.org/en/master/">documentation for sphinx for updating or building docs manually</a></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/CONTRIBUTING.md</span></code> - general guidance for contributing to the project</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/CODE_OF_CONDUCT.md</span></code> - code of conduct</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code> - configs for GitHub Actions</p></li>
 </ul>
 </section>
 </section>
