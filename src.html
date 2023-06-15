@@ -1,16 +1,18 @@
+
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>src package &#8212; PES MATCH  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="src.pes_match package" href="src.pes_match.html" />
@@ -32,9 +34,9 @@
           <div class="body" role="main">
             
   <section id="src-package">
-<h1>src package<a class="headerlink" href="#src-package" title="Permalink to this heading">¶</a></h1>
+<h1>src package<a class="headerlink" href="#src-package" title="Permalink to this headline">¶</a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="src.pes_match.html">src.pes_match package</a><ul>
@@ -42,47 +44,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.cleaning">src.pes_match.cleaning module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.alpha_name"><code class="docutils literal notranslate"><span class="pre">alpha_name()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.change_types"><code class="docutils literal notranslate"><span class="pre">change_types()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.clean_name"><code class="docutils literal notranslate"><span class="pre">clean_name()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.concat"><code class="docutils literal notranslate"><span class="pre">concat()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.derive_list"><code class="docutils literal notranslate"><span class="pre">derive_list()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.derive_names"><code class="docutils literal notranslate"><span class="pre">derive_names()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.n_gram"><code class="docutils literal notranslate"><span class="pre">n_gram()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.pad_column"><code class="docutils literal notranslate"><span class="pre">pad_column()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.replace_vals"><code class="docutils literal notranslate"><span class="pre">replace_vals()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.select"><code class="docutils literal notranslate"><span class="pre">select()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cleaning.soundex"><code class="docutils literal notranslate"><span class="pre">soundex()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.cluster">src.pes_match.cluster module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.cluster.cluster_number"><code class="docutils literal notranslate"><span class="pre">cluster_number()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.crow">src.pes_match.crow module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.crow.collect_conflicts"><code class="docutils literal notranslate"><span class="pre">collect_conflicts()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.crow.collect_uniques"><code class="docutils literal notranslate"><span class="pre">collect_uniques()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.crow.combine_crow_results"><code class="docutils literal notranslate"><span class="pre">combine_crow_results()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.crow.crow_output_updater"><code class="docutils literal notranslate"><span class="pre">crow_output_updater()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.crow.remove_large_clusters"><code class="docutils literal notranslate"><span class="pre">remove_large_clusters()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.crow.save_for_crow"><code class="docutils literal notranslate"><span class="pre">save_for_crow()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.crow.split_save"><code class="docutils literal notranslate"><span class="pre">split_save()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.matching">src.pes_match.matching module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.age_diff_filter"><code class="docutils literal notranslate"><span class="pre">age_diff_filter()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.age_tolerance"><code class="docutils literal notranslate"><span class="pre">age_tolerance()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.combine"><code class="docutils literal notranslate"><span class="pre">combine()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.generate_matchkey"><code class="docutils literal notranslate"><span class="pre">generate_matchkey()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.get_assoc_candidates"><code class="docutils literal notranslate"><span class="pre">get_assoc_candidates()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.get_residuals"><code class="docutils literal notranslate"><span class="pre">get_residuals()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.mult_match"><code class="docutils literal notranslate"><span class="pre">mult_match()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.run_single_matchkey"><code class="docutils literal notranslate"><span class="pre">run_single_matchkey()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.std_lev"><code class="docutils literal notranslate"><span class="pre">std_lev()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src.pes_match.html#src.pes_match.matching.std_lev_filter"><code class="docutils literal notranslate"><span class="pre">std_lev_filter()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.cleaning">src.pes_match.cleaning module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.cluster">src.pes_match.cluster module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.crow">src.pes_match.crow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.matching">src.pes_match.matching module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match.parameters">src.pes_match.parameters module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.pes_match.html#module-src.pes_match">Module contents</a></li>
 </ul>
@@ -91,7 +56,7 @@
 </div>
 </section>
 <section id="module-src">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Permalink to this heading">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Permalink to this headline">¶</a></h2>
 </section>
 </section>
 
@@ -118,6 +83,8 @@
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">src package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of conduct for <code class="docutils literal notranslate"><span class="pre">pes_match</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -142,7 +109,7 @@
     </form>
     </div>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -159,7 +126,7 @@
       &copy;2023, Charlie Tomlin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
