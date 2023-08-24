@@ -404,6 +404,11 @@ def get_residuals(all_records, matched_records, id_column):
     0       4
     1       5
     """
+
+    assert (
+        matched_records[id_column].dtype == all_records[id_column].dtype
+    ), "id_column types do not match between matched_records and all_records"
+
     df = all_records.merge(
         matched_records[[id_column]].drop_duplicates(),
         on=id_column,
