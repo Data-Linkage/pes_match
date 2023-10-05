@@ -1,5 +1,4 @@
 import jellyfish
-import numpy as np
 import pandas as pd
 
 
@@ -92,13 +91,13 @@ def age_tolerance(val1, val2):
     >>> age_tolerance(45,50)
     False
     """
-    if (abs(val1 - val2) < 2) & (np.maximum(val1, val2) < 10):
+    if (abs(val1 - val2) < 2) & ((0 <= val1 <= 10) | (0 <= val2 <= 10)):
         return True
-    if (abs(val1 - val2) < 3) & (11 <= val1 <= 20) & (11 <= val2 <= 20):
+    if (abs(val1 - val2) < 3) & ((11 <= val1 <= 20) | (11 <= val2 <= 20)):
         return True
-    if (abs(val1 - val2) < 4) & (21 <= val1 <= 40) & (21 <= val2 <= 40):
+    if (abs(val1 - val2) < 4) & ((21 <= val1 <= 40) | (21 <= val2 <= 40)):
         return True
-    if (abs(val1 - val2) < 5) & (val1 > 40) & (val2 > 40):
+    if (abs(val1 - val2) < 5) & ((val1 > 40) | (val2 > 40)):
         return True
     return False
 
