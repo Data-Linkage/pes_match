@@ -1,9 +1,11 @@
 import glob
 import os
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+
 from pes_match.cluster import cluster_number
-from pes_match.parameters import CLERICAL_PATH, CLERICAL_VARIABLES
+from pes_match.parameters import CLERICAL_VARIABLES
 
 
 def collect_uniques(df, id_1, id_2, match_type):
@@ -47,8 +49,11 @@ def collect_uniques(df, id_1, id_2, match_type):
     2   A5   B4         0  Stage_X_Matchkeys
     3   A6   B5         0  Stage_X_Matchkeys
     """
-    if not ((isinstance(id_1, str)) and (isinstance(id_2, str)) and
-            (isinstance(match_type, str))):
+    if not (
+        (isinstance(id_1, str))
+        and (isinstance(id_2, str))
+        and (isinstance(match_type, str))
+    ):
         raise TypeError("id_1, id_2 and match_type must be strings")
     pd.options.mode.chained_assignment = None
     df["ID_count_1"] = df.groupby([id_1])[id_2].transform("count")
@@ -110,7 +115,9 @@ def collect_conflicts(df, id_1, id_2):
     return df
 
 
-def crow_output_updater(output_df, id_column, source_column, suffix_1, suffix_2, match_type):
+def crow_output_updater(
+    output_df, id_column, source_column, suffix_1, suffix_2, match_type
+):
     """
     Returns the outputs of CROW in a pairwise linked format.
     Only matched pairs are retained.
@@ -225,7 +232,7 @@ def crow_output_updater(output_df, id_column, source_column, suffix_1, suffix_2,
     return df
 
 
-def combine_crow_results(stage):
+def combine_crow_results(stage, results_path):
     """
     Takes all matches made in CROW from a chosen stage and combines
     them into a single pandas DataFrame. All matching in CROW for
@@ -234,29 +241,33 @@ def combine_crow_results(stage):
     Parameters
     ----------
     stage: str
-        Chosen stage of matching e.g., 'Stage_1'. The function will look inside CLERICAL_PATH and
-        combine all clerically matched CSV files that contain this string. File names for completed
-        matches must also end in '_DONE.csv', otherwise they will not be included in the final set of
-        combined clerical matches.
+        Chosen stage of matching e.g., 'Stage_1'.
+        The function will look inside CLERICAL_PATH and combine all clerically
+        matched CSV files that contain this string. File names for completed
+        matches must also end in '_DONE.csv', otherwise they will not be
+        included in the final set of combined clerical matches.
+    results_path: str
+        Location of outputs from CROW matching.
 
     Returns
     -------
     pandas.DataFrame
-        Pandas dataframe with all clerically matched records from a selected stage combined.
+        Pandas dataframe with all clerically matched records from a selected
+        stage combined.
     """
     if not isinstance(stage, str):
         raise TypeError("stage must be a string")
-    if not os.path.exists(CLERICAL_PATH):
-        os.makedirs(CLERICAL_PATH)
-    all_files = glob.glob(os.path.join(CLERICAL_PATH, "*.csv"))
+    all_files = glob.glob(os.path.join(results_path, "*.csv"))
     completed_files = []
     for filename in all_files:
         if stage in filename:
             if filename.endswith("_DONE.csv"):
                 df = pd.read_csv(filename, index_col=None, iterator=False, header=0)
                 completed_files.append(df)
-    assert len(completed_files) > 0, f"No completed clerical matching files" \
-                                     f" (ending with _DONE) found from {stage}"
+    assert len(completed_files) > 0, (
+        f"No completed clerical matching files"
+        f" (ending with _DONE) found from {stage}"
+    )
     df = pd.concat(completed_files, axis=0, ignore_index=True)
     return df
 
@@ -313,7 +324,9 @@ def remove_large_clusters(df, n):
     return df
 
 
-def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
+def save_for_crow(
+    df, id_column, suffix_1, suffix_2, output_folder, file_name, no_of_files=1
+):
     """
     Takes candidate matches, updates their format ready for CROW
     and then saves them. Split matches into multiple files if desired.
@@ -329,6 +342,8 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
         Suffix used for the first data source.
     suffix_2: str
         Suffix used for the second data source.
+    output_folder: str
+        Path to save CROW input data.
     file_name: str
         Name of file that will be saved. If multiple files are
         saved, each file will have a different suffix
@@ -342,8 +357,12 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
     remove_large_clusters
     split_save
     """
-    if not ((isinstance(id_column, str)) and (isinstance(suffix_1, str)) and
-            (isinstance(suffix_2, str)) and (isinstance(file_name, str))):
+    if not (
+        (isinstance(id_column, str))
+        and (isinstance(suffix_1, str))
+        and (isinstance(suffix_2, str))
+        and (isinstance(file_name, str))
+    ):
         raise TypeError("id_column, file_name and suffixes must be strings")
 
     crow_variables = CLERICAL_VARIABLES
@@ -367,10 +386,15 @@ def save_for_crow(df, id_column, suffix_1, suffix_2, file_name, no_of_files=1):
     crow_input = pd.concat([crow_records_1, crow_records_2], axis=0).sort_values(
         ["Cluster_Number", "Source_Dataset"]
     )
-    split_save(crow_input, file_name=file_name, no_of_files=no_of_files)
+    split_save(
+        crow_input,
+        file_name=file_name,
+        no_of_files=no_of_files,
+        output_folder=output_folder,
+    )
 
 
-def split_save(df, file_name, no_of_files):
+def split_save(df, file_name, no_of_files, output_folder):
     """
     Splits clusters (that are already in a format ready for
     CROW) into multiple smaller files.
@@ -384,20 +408,22 @@ def split_save(df, file_name, no_of_files):
         different suffix e.g. "_1", "_2", etc.
     no_of_files: int
         Number of csv files that the output will be split into.
+    output_folder: str
+        Path to save CROW input data.
 
     See Also
     --------
     save_for_crow
     """
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
     if not ((isinstance(file_name, str)) and (isinstance(no_of_files, int))):
         raise TypeError("file_name must be a string, no_of_files must be an integer")
     clusters_split = np.array_split(df["Cluster_Number"].unique(), no_of_files)
     for i, group in enumerate(clusters_split):
-        df_split = df[
-            df["Cluster_Number"].isin(list(group))
-        ]
+        df_split = df[df["Cluster_Number"].isin(list(group))]
         df_split.to_csv(
-            CLERICAL_PATH + file_name + "_" + str(i + 1) + ".csv",
+            output_folder + "/" + file_name + "_" + str(i + 1) + ".csv",
             header=True,
             index=False,
         )
