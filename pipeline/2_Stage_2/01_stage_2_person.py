@@ -5,6 +5,7 @@ from pes_match.matching import combine, get_residuals, run_single_matchkey
 from pes_match.parameters import (
     CEN_CLEAN_DATA,
     CHECKPOINT_PATH,
+    CLERICAL_PATH,
     CLERICAL_VARIABLES,
     OUTPUT_PATH,
     PES_CLEAN_DATA,
@@ -68,6 +69,7 @@ save_for_crow(
     id_column="puid",
     suffix_1="_cen",
     suffix_2="_pes",
+    output_folder=CLERICAL_PATH + "Stage_2_CROW_Files",
     file_name="Stage_2_Matchkey_CROW_Conflicts",
     no_of_files=1,
 )

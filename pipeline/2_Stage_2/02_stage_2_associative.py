@@ -5,6 +5,7 @@ from pes_match.matching import combine, get_assoc_candidates, run_single_matchke
 from pes_match.parameters import (
     CEN_CLEAN_DATA,
     CHECKPOINT_PATH,
+    CLERICAL_PATH,
     CLERICAL_VARIABLES,
     OUTPUT_PATH,
     OUTPUT_VARIABLES,
@@ -29,7 +30,9 @@ unique_matches = pd.read_csv(
 )
 
 # Combine matches made in CROW into single dataset
-crow_matches = combine_crow_results(stage="Stage_2")
+crow_matches = combine_crow_results(
+    stage="Stage_2", results_path=CLERICAL_PATH + "Stage_2_CROW_Files"
+)
 
 # Update format of matches and add flags
 crow_matches = crow_output_updater(

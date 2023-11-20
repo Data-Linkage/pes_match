@@ -7,6 +7,7 @@ from pes_match.matching import combine, run_single_matchkey
 from pes_match.parameters import (
     CEN_CLEAN_DATA,
     CHECKPOINT_PATH,
+    CLERICAL_PATH,
     CLERICAL_VARIABLES,
     PES_CLEAN_DATA,
     cen_variable_types,
@@ -15,6 +16,8 @@ from pes_match.parameters import (
 
 if not os.path.exists(CHECKPOINT_PATH):
     os.makedirs(CHECKPOINT_PATH)
+if not os.path.exists(CLERICAL_PATH):
+    os.makedirs(CLERICAL_PATH)
 
 # Cleaned data
 CEN = pd.read_csv(
@@ -64,6 +67,7 @@ save_for_crow(
     id_column="puid",
     suffix_1="_cen",
     suffix_2="_pes",
+    output_folder=CLERICAL_PATH + "Stage_1_CROW_Files",
     file_name="Stage_1_Matchkey_CROW_Conflicts",
     no_of_files=1,
 )
